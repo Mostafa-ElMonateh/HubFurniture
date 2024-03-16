@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HubFurniture.APIs.Dtos;
+using HubFurniture.APIs.Errors;
 using HubFurniture.Core.Contracts.Contracts.repositories;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Specifications.ProductItemSpecifications;
@@ -28,6 +29,8 @@ namespace HubFurniture.APIs.Controllers
             return Ok(mappedProductItems);
         }
 
+        [ProducesResponseType(typeof(ProductItemToReturnDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductItemToReturnDto>> GetProductItem(int id)
         {
@@ -37,7 +40,7 @@ namespace HubFurniture.APIs.Controllers
 
             if (productItem is null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
 
             var mappedProductItem = _mapper.Map<ProductItem, ProductItemToReturnDto>(productItem);

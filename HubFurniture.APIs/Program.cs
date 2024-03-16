@@ -1,8 +1,13 @@
+using HubFurniture.APIs.Errors;
+using HubFurniture.APIs.Extensions;
 using HubFurniture.APIs.Helpers;
+using HubFurniture.APIs.Middlewares;
 using HubFurniture.Core.Contracts.Contracts.repositories;
 using HubFurniture.Repository;
 using HubFurniture.Repository.Data;
 using HubFurniture.Repository.DataSeed;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HubFurniture.APIs
@@ -18,18 +23,15 @@ namespace HubFurniture.APIs
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(); 
+
+            builder.Services.AddSwaggerServices();
 
             builder.Services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-            builder.Services.AddAutoMapper(typeof(MappingProfiles));
+            builder.Services.AddApplicationServices();
 
             #endregion
 
@@ -58,18 +60,21 @@ namespace HubFurniture.APIs
             #region Configure Kestrel Middlewares
 
             // Configure the HTTP request pipeline.
+
+            app.UseMiddleware<ExceptionMiddleware>();
+
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerMiddlewares();
             }
 
             app.UseStaticFiles();
 
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
             //app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers(); 
 
