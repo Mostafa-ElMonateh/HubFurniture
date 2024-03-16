@@ -1,0 +1,14 @@
+[
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "ProductCollectionId": 1
+  },
+  {
+    "Rate": 1,
+    "CustomerName": "Mostafa Ahmed",
+    "Review": "This is a bad product I have never seen before",
+    "ProductItemId": 1
+  }
+]
