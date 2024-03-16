@@ -1,0 +1,6 @@
+@HubFurniture.APIs_HostAddress = http://localhost:5016
+
+GET {{HubFurniture.APIs_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
