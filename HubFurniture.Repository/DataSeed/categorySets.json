@@ -1,6 +1,62 @@
 [
   {
+    "Name": "Sofa Set",
+    "CategoryId": 1
+  },
+  {
     "Name": "U-Shape",
     "CategoryId": 1
+  },
+  {
+    "Name": "L-Shape",
+    "CategoryId": 1
+  },
+  {
+    "Name": "Recliner Sofa Sets",
+    "CategoryId": 1
+  },
+  {
+    "Name": "Tv Tables",
+    "CategoryId": 1
+  },
+  {
+    "Name": "King Bedroom Set",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Queen Bedroom Set",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Youth beedrooms",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Kids beedrooms",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Complete Dining room sets",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Dining room with 8 chairs",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Dining room with 6 chairs",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Dining room with 4 chairs",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Outdoor table",
+    "CategoryId": 4
+  },
+  {
+    "Name": "Outdoor Dining Set",
+    "CategoryId": 4
   }
 ]

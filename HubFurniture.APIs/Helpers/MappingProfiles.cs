@@ -14,6 +14,9 @@ namespace HubFurniture.APIs.Helpers
             CreateMap<CustomerReview, CustomerReviewToReturnDto>();
             CreateMap<ProductItem, ProductItemToReturnDto>().ForMember(d => d.ProductPictures, 
                 o => o.MapFrom<ProductPictureUrlResolver>());
+
+            CreateMap<Category, ProductCategoryToReturnDto>().ForMember(d => d.CategorySets,
+                o => o.MapFrom<ProductCategoryResolver>());
         }
     }
 }

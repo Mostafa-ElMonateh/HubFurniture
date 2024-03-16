@@ -3,24 +3,36 @@ using HubFurniture.APIs.Dtos;
 using HubFurniture.APIs.Errors;
 using HubFurniture.Core.Contracts.Contracts.repositories;
 using HubFurniture.Core.Entities;
+using HubFurniture.Core.Specifications.ProductCategorySpecifications;
 using HubFurniture.Core.Specifications.ProductItemSpecifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HubFurniture.APIs.Controllers
 {
-    public class ProductItemController : BaseApiController
+    public class ProductsController : BaseApiController
     {
         private readonly IGenericRepository<ProductItem> _productRepo;
+        private readonly IGenericRepository<ProductCollection> _productCollectionRepo;
+        private readonly IGenericRepository<CategorySet> _categorySetRepo;
+        private readonly IGenericRepository<Category> _categoryRepo;
         private readonly IMapper _mapper;
 
-        public ProductItemController(IGenericRepository<ProductItem> productRepo,
+        public ProductsController(IGenericRepository<ProductItem> productRepo,
+            IGenericRepository<ProductCollection> productCollectionRepo,
+            IGenericRepository<CategorySet> categorySetRepo,
+            IGenericRepository<Category> categoryRepo,
             IMapper mapper)
         {
             _productRepo = productRepo;
+            _productCollectionRepo = productCollectionRepo;
+            _categorySetRepo = categorySetRepo;
+            _categoryRepo = categoryRepo;
             _mapper = mapper;
         }
 
-        [HttpGet]
+
+
+        [HttpGet("items")]
         public async Task<ActionResult<IEnumerable<ProductItemToReturnDto>>> GetProductItems()
         {
             var specifications = new ProductItemWithItsCollectionsAndItsPicturesAndItsReviewsSpecifications();
@@ -29,9 +41,11 @@ namespace HubFurniture.APIs.Controllers
             return Ok(mappedProductItems);
         }
 
+
+
         [ProducesResponseType(typeof(ProductItemToReturnDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        [HttpGet("{id}")]
+        [HttpGet("item/{id}")]
         public async Task<ActionResult<ProductItemToReturnDto>> GetProductItem(int id)
         {
             var specifications = new ProductItemWithItsCollectionsAndItsPicturesAndItsReviewsSpecifications(id);
@@ -46,6 +60,17 @@ namespace HubFurniture.APIs.Controllers
             var mappedProductItem = _mapper.Map<ProductItem, ProductItemToReturnDto>(productItem);
 
             return Ok(mappedProductItem);
+        }
+
+
+
+        [HttpGet("categories")]
+        public async Task<ActionResult<IEnumerable<ProductCategoryToReturnDto>>> GetProductsCategory()
+        {
+            var specifications = new ProductCategoryWithItsSetsSpecifications();
+            var categories = await _categoryRepo.GetAllWithSpecAsync(specifications);
+            var mappedProductsCategory = _mapper.Map<IEnumerable<Category>, IEnumerable<ProductCategoryToReturnDto>>(categories);
+            return Ok(mappedProductsCategory);
         }
 
 

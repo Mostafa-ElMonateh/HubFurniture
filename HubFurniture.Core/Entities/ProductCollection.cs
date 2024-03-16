@@ -23,6 +23,7 @@ namespace HubFurniture.Core.Entities
         public decimal? Width { get; set; }
         public ICollection<ProductPicture> ProductPictures{ get; set; } = new HashSet<ProductPicture>();
         public int CategorySetId { get; set; }
+        [JsonIgnore] // Avoid Circle Ref
         public CategorySet CategorySet { get; set; }
         public ICollection<CustomerReview> CustomerReviews { get; set; } = new HashSet<CustomerReview>();
         
