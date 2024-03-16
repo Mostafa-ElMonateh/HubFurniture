@@ -1,3 +1,4 @@
+using HubFurniture.APIs.Helpers;
 using HubFurniture.Core.Contracts.Contracts.repositories;
 using HubFurniture.Repository;
 using HubFurniture.Repository.Data;
@@ -28,6 +29,7 @@ namespace HubFurniture.APIs
 
             builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+            builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
             #endregion
 
@@ -61,6 +63,8 @@ namespace HubFurniture.APIs
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseStaticFiles();
 
             //app.UseHttpsRedirection();
 
