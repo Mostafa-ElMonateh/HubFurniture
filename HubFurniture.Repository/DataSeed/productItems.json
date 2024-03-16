@@ -1,0 +1,26 @@
+[
+  {
+    "Name": "Comfy Brown Recliner Chair",
+    "Availability": 0,
+    "Price": 13450,
+    "Color": "brown",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "LivingRoom",
+    "Height": 80,
+    "Depth": 65,
+    "Width": 100
+  },
+  {
+    "Name": "AE-9200-1R- Dark Grey Rocker Recliner Chair",
+    "Availability": 0,
+    "Price": 11350,
+    "Color": "Dark Grey",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "LivingRoom",
+    "Height": 90,
+    "Depth": 105,
+    "Width": 100
+  }
+]
