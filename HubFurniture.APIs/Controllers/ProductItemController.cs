@@ -25,7 +25,9 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductItem>> GetProductItem(int id)
         {
-            var productItem = await _productRepo.GetAsync(id);
+            var specifications = new ProductItemWithItsCollectionsAndItsPicturesAndItsReviewsSpecifications(id);
+
+            var productItem = await _productRepo.GetWithSpecAsync(specifications);
 
             if (productItem is null)
             {
