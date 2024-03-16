@@ -19,7 +19,7 @@ namespace HubFurniture.Repository
         {
             _dbContext = dbContext;
         }
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
@@ -28,7 +28,7 @@ namespace HubFurniture.Repository
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAllWithSpecAsync(ISpecifications<T> specifications)
+        public async Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecifications<T> specifications)
         {
             return await ApplySpecifications(specifications).ToListAsync();
         }

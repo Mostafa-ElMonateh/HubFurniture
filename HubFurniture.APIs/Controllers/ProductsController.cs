@@ -33,11 +33,11 @@ namespace HubFurniture.APIs.Controllers
 
 
         [HttpGet("items")]
-        public async Task<ActionResult<IEnumerable<ProductItemToReturnDto>>> GetProductItems()
+        public async Task<ActionResult<IReadOnlyList<ProductItemToReturnDto>>> GetProductItems()
         {
             var specifications = new ProductItemWithItsCollectionsAndItsPicturesAndItsReviewsSpecifications();
             var productItems = await _productRepo.GetAllWithSpecAsync(specifications);
-            var mappedProductItems = _mapper.Map<IEnumerable<ProductItem>, IEnumerable<ProductItemToReturnDto>>(productItems);
+            var mappedProductItems = _mapper.Map<IReadOnlyList<ProductItem>, IReadOnlyList<ProductItemToReturnDto>>(productItems);
             return Ok(mappedProductItems);
         }
 
@@ -65,11 +65,11 @@ namespace HubFurniture.APIs.Controllers
 
 
         [HttpGet("categories")]
-        public async Task<ActionResult<IEnumerable<ProductCategoryToReturnDto>>> GetProductsCategory()
+        public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetProductsCategory()
         {
             var specifications = new ProductCategoryWithItsSetsSpecifications();
             var categories = await _categoryRepo.GetAllWithSpecAsync(specifications);
-            var mappedProductsCategory = _mapper.Map<IEnumerable<Category>, IEnumerable<ProductCategoryToReturnDto>>(categories);
+            var mappedProductsCategory = _mapper.Map<IReadOnlyList<Category>, IReadOnlyList<ProductCategoryToReturnDto>>(categories);
             return Ok(mappedProductsCategory);
         }
 
