@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HubFurniture.APIs.Dtos;
+using HubFurniture.APIs.Errors;
 using HubFurniture.Core.Contracts.Contracts.repositories;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Specifications.ProductItemSpecifications;
@@ -37,7 +38,7 @@ namespace HubFurniture.APIs.Controllers
 
             if (productItem is null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
 
             var mappedProductItem = _mapper.Map<ProductItem, ProductItemToReturnDto>(productItem);

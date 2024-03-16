@@ -1,8 +1,12 @@
+using HubFurniture.APIs.Errors;
 using HubFurniture.APIs.Helpers;
+using HubFurniture.APIs.Middlewares;
 using HubFurniture.Core.Contracts.Contracts.repositories;
 using HubFurniture.Repository;
 using HubFurniture.Repository.Data;
 using HubFurniture.Repository.DataSeed;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HubFurniture.APIs
@@ -31,6 +35,23 @@ namespace HubFurniture.APIs
 
             builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = (actionContext) =>
+                {
+                    var errors = actionContext.ModelState.Where(p => p.Value.Errors.Count > 0)
+                        .SelectMany(p => p.Value.Errors)
+                        .Select(e => e.ErrorMessage).ToArray();
+
+                    var validationErrorResponse = new ApiValidationErrorResponse()
+                    {
+                        Errors = errors
+                    };
+
+                    return new BadRequestObjectResult(validationErrorResponse);
+                };
+            });
+
             #endregion
 
             var app = builder.Build();
@@ -58,6 +79,9 @@ namespace HubFurniture.APIs
             #region Configure Kestrel Middlewares
 
             // Configure the HTTP request pipeline.
+
+            app.UseMiddleware<ExceptionMiddleware>();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -66,10 +90,11 @@ namespace HubFurniture.APIs
 
             app.UseStaticFiles();
 
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
             //app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers(); 
 
