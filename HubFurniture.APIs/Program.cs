@@ -1,4 +1,5 @@
 using HubFurniture.APIs.Errors;
+using HubFurniture.APIs.Extensions;
 using HubFurniture.APIs.Helpers;
 using HubFurniture.APIs.Middlewares;
 using HubFurniture.Core.Contracts.Contracts.repositories;
@@ -22,35 +23,15 @@ namespace HubFurniture.APIs
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(); 
+
+            builder.Services.AddSwaggerServices();
 
             builder.Services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-            builder.Services.AddAutoMapper(typeof(MappingProfiles));
-
-            builder.Services.Configure<ApiBehaviorOptions>(options =>
-            {
-                options.InvalidModelStateResponseFactory = (actionContext) =>
-                {
-                    var errors = actionContext.ModelState.Where(p => p.Value.Errors.Count > 0)
-                        .SelectMany(p => p.Value.Errors)
-                        .Select(e => e.ErrorMessage).ToArray();
-
-                    var validationErrorResponse = new ApiValidationErrorResponse()
-                    {
-                        Errors = errors
-                    };
-
-                    return new BadRequestObjectResult(validationErrorResponse);
-                };
-            });
+            builder.Services.AddApplicationServices();
 
             #endregion
 
@@ -84,8 +65,7 @@ namespace HubFurniture.APIs
 
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerMiddlewares();
             }
 
             app.UseStaticFiles();

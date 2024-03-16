@@ -29,6 +29,8 @@ namespace HubFurniture.APIs.Controllers
             return Ok(mappedProductItems);
         }
 
+        [ProducesResponseType(typeof(ProductItemToReturnDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductItemToReturnDto>> GetProductItem(int id)
         {
