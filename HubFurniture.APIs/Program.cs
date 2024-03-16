@@ -1,4 +1,5 @@
-
+using HubFurniture.Core.Contracts.Contracts.repositories;
+using HubFurniture.Repository;
 using HubFurniture.Repository.Data;
 using HubFurniture.Repository.DataSeed;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,9 @@ namespace HubFurniture.APIs
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
 
             #endregion
 
