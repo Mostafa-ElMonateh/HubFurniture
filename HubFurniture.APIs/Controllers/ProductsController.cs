@@ -33,9 +33,10 @@ namespace HubFurniture.APIs.Controllers
 
 
         [HttpGet("items")]
-        public async Task<ActionResult<IReadOnlyList<ProductItemToReturnDto>>> GetProductItems()
+        public async Task<ActionResult<IReadOnlyList<ProductItemToReturnDto>>> GetProductItems(string? sort = null,
+            string? categoryName = null, string? productColor = null, int? minimumPrice = null, int? maximumPrice= null)
         {
-            var specifications = new ProductItemWithItsCollectionsAndItsPicturesAndItsReviewsSpecifications();
+            var specifications = new ProductItemWithItsCollectionsItsPicturesItsReviewsSpecifications(sort, categoryName, productColor, minimumPrice, maximumPrice);
             var productItems = await _productRepo.GetAllWithSpecAsync(specifications);
             var mappedProductItems = _mapper.Map<IReadOnlyList<ProductItem>, IReadOnlyList<ProductItemToReturnDto>>(productItems);
             return Ok(mappedProductItems);
@@ -48,7 +49,7 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("item/{id}")]
         public async Task<ActionResult<ProductItemToReturnDto>> GetProductItem(int id)
         {
-            var specifications = new ProductItemWithItsCollectionsAndItsPicturesAndItsReviewsSpecifications(id);
+            var specifications = new ProductItemWithItsCollectionsItsPicturesItsReviewsSpecifications(id);
 
             var productItem = await _productRepo.GetWithSpecAsync(specifications);
 

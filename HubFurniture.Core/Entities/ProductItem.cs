@@ -23,5 +23,7 @@ namespace HubFurniture.Core.Entities
         public ICollection<ProductPicture> ProductPictures{ get; set; } = new HashSet<ProductPicture>();
         public ICollection<CustomerReview> CustomerReviews { get; set; } = new HashSet<CustomerReview>();
         public ICollection<ProductCollection> ProductCollections { get; set; } = new HashSet<ProductCollection>();
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
