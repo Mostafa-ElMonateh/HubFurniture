@@ -15,6 +15,8 @@ namespace HubFurniture.Core.Specifications.ProductItemSpecifications
             :base()
         {
             AddIncludes();
+
+            
         }
 
         // This Constructor will be used for creating an Object, that will be used to get a specific productItem
