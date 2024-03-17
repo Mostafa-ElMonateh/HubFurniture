@@ -21,6 +21,15 @@ namespace HubFurniture.Repository
                 query = query.Where(specifications.Criteria);
             }
 
+            if (specifications.OrderBy is not null)
+            {
+                query = query.OrderBy(specifications.OrderBy);
+            }
+            else if (specifications.OrderByDesc is not null)
+            {
+                query = query.OrderByDescending(specifications.OrderByDesc);
+            }
+
             query = specifications.Includes.Aggregate(query, (currentQuery, includeExpression)
                 => currentQuery.Include(includeExpression));
 

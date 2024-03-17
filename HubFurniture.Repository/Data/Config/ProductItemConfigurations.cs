@@ -50,6 +50,11 @@ namespace HubFurniture.Repository.Data.Config
 
             builder.HasMany(pi => pi.CustomerReviews)
                 .WithOne();
+
+            builder.HasOne(pi => pi.Category)
+                .WithMany()
+                .HasForeignKey(pi => pi.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
