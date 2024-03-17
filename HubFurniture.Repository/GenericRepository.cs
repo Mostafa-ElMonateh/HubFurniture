@@ -30,7 +30,7 @@ namespace HubFurniture.Repository
 
         public async Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecifications<T> specifications)
         {
-            return await ApplySpecifications(specifications).ToListAsync();
+            return await ApplySpecifications(specifications).ToListAsync();;
         }
 
         public async Task<T?> GetWithSpecAsync(ISpecifications<T> specifications)

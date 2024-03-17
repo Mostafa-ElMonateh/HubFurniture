@@ -9,7 +9,8 @@
     "Room": "LivingRoom",
     "Height": 80,
     "Depth": 65,
-    "Width": 100
+    "Width": 100,
+    "CategoryId": 1
   },
   {
     "Name": "AE-9200-1R- Dark Grey Rocker Recliner Chair",
@@ -21,6 +22,7 @@
     "Room": "LivingRoom",
     "Height": 90,
     "Depth": 105,
-    "Width": 100
+    "Width": 100,
+    "CategoryId": 1
   }
 ]
