@@ -47,51 +47,51 @@ namespace HubFurniture.APIs.Controllers
         [HttpPost("login")]//api/account/login
         public async Task<IActionResult> Login(LoginUserDto userDto)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == true)
             {
+                //check - create token
                 ApplicationUser user = await usermanger.FindByEmailAsync(userDto.Email);
-                if (user != null)
+                if (user != null)//user name found
                 {
                     bool found = await usermanger.CheckPasswordAsync(user, userDto.Password);
                     if (found)
                     {
-                        var token = await GenerateTokenAsync(user, config);
-                        return Ok(token);
+                        //Claims Token
+                        var claims = new List<Claim>();
+                        claims.Add(new Claim(ClaimTypes.Name, user.UserName));
+                        claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
+                        claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+
+                        //get role
+                        var roles = await usermanger.GetRolesAsync(user);
+                        foreach (var itemRole in roles)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, itemRole));
+                        }
+                        SecurityKey securityKey =
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:Secret"]));
+
+                        SigningCredentials signincred =
+                            new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                        //Create token
+                        JwtSecurityToken mytoken = new JwtSecurityToken(
+                            issuer: config["JWT:ValidIssuer"],
+                            audience: config["JWT:ValidAudiance"],
+                            claims: claims,
+                            expires: DateTime.Now.AddHours(1),
+                            signingCredentials: signincred
+                            );
+                        return Ok(new
+                        {
+                            token = new JwtSecurityTokenHandler().WriteToken(mytoken),
+                            expiration = mytoken.ValidTo
+                        });
                     }
                 }
                 return Unauthorized();
+
             }
             return Unauthorized();
         }
-
-        public async Task<string> GenerateTokenAsync(ApplicationUser user, IConfiguration config)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var roles = await usermanger.GetRolesAsync(user);
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
-
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:Secret"]));
-            var signinCred = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                issuer: config["JWT:ValidIssuer"],
-                audience: config["JWT:ValidAudience"],
-                claims: claims,
-                expires: DateTime.Now.AddHours(1),
-                signingCredentials: signinCred
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
     }
 }
