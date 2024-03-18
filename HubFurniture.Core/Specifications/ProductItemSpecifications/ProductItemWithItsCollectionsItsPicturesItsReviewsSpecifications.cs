@@ -11,21 +11,21 @@ namespace HubFurniture.Core.Specifications.ProductItemSpecifications
     {
 
         // This Constructor will be used for creating an Object, that will be used to get all productItems
-        public ProductItemWithItsCollectionsItsPicturesItsReviewsSpecifications(string? sort, string? categoryName, string? productColor, int? minimumPrice, int? maximumPrice)
+        public ProductItemWithItsCollectionsItsPicturesItsReviewsSpecifications(ProductSpecParams specParams)
             :base(pi => 
                 
-                    (string.IsNullOrEmpty(categoryName) || pi.Category.Name == categoryName) &&
-                    (string.IsNullOrEmpty(productColor) || pi.Color == productColor) &&
-                    (!minimumPrice.HasValue || pi.Price >= minimumPrice) &&
-                    (!maximumPrice.HasValue || pi.Price <= maximumPrice)
+                    (string.IsNullOrEmpty(specParams.CategoryName) || pi.Category.Name == specParams.CategoryName) &&
+                    (string.IsNullOrEmpty(specParams.ProductColor) || pi.Color == specParams.ProductColor) &&
+                    (!specParams.MinimumPrice.HasValue || pi.Price >= specParams.MinimumPrice) &&
+                    (!specParams.MaximumPrice.HasValue || pi.Price <= specParams.MaximumPrice)
                 
                 )
         {
             AddIncludes();
 
-            if (!string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(specParams.Sort))
             {
-                switch (sort)
+                switch (specParams.Sort)
                 { 
                     case "priceAsc":
                         AddOrderBy(pi => pi.Price);
@@ -48,6 +48,8 @@ namespace HubFurniture.Core.Specifications.ProductItemSpecifications
             {
                 AddOrderBy(pi => pi.Name);
             }
+
+            ApplyPagination((specParams.PageIndex - 1) * specParams.PageSize,specParams.PageSize);
             
         }
 

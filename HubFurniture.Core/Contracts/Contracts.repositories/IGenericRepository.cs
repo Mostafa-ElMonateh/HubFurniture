@@ -14,5 +14,6 @@ namespace HubFurniture.Core.Contracts.Contracts.repositories
         Task<T?> GetAsync(int id);
         Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecifications<T> specifications);
         Task<T?> GetWithSpecAsync(ISpecifications<T> specifications);
+        Task<int> GetCountAsync(ISpecifications<T> specifications);
     }
 }
