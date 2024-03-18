@@ -13,12 +13,11 @@ namespace HubFurniture.Core.Specifications.ProductItemSpecifications
         // This Constructor will be used for creating an Object, that will be used to get all productItems
         public ProductItemWithItsCollectionsItsPicturesItsReviewsSpecifications(ProductSpecParams specParams)
             :base(pi => 
-                
+                    (string.IsNullOrEmpty(specParams.Search) || pi.Name.ToLower().Contains(specParams.Search))&&
                     (string.IsNullOrEmpty(specParams.CategoryName) || pi.Category.Name == specParams.CategoryName) &&
                     (string.IsNullOrEmpty(specParams.ProductColor) || pi.Color == specParams.ProductColor) &&
                     (!specParams.MinimumPrice.HasValue || pi.Price >= specParams.MinimumPrice) &&
                     (!specParams.MaximumPrice.HasValue || pi.Price <= specParams.MaximumPrice)
-                
                 )
         {
             AddIncludes();
