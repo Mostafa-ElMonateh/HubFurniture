@@ -10,6 +10,14 @@ namespace HubFurniture.Core.Specifications.ProductItemSpecifications
     {
         private const int MaxPageSize = 10;
         public string? Sort { get; set; }
+        private string? search;
+
+        public string? Search
+        {
+            get => search;
+            set => search = value?.ToLower();
+        }
+
         public string? CategoryName { get; set; }
         public string? ProductColor { get; set; }
         public int? MinimumPrice { get; set; }

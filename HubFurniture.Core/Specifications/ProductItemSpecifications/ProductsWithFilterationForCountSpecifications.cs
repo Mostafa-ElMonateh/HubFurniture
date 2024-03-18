@@ -11,7 +11,7 @@ namespace HubFurniture.Core.Specifications.ProductItemSpecifications
     {
         public ProductsWithFilterationForCountSpecifications(ProductSpecParams specParams)
             :base(pi => 
-                
+                (string.IsNullOrEmpty(specParams.Search) || pi.Name.ToLower().Contains(specParams.Search))&&
                 (string.IsNullOrEmpty(specParams.CategoryName) || pi.Category.Name == specParams.CategoryName) &&
                 (string.IsNullOrEmpty(specParams.ProductColor) || pi.Color == specParams.ProductColor) &&
                 (!specParams.MinimumPrice.HasValue || pi.Price >= specParams.MinimumPrice) &&
