@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HubFurniture.APIs.Dtos;
 using HubFurniture.APIs.Errors;
+using HubFurniture.APIs.Helpers;
 using HubFurniture.Core.Contracts.Contracts.repositories;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Specifications.ProductCategorySpecifications;
@@ -33,13 +34,14 @@ namespace HubFurniture.APIs.Controllers
 
 
         [HttpGet("items")]
-        public async Task<ActionResult<IReadOnlyList<ProductItemToReturnDto>>> GetProductItems(string? sort = null,
-            string? categoryName = null, string? productColor = null, int? minimumPrice = null, int? maximumPrice= null)
+        public async Task<ActionResult<Pagination<ProductItemToReturnDto>>> GetProductItems([FromQuery]ProductSpecParams specParams)
         {
-            var specifications = new ProductItemWithItsCollectionsItsPicturesItsReviewsSpecifications(sort, categoryName, productColor, minimumPrice, maximumPrice);
+            var specifications = new ProductItemWithItsCollectionsItsPicturesItsReviewsSpecifications(specParams);
             var productItems = await _productRepo.GetAllWithSpecAsync(specifications);
             var mappedProductItems = _mapper.Map<IReadOnlyList<ProductItem>, IReadOnlyList<ProductItemToReturnDto>>(productItems);
-            return Ok(mappedProductItems);
+            var countSpecifications = new ProductsWithFilterationForCountSpecifications(specParams);
+            int count = await _productRepo.GetCountAsync(countSpecifications);
+            return Ok(new Pagination<ProductItemToReturnDto>(specParams.PageIndex, specParams.PageSize, count, mappedProductItems));
         }
 
 

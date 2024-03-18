@@ -38,6 +38,11 @@ namespace HubFurniture.Repository
             return await ApplySpecifications(specifications).FirstOrDefaultAsync();
         }
 
+        public async Task<int> GetCountAsync(ISpecifications<T> specifications)
+        {
+            return await ApplySpecifications(specifications).CountAsync();
+        }
+
         private IQueryable<T> ApplySpecifications(ISpecifications<T> specifications)
         {
             return SpecificationsEvaluator<T>.GetQuery(_dbContext.Set<T>(), specifications);
