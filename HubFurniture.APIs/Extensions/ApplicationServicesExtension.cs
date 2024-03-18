@@ -1,7 +1,10 @@
 ﻿using HubFurniture.APIs.Errors;
 using HubFurniture.APIs.Helpers;
 using HubFurniture.Core.Contracts.Contracts.repositories;
+using HubFurniture.Core.Entities;
 using HubFurniture.Repository;
+using HubFurniture.Repository.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HubFurniture.APIs.Extensions
@@ -13,6 +16,9 @@ namespace HubFurniture.APIs.Extensions
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddAutoMapper(typeof(MappingProfiles));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<StoreContext>();
 
             services.Configure<ApiBehaviorOptions>(options =>
             {

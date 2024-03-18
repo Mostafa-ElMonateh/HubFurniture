@@ -6,10 +6,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using HubFurniture.Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace HubFurniture.Repository.Data
 {
-    public class StoreContext : DbContext
+    public class StoreContext : IdentityDbContext<ApplicationUser>
     {
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
@@ -17,6 +18,7 @@ namespace HubFurniture.Repository.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
