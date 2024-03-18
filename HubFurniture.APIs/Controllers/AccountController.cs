@@ -39,9 +39,16 @@ namespace HubFurniture.APIs.Controllers
                 {
                     return Ok("Account Add Success");
                 }
-                return BadRequest(result.Errors);
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage)
+                .ToList();
+                return BadRequest(errors);
             }
-            return BadRequest(ModelState);
+
+            var modelStateErrors = ModelState.Values.SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage)
+            .ToList();
+            return BadRequest(modelStateErrors);
         }
 
         [HttpPost("login")]//api/account/login
