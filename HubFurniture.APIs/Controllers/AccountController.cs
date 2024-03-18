@@ -37,6 +37,8 @@ namespace HubFurniture.APIs.Controllers
                 IdentityResult result = await usermanger.CreateAsync(user, userDto.Password);
                 if (result.Succeeded)
                 {
+                    await usermanger.AddToRoleAsync(user, "user");
+
                     return Ok("Account Add Success");
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors)
@@ -63,7 +65,7 @@ namespace HubFurniture.APIs.Controllers
                     if (found)
                     {
                         var token = await GenerateTokenAsync(user, config);
-                        return Ok(token);
+                        return Ok(new { token });
                     }
                 }
                 return Unauthorized();
@@ -96,7 +98,7 @@ namespace HubFurniture.APIs.Controllers
                 expires: DateTime.Now.AddHours(1),
                 signingCredentials: signinCred
             );
-
+             
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
