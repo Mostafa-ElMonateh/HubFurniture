@@ -39,18 +39,18 @@ namespace HubFurniture.APIs.Controllers
                 {
                     await usermanger.AddToRoleAsync(user, "user");
 
-                    return Ok("Account Add Success");
+                    return Ok(new { message = "Account Add Success" });
                 }
                 var errors = ModelState.Values.SelectMany(v => v.Errors)
                 .Select(e => e.ErrorMessage)
                 .ToList();
-                return BadRequest(errors);
+                return BadRequest(new { errors });
             }
 
             var modelStateErrors = ModelState.Values.SelectMany(v => v.Errors)
             .Select(e => e.ErrorMessage)
             .ToList();
-            return BadRequest(modelStateErrors);
+            return BadRequest(new { modelStateErrors });
         }
 
         [HttpPost("login")]//api/account/login
