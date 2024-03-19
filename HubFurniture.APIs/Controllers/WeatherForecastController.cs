@@ -18,14 +18,14 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("AdminHomePage")]
         public async Task<IActionResult> AdminHomePage()
         {
-            return Ok("hi from admin pagw");
+            return Ok(new { message = "hi from admin page" });
         }
 
         [Authorize(Roles = "User")]
         [HttpGet("UserHomePage")]
         public async Task<IActionResult> UserHomePage()
         {
-            return Ok("hi from user pagw");
+            return Ok(new { message = "hi from user page" });
         }
 
 

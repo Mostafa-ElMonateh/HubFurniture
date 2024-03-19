@@ -47,6 +47,17 @@ namespace HubFurniture.APIs.Extensions
                 };
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Default", policy =>
+                {
+                    //policy.WithOrigins("http://localhost:4200,null");
+                    policy.AllowAnyHeader().
+                    AllowAnyMethod().
+                    AllowAnyOrigin();
+                });
+            });
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = (actionContext) =>

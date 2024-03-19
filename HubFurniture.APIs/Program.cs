@@ -102,6 +102,8 @@ namespace HubFurniture.APIs
 
             app.UseStaticFiles();
 
+            app.UseCors("Default");
+
             //app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             //app.UseHttpsRedirection();
