@@ -1,6 +1,6 @@
 ﻿using HubFurniture.APIs.Errors;
 using HubFurniture.APIs.Helpers;
-using HubFurniture.Core.Contracts.Contracts.repositories;
+using HubFurniture.Core.Contracts.Contracts.Repositories;
 using HubFurniture.Core.Entities;
 using HubFurniture.Repository;
 using HubFurniture.Repository.Data;

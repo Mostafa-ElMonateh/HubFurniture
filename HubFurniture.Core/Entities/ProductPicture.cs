@@ -9,7 +9,8 @@ namespace HubFurniture.Core.Entities
     public class ProductPicture : BaseEntity
     {
         public string PictureUrl { get; set; }
-        public int? ProductCollectionId { get; set; }
-        public int? ProductItemId { get; set; }
+        public int? CategorySetId { get; set; }
+        public int? CategoryItemId { get; set; }
+
     }
 }

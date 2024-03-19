@@ -2,12 +2,7 @@
 using HubFurniture.Core.Specifications;
 using HubFurniture.Repository.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HubFurniture.Core.Contracts.Contracts.repositories;
+using HubFurniture.Core.Contracts.Contracts.Repositories;
 
 namespace HubFurniture.Repository
 {
@@ -30,7 +25,7 @@ namespace HubFurniture.Repository
 
         public async Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecifications<T> specifications)
         {
-            return await ApplySpecifications(specifications).ToListAsync();;
+            return await ApplySpecifications(specifications).ToListAsync();
         }
 
         public async Task<T?> GetWithSpecAsync(ISpecifications<T> specifications)
@@ -42,6 +37,7 @@ namespace HubFurniture.Repository
         {
             return await ApplySpecifications(specifications).CountAsync();
         }
+
 
         private IQueryable<T> ApplySpecifications(ISpecifications<T> specifications)
         {

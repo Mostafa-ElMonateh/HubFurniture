@@ -1,0 +1,90 @@
+[
+  {
+    "Name": "Recliner Chair",
+    "CategoryId": 1
+  },
+  {
+    "Name": "Sofa 3 Seaters",
+    "CategoryId": 1
+  },
+  {
+    "Name": "Loveseat",
+    "CategoryId": 1
+  },
+  {
+    "Name": "Shoe rack",
+    "CategoryId": 1
+  },
+  {
+    "Name": "Coffee table",
+    "CategoryId": 1
+  },
+  {
+    "Name": "Side Table",
+    "CategoryId": 1
+  },
+  {
+    "Name": "Massage Chairs",
+    "CategoryId": 1
+  },
+  {
+    "Name": "King Bed",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Queen Bed",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Youth Beds",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Bunk bed",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Nightstand",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Dresser",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Study desk",
+    "CategoryId": 2
+  },
+  {
+    "Name": "Dining Table",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Dining Chair",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Dining Bench",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Display Unit",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Buffet",
+    "CategoryId": 3
+  },
+  {
+    "Name": "Hammock",
+    "CategoryId": 4
+  },
+  {
+    "Name": "Relax chair",
+    "CategoryId": 4
+  },
+  {
+    "Name": "Swings",
+    "CategoryId": 4
+  }
+]
