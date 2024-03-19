@@ -2,77 +2,144 @@
 using HubFurniture.APIs.Dtos;
 using HubFurniture.APIs.Errors;
 using HubFurniture.APIs.Helpers;
-using HubFurniture.Core.Contracts.Contracts.repositories;
+using HubFurniture.Core.Contracts.Contracts.Entities;
+using HubFurniture.Core.Contracts.Contracts.Repositories;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Specifications.ProductCategorySpecifications;
-using HubFurniture.Core.Specifications.ProductItemSpecifications;
+using HubFurniture.Core.Specifications.ProductSpecifications;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HubFurniture.APIs.Controllers
 {
     public class ProductsController : BaseApiController
     {
-        private readonly IGenericRepository<ProductItem> _productRepo;
-        private readonly IGenericRepository<ProductCollection> _productCollectionRepo;
+        private readonly IGenericRepository<CategoryItem> _categoryItemRepo;
         private readonly IGenericRepository<CategorySet> _categorySetRepo;
         private readonly IGenericRepository<Category> _categoryRepo;
         private readonly IMapper _mapper;
 
-        public ProductsController(IGenericRepository<ProductItem> productRepo,
-            IGenericRepository<ProductCollection> productCollectionRepo,
+        public ProductsController(IGenericRepository<CategoryItem> productRepo,
             IGenericRepository<CategorySet> categorySetRepo,
             IGenericRepository<Category> categoryRepo,
             IMapper mapper)
         {
-            _productRepo = productRepo;
-            _productCollectionRepo = productCollectionRepo;
+            _categoryItemRepo = productRepo;
             _categorySetRepo = categorySetRepo;
             _categoryRepo = categoryRepo;
             _mapper = mapper;
         }
 
 
-
-        [HttpGet("items")]
-        public async Task<ActionResult<Pagination<ProductItemToReturnDto>>> GetProductItems([FromQuery]ProductSpecParams specParams)
+        // {{BaseUrl}}/api/products/categories
+        [HttpGet("categories")]
+        public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetProductsCategory()
         {
-            var specifications = new ProductItemWithItsCollectionsItsPicturesItsReviewsSpecifications(specParams);
-            var productItems = await _productRepo.GetAllWithSpecAsync(specifications);
-            var mappedProductItems = _mapper.Map<IReadOnlyList<ProductItem>, IReadOnlyList<ProductItemToReturnDto>>(productItems);
-            var countSpecifications = new ProductsWithFilterationForCountSpecifications(specParams);
-            int count = await _productRepo.GetCountAsync(countSpecifications);
-            return Ok(new Pagination<ProductItemToReturnDto>(specParams.PageIndex, specParams.PageSize, count, mappedProductItems));
+            var specifications = new ProductCategorySpecifications();
+            var categories = await _categoryRepo.GetAllWithSpecAsync(specifications);
+            var mappedProductsCategory = _mapper.Map<IReadOnlyList<Category>, IReadOnlyList<ProductCategoryToReturnDto>>(categories);
+            return Ok(mappedProductsCategory);
         }
 
 
 
+        [HttpGet("sets")]
+        public async Task<ActionResult<Pagination<productFlashCardToReturnDto>>> GetCategorySetsProducts([FromQuery]ProductSpecParams specParams)
+        {
+            decimal minimumPrice = 0, maximumPrice = 0;
+            var specifications = new ProductSetWithItsPicturesItsReviewsSpecifications(specParams);
+            var setProducts = await _categorySetRepo.GetAllWithSpecAsync(specifications);
+            if (setProducts.Any())
+            {
+                minimumPrice = setProducts.Min(ci => ci.Price);
+                maximumPrice = setProducts.Max(ci => ci.Price);
+            }
+            var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategorySet>, IReadOnlyList<productFlashCardToReturnDto>>(setProducts);
+            var countSpecifications = new ProductsSetsWithFilterationForCountSpecifications(specParams);
+            int count = await _categorySetRepo.GetCountAsync(countSpecifications);
+            return Ok(new Pagination<productFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
+        }
+
+
+
+        [HttpGet("items")]
+        public async Task<ActionResult<Pagination<productFlashCardToReturnDto>>> GetCategoryItemsProducts([FromQuery]ProductSpecParams specParams)
+        {
+            decimal minimumPrice = 0, maximumPrice = 0;
+            var specifications = new ProductItemWithItsPicturesItsReviewsSpecifications(specParams);
+            var setProducts = await _categoryItemRepo.GetAllWithSpecAsync(specifications);
+            if (setProducts.Any())
+            {
+                minimumPrice = setProducts.Min(ci => ci.Price);
+                maximumPrice = setProducts.Max(ci => ci.Price);
+            }
+            var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategoryItem>, IReadOnlyList<productFlashCardToReturnDto>>(setProducts);
+            var countSpecifications = new ProductsItemsWithFilterationForCountSpecifications(specParams);
+            int count = await _categoryItemRepo.GetCountAsync(countSpecifications);
+            return Ok(new Pagination<productFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
+        }
+
+
+        // {{BaseUrl}}/api/products/sets?SetId=1
         [ProducesResponseType(typeof(ProductItemToReturnDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        [HttpGet("item/{id}")]
-        public async Task<ActionResult<ProductItemToReturnDto>> GetProductItem(int id)
+        [HttpGet("set")]
+        public async Task<ActionResult<ProductItemToReturnDto>> GetProductSet(int setId)
         {
-            var specifications = new ProductItemWithItsCollectionsItsPicturesItsReviewsSpecifications(id);
+            var specifications = new ProductSetWithItsPicturesItsReviewsSpecifications(setId);
 
-            var productItem = await _productRepo.GetWithSpecAsync(specifications);
+            var productSet = await _categorySetRepo.GetWithSpecAsync(specifications);
+
+            if (productSet is null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
+
+            var mappedProductSet = _mapper.Map<CategorySet, ProductSetToReturnDto>(productSet);
+
+            return Ok(mappedProductSet);
+        }
+
+        // {{BaseUrl}}/api/products/item?ItemId=1
+        [ProducesResponseType(typeof(ProductItemToReturnDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        [HttpGet("item")]
+        public async Task<ActionResult<ProductItemToReturnDto>> GetProductItem(int itemId)
+        {
+            var specifications = new ProductItemWithItsPicturesItsReviewsSpecifications(itemId);
+
+            var productItem = await _categoryItemRepo.GetWithSpecAsync(specifications);
 
             if (productItem is null)
             {
                 return NotFound(new ApiResponse(404));
             }
 
-            var mappedProductItem = _mapper.Map<ProductItem, ProductItemToReturnDto>(productItem);
+            var mappedProductItem = _mapper.Map<CategoryItem, ProductItemToReturnDto>(productItem);
 
             return Ok(mappedProductItem);
         }
 
-
-
-        [HttpGet("categories")]
-        public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetProductsCategory()
+        // {{BaseUrl}}/api/Products/sets/types?CategoryName=LivingRoom
+        [HttpGet("sets/types")]
+        public async Task<ActionResult<IReadOnlyList<CategorySetsToReturnDto>>> GetCategorySets([FromQuery]ProductSpecParams specParams)
         {
-            var specifications = new ProductCategoryWithItsSetsSpecifications();
+            // _dbContext.CategoryItems.Where(c => c.Name == Name).CountAsync();
+
+            var specifications = new ProductCategorySpecifications(specParams.CategoryId);
             var categories = await _categoryRepo.GetAllWithSpecAsync(specifications);
-            var mappedProductsCategory = _mapper.Map<IReadOnlyList<Category>, IReadOnlyList<ProductCategoryToReturnDto>>(categories);
+            var mappedProductsCategory = _mapper.Map<IReadOnlyList<Category>, IReadOnlyList<CategorySetsToReturnDto>>(categories);
+            return Ok(mappedProductsCategory);
+        }
+
+        // {{BaseUrl}}/api/Products/sets/types?CategoryName=LivingRoom
+        [HttpGet("items/types")]
+        public async Task<ActionResult<IReadOnlyList<CategoryItemsToReturn>>> GetCategoryItems([FromQuery]ProductSpecParams specParams)
+        {
+            // _dbContext.CategoryItems.Where(c => c.Name == Name).CountAsync();
+
+            var specifications = new ProductCategorySpecifications(specParams.CategoryId);
+            var categories = await _categoryRepo.GetAllWithSpecAsync(specifications);
+            var mappedProductsCategory = _mapper.Map<IReadOnlyList<Category>, IReadOnlyList<CategoryItemsToReturn>>(categories);
             return Ok(mappedProductsCategory);
         }
 

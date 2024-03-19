@@ -11,8 +11,9 @@ namespace HubFurniture.Core.Entities
         public int Rate { get; set; }
         public string CustomerName { get; set; }
         public string Review { get; set; }
-        public int? ProductCollectionId { get; set; }
-        public int? ProductItemId { get; set; }
+        public int? CategorySetId { get; set; }
+        public int? CategoryItemId { get; set; }
+
 
     }
 }

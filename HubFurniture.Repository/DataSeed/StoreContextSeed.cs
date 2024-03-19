@@ -14,9 +14,10 @@ namespace HubFurniture.Repository.DataSeed
         public static async Task SeedAsync(StoreContext dbContext)
         {
             if (!dbContext.Categories.Any()
+                && !dbContext.CategorySetsTypes.Any()
+                && !dbContext.CategoryItemsTypes.Any()
                 && !dbContext.CategorySets.Any()
-                && !dbContext.ProductCollections.Any()
-                && !dbContext.ProductItems.Any()
+                && !dbContext.CategoryItems.Any()
                 && !dbContext.CustomerReviews.Any()
                 && !dbContext.ProductPictures.Any())
             {
@@ -31,6 +32,39 @@ namespace HubFurniture.Repository.DataSeed
                     await dbContext.SaveChangesAsync();
                 }
 
+                // Adding CategoriesSetsTypes.
+                var categoriesSetsTypesData = File.ReadAllText("../HubFurniture.Repository/DataSeed/categorySetsTypes.json");
+                var categoriesSetsTypes = JsonSerializer.Deserialize<List<CategorySetType>>(categoriesSetsTypesData);
+
+                if (categoriesSetsTypes?.Count() > 0)
+                {
+                    foreach (var categorySetsType in categoriesSetsTypes)
+                        dbContext.CategorySetsTypes.Add(categorySetsType);
+                    await dbContext.SaveChangesAsync();
+                }
+
+                // Adding CategoriesItemsTypes.
+                var categoriesItemsTypesData = File.ReadAllText("../HubFurniture.Repository/DataSeed/categoryItemsTypes.json");
+                var categoriesItemsTypes = JsonSerializer.Deserialize<List<CategoryItemType>>(categoriesItemsTypesData);
+
+                if (categoriesItemsTypes?.Count() > 0)
+                {
+                    foreach (var categoryItemType in categoriesItemsTypes)
+                        dbContext.CategoryItemsTypes.Add(categoryItemType);
+                    await dbContext.SaveChangesAsync();
+                }
+
+                // Adding CategoryItems.
+                var categoryItemsData = File.ReadAllText("../HubFurniture.Repository/DataSeed/categoryItems.json");
+                var categoryItems = JsonSerializer.Deserialize<List<CategoryItem>>(categoryItemsData);
+
+                if (categoryItems?.Count() > 0)
+                {
+                    foreach (var categoryItem in categoryItems)
+                        dbContext.CategoryItems.Add(categoryItem);
+                    await dbContext.SaveChangesAsync();
+                }
+
                 // Adding CategorySets.
                 var categorySetsData = File.ReadAllText("../HubFurniture.Repository/DataSeed/categorySets.json");
                 var categorySets = JsonSerializer.Deserialize<List<CategorySet>>(categorySetsData);
@@ -39,28 +73,6 @@ namespace HubFurniture.Repository.DataSeed
                 {
                     foreach (var categorySet in categorySets)
                         dbContext.CategorySets.Add(categorySet);
-                    await dbContext.SaveChangesAsync();
-                }
-
-                // Adding ProductItems.
-                var productItemsData = File.ReadAllText("../HubFurniture.Repository/DataSeed/productItems.json");
-                var productItems = JsonSerializer.Deserialize<List<ProductItem>>(productItemsData);
-
-                if (productItems?.Count() > 0)
-                {
-                    foreach (var productItem in productItems)
-                        dbContext.ProductItems.Add(productItem);
-                    await dbContext.SaveChangesAsync();
-                }
-
-                // Adding ProductCollections.
-                var productCollectionsData = File.ReadAllText("../HubFurniture.Repository/DataSeed/productCollections.json");
-                var productCollections = JsonSerializer.Deserialize<List<ProductCollection>>(productCollectionsData);
-
-                if (productCollections?.Count() > 0)
-                {
-                    foreach (var productCollection in productCollections)
-                        dbContext.ProductCollections.Add(productCollection);
                     await dbContext.SaveChangesAsync();
                 }
 
@@ -76,7 +88,7 @@ namespace HubFurniture.Repository.DataSeed
                 }
 
                 // Adding picturesUrls.
-                var picturesUrlsData = File.ReadAllText("../HubFurniture.Repository/DataSeed/picturesUrls.json");
+                var picturesUrlsData = File.ReadAllText("../HubFurniture.Repository/DataSeed/productPictures.json");
                 var picturesUrls = JsonSerializer.Deserialize<List<ProductPicture>>(picturesUrlsData);
 
                 if (picturesUrls?.Count() > 0)

@@ -22,6 +22,21 @@ namespace HubFurniture.Repository.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CategoryItemCategorySet", b =>
+                {
+                    b.Property<int>("CategoryItemsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategorySetsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryItemsId", "CategorySetsId");
+
+                    b.HasIndex("CategorySetsId");
+
+                    b.ToTable("CategoryItemCategorySet");
+                });
+
             modelBuilder.Entity("HubFurniture.Core.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -40,7 +55,65 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("HubFurniture.Core.Entities.CategorySet", b =>
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategoryItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<byte>("Availability")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryItemTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Depth")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("Height")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Room")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Style")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("Suitability")
+                        .HasColumnType("tinyint");
+
+                    b.Property<decimal?>("Width")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CategoryItemTypeId");
+
+                    b.ToTable("CategoryItems");
+                });
+
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategoryItemType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,7 +133,79 @@ namespace HubFurniture.Repository.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.ToTable("CategoryItemsTypes");
+                });
+
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategorySet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<byte>("Availability")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategorySetTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Room")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Style")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("Suitability")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CategorySetTypeId");
+
                     b.ToTable("CategorySets");
+                });
+
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategorySetType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("CategorySetsTypes");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CustomerReview", b =>
@@ -71,15 +216,16 @@ namespace HubFurniture.Repository.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CategoryItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategorySetId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CustomerName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProductCollectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductItemId")
-                        .HasColumnType("int");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Rate")
                         .HasColumnType("int");
@@ -90,117 +236,11 @@ namespace HubFurniture.Repository.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductCollectionId");
-
-                    b.HasIndex("ProductItemId");
-
-                    b.ToTable("CustomerReviews");
-                });
-
-            modelBuilder.Entity("HubFurniture.Core.Entities.ProductCollection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<byte>("Availability")
-                        .HasColumnType("tinyint");
-
-                    b.Property<int>("CategorySetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Depth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Height")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Room")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Style")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("Suitability")
-                        .HasColumnType("tinyint");
-
-                    b.Property<decimal?>("Width")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
+                    b.HasIndex("CategoryItemId");
 
                     b.HasIndex("CategorySetId");
 
-                    b.ToTable("ProductCollections");
-                });
-
-            modelBuilder.Entity("HubFurniture.Core.Entities.ProductItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<byte>("Availability")
-                        .HasColumnType("tinyint");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Depth")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("Height")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Room")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Style")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("Suitability")
-                        .HasColumnType("tinyint");
-
-                    b.Property<decimal?>("Width")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ProductItems");
+                    b.ToTable("CustomerReviews");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.ProductPicture", b =>
@@ -211,38 +251,64 @@ namespace HubFurniture.Repository.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CategoryItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategorySetId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PictureUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductCollectionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductItemId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductCollectionId");
+                    b.HasIndex("CategoryItemId");
 
-                    b.HasIndex("ProductItemId");
+                    b.HasIndex("CategorySetId");
 
                     b.ToTable("ProductPictures");
                 });
 
-            modelBuilder.Entity("ProductCollectionProductItem", b =>
+            modelBuilder.Entity("CategoryItemCategorySet", b =>
                 {
-                    b.Property<int>("ProductCollectionsId")
-                        .HasColumnType("int");
+                    b.HasOne("HubFurniture.Core.Entities.CategoryItem", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("ProductItemsId")
-                        .HasColumnType("int");
+                    b.HasOne("HubFurniture.Core.Entities.CategorySet", null)
+                        .WithMany()
+                        .HasForeignKey("CategorySetsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.HasKey("ProductCollectionsId", "ProductItemsId");
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategoryItem", b =>
+                {
+                    b.HasOne("HubFurniture.Core.Entities.Category", "Category")
+                        .WithMany("CategoryItems")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasIndex("ProductItemsId");
+                    b.HasOne("HubFurniture.Core.Entities.CategoryItemType", null)
+                        .WithMany("CategoryItems")
+                        .HasForeignKey("CategoryItemTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.ToTable("ProductCollectionProductItem");
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategoryItemType", b =>
+                {
+                    b.HasOne("HubFurniture.Core.Entities.Category", null)
+                        .WithMany("CategoryItemsTypes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CategorySet", b =>
@@ -250,93 +316,82 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.HasOne("HubFurniture.Core.Entities.Category", "Category")
                         .WithMany("CategorySets")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("HubFurniture.Core.Entities.CustomerReview", b =>
-                {
-                    b.HasOne("HubFurniture.Core.Entities.ProductCollection", null)
-                        .WithMany("CustomerReviews")
-                        .HasForeignKey("ProductCollectionId");
-
-                    b.HasOne("HubFurniture.Core.Entities.ProductItem", null)
-                        .WithMany("CustomerReviews")
-                        .HasForeignKey("ProductItemId");
-                });
-
-            modelBuilder.Entity("HubFurniture.Core.Entities.ProductCollection", b =>
-                {
-                    b.HasOne("HubFurniture.Core.Entities.CategorySet", "CategorySet")
-                        .WithMany("ProductCollections")
-                        .HasForeignKey("CategorySetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CategorySet");
-                });
-
-            modelBuilder.Entity("HubFurniture.Core.Entities.ProductItem", b =>
-                {
-                    b.HasOne("HubFurniture.Core.Entities.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("HubFurniture.Core.Entities.CategorySetType", null)
+                        .WithMany("CategorySets")
+                        .HasForeignKey("CategorySetTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("HubFurniture.Core.Entities.ProductPicture", b =>
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategorySetType", b =>
                 {
-                    b.HasOne("HubFurniture.Core.Entities.ProductCollection", null)
-                        .WithMany("ProductPictures")
-                        .HasForeignKey("ProductCollectionId");
-
-                    b.HasOne("HubFurniture.Core.Entities.ProductItem", null)
-                        .WithMany("ProductPictures")
-                        .HasForeignKey("ProductItemId");
+                    b.HasOne("HubFurniture.Core.Entities.Category", null)
+                        .WithMany("CategorySetsTypes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("ProductCollectionProductItem", b =>
+            modelBuilder.Entity("HubFurniture.Core.Entities.CustomerReview", b =>
                 {
-                    b.HasOne("HubFurniture.Core.Entities.ProductCollection", null)
-                        .WithMany()
-                        .HasForeignKey("ProductCollectionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("HubFurniture.Core.Entities.CategoryItem", null)
+                        .WithMany("CustomerReviews")
+                        .HasForeignKey("CategoryItemId");
 
-                    b.HasOne("HubFurniture.Core.Entities.ProductItem", null)
-                        .WithMany()
-                        .HasForeignKey("ProductItemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("HubFurniture.Core.Entities.CategorySet", null)
+                        .WithMany("CustomerReviews")
+                        .HasForeignKey("CategorySetId");
+                });
+
+            modelBuilder.Entity("HubFurniture.Core.Entities.ProductPicture", b =>
+                {
+                    b.HasOne("HubFurniture.Core.Entities.CategoryItem", null)
+                        .WithMany("ProductPictures")
+                        .HasForeignKey("CategoryItemId");
+
+                    b.HasOne("HubFurniture.Core.Entities.CategorySet", null)
+                        .WithMany("ProductPictures")
+                        .HasForeignKey("CategorySetId");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.Category", b =>
                 {
+                    b.Navigation("CategoryItems");
+
+                    b.Navigation("CategoryItemsTypes");
+
                     b.Navigation("CategorySets");
+
+                    b.Navigation("CategorySetsTypes");
+                });
+
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategoryItem", b =>
+                {
+                    b.Navigation("CustomerReviews");
+
+                    b.Navigation("ProductPictures");
+                });
+
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategoryItemType", b =>
+                {
+                    b.Navigation("CategoryItems");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CategorySet", b =>
                 {
-                    b.Navigation("ProductCollections");
-                });
-
-            modelBuilder.Entity("HubFurniture.Core.Entities.ProductCollection", b =>
-                {
                     b.Navigation("CustomerReviews");
 
                     b.Navigation("ProductPictures");
                 });
 
-            modelBuilder.Entity("HubFurniture.Core.Entities.ProductItem", b =>
+            modelBuilder.Entity("HubFurniture.Core.Entities.CategorySetType", b =>
                 {
-                    b.Navigation("CustomerReviews");
-
-                    b.Navigation("ProductPictures");
+                    b.Navigation("CategorySets");
                 });
 #pragma warning restore 612, 618
         }

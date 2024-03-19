@@ -13,13 +13,37 @@ namespace HubFurniture.Repository.Data.Config
     {
         public void Configure(EntityTypeBuilder<CategorySet> builder)
         {
-            builder.Property(c => c.Name)
+
+            
+
+            builder.Property(cs => cs.Name)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.HasMany(cs => cs.ProductCollections)
-                .WithOne(pc => pc.CategorySet)
-                .HasForeignKey(pc => pc.CategorySetId);
+            builder.Property(cs => cs.Availability)
+                .IsRequired();
+
+            builder.Property(cs => cs.Suitability)
+                .IsRequired();
+
+            builder.Property(cs => cs.Price)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
+
+            builder.Property(cs => cs.Color)
+                .IsRequired();
+
+            builder.Property(cs => cs.Style)
+                .IsRequired();
+
+            builder.Property(cs => cs.Room)
+                .IsRequired();
+
+            builder.HasMany(cs => cs.ProductPictures)
+                .WithOne();
+
+            builder.HasMany(cs => cs.CustomerReviews)
+                .WithOne();
         }
     }
 }

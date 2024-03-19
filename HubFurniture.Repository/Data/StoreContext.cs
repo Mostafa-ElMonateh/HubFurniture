@@ -21,9 +21,10 @@ namespace HubFurniture.Repository.Data
         }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<CategorySetType> CategorySetsTypes { get; set; } 
         public DbSet<CategorySet> CategorySets { get; set; } 
-        public DbSet<ProductCollection> ProductCollections { get; set; } 
-        public DbSet<ProductItem> ProductItems { get; set; } 
+        public DbSet<CategoryItemType> CategoryItemsTypes { get; set; }
+        public DbSet<CategoryItem> CategoryItems { get; set; }
         public DbSet<CustomerReview> CustomerReviews { get; set; } 
         public DbSet<ProductPicture> ProductPictures { get; set; }
     }

@@ -3,12 +3,108 @@
     "Rate": 5,
     "CustomerName": "Ahmed Mamdouh",
     "Review": "This is a good product I have never seen before",
-    "ProductCollectionId": 1
+    "CategorySetId": 1
+  },
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "CategorySetId": 2
+  },
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "CategorySetId": 3
+  },
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "CategorySetId": 4
+  },
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "CategorySetId": 5
+  },
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "CategorySetId": 6
+  },
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "CategorySetId": 7
+  },
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "CategorySetId": 8
+  },
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "CategorySetId": 9
+  },
+  {
+    "Rate": 5,
+    "CustomerName": "Ahmed Mamdouh",
+    "Review": "This is a good product I have never seen before",
+    "CategorySetId": 10
   },
   {
     "Rate": 1,
     "CustomerName": "Mostafa Ahmed",
     "Review": "This is a bad product I have never seen before",
-    "ProductItemId": 1
+    "CategoryItemId": 1
+  },
+  {
+    "Rate": 1,
+    "CustomerName": "Mostafa Ahmed",
+    "Review": "This is a bad product I have never seen before",
+    "CategoryItemId": 2
+  },
+  {
+    "Rate": 1,
+    "CustomerName": "Mostafa Ahmed",
+    "Review": "This is a bad product I have never seen before",
+    "CategoryItemId": 3
+  },
+  {
+    "Rate": 1,
+    "CustomerName": "Mostafa Ahmed",
+    "Review": "This is a bad product I have never seen before",
+    "CategoryItemId": 4
+  },
+  {
+    "Rate": 1,
+    "CustomerName": "Mostafa Ahmed",
+    "Review": "This is a bad product I have never seen before",
+    "CategoryItemId": 5
+  },
+  {
+    "Rate": 1,
+    "CustomerName": "Mostafa Ahmed",
+    "Review": "This is a bad product I have never seen before",
+    "CategoryItemId": 6
+  },
+  {
+    "Rate": 1,
+    "CustomerName": "Mostafa Ahmed",
+    "Review": "This is a bad product I have never seen before",
+    "CategoryItemId": 7
+  },
+  {
+    "Rate": 1,
+    "CustomerName": "Mostafa Ahmed",
+    "Review": "This is a bad product I have never seen before",
+    "CategoryItemId": 8
   }
 ]
