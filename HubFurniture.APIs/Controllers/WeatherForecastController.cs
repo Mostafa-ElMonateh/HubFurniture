@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HubFurniture.APIs.Controllers
@@ -12,6 +13,21 @@ namespace HubFurniture.APIs.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+
+        [Authorize (Roles = "Admin")]
+        [HttpGet("AdminHomePage")]
+        public async Task<IActionResult> AdminHomePage()
+        {
+            return Ok(new { message = "hi from admin page" });
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpGet("UserHomePage")]
+        public async Task<IActionResult> UserHomePage()
+        {
+            return Ok(new { message = "hi from user page" });
+        }
+
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {

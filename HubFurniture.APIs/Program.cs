@@ -5,6 +5,7 @@ using HubFurniture.APIs.Middlewares;
 using HubFurniture.Repository.Data;
 using HubFurniture.Repository.DataSeed;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace HubFurniture.APIs
 {
@@ -23,12 +24,42 @@ namespace HubFurniture.APIs
 
             builder.Services.AddSwaggerServices();
 
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "JWTToken_Auth_API",
+                    Version = "v1"
+                });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme.\r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                {
+                    new OpenApiSecurityScheme {
+                        Reference = new OpenApiReference {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+                });
+            });
+
+
             builder.Services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddApplicationServices();
+            builder.Services.AddApplicationServices(builder.Configuration);
 
             #endregion
 
@@ -67,13 +98,17 @@ namespace HubFurniture.APIs
 
             app.UseStaticFiles();
 
-            app.UseStatusCodePagesWithReExecute("/errors/{0}");
+            app.UseCors("Default");
+
+            //app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             //app.UseHttpsRedirection();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
-            app.MapControllers(); 
+            app.MapControllers();
 
             #endregion
 

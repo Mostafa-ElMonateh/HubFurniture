@@ -49,6 +49,13 @@ namespace HubFurniture.APIs.Helpers
                 o => o.MapFrom<CategoryItemsResolver>());
 
 
+            CreateMap<Category, ProductCategoryToReturnDto>().ForMember(d => d.CategorySets,
+                o => o.MapFrom<ProductCategoryResolver>());
+
+            CreateMap<RegisterUserDto, ApplicationUser>()
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.LastName + src.FirstName))
+            .ReverseMap();
+
         }
     }
 }
