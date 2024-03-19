@@ -1,6 +1,6 @@
 ﻿using HubFurniture.APIs.Errors;
 using HubFurniture.APIs.Helpers;
-using HubFurniture.Core.Contracts.Contracts.repositories;
+using HubFurniture.Core.Contracts.Contracts.Repositories;
 using HubFurniture.Repository;
 using Microsoft.AspNetCore.Mvc;
 

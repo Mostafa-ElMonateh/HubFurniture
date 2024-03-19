@@ -1,62 +1,112 @@
 [
   {
-    "Name": "Sofa Set",
+    "Name": "Modern luxury living room set",
+    "Availability": 0,
+    "Price": 111950,
+    "Color": "black",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "LivingRoom",
+    "CategorySetTypeId": 1,
     "CategoryId": 1
   },
   {
-    "Name": "U-Shape",
+    "Name": "Billy - Blue",
+    "Availability": 0,
+    "Price": 90650,
+    "Color": "blue",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "LivingRoom",
+    "CategorySetTypeId": 1,
     "CategoryId": 1
   },
   {
-    "Name": "L-Shape",
-    "CategoryId": 1
-  },
-  {
-    "Name": "Recliner Sofa Sets",
-    "CategoryId": 1
-  },
-  {
-    "Name": "Tv Tables",
-    "CategoryId": 1
-  },
-  {
-    "Name": "King Bedroom Set",
+    "Name": "Fontant bedroom set",
+    "Availability": 0,
+    "Price": 87000,
+    "Color": "gray",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "BedRoom",
+    "CategorySetTypeId": 1,
     "CategoryId": 2
   },
   {
-    "Name": "Queen Bedroom Set",
+    "Name": "Diamon bedroom set",
+    "Availability": 0,
+    "Price": 100000,
+    "Color": "brown",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "BedRoom",
+    "CategorySetTypeId": 1,
     "CategoryId": 2
   },
   {
-    "Name": "Youth beedrooms",
-    "CategoryId": 2
-  },
-  {
-    "Name": "Kids beedrooms",
-    "CategoryId": 2
-  },
-  {
-    "Name": "Complete Dining room sets",
+    "Name": "METROPOL-EM-DN Dining room set",
+    "Availability": 0,
+    "Price": 75250,
+    "Color": "black",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "Dining Room",
+    "CategorySetTypeId": 1,
     "CategoryId": 3
   },
   {
-    "Name": "Dining room with 8 chairs",
+    "Name": "AE-D545 Dining full set",
+    "Availability": 0,
+    "Price": 86700,
+    "Color": "white",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "Dining Room",
+    "CategorySetTypeId": 1,
     "CategoryId": 3
   },
   {
-    "Name": "Dining room with 6 chairs",
-    "CategoryId": 3
-  },
-  {
-    "Name": "Dining room with 4 chairs",
-    "CategoryId": 3
-  },
-  {
-    "Name": "Outdoor table",
+    "Name": "HOD-GO-255-4CHR/T",
+    "Availability": 0,
+    "Price": 38865,
+    "Color": "black",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "Open Air",
+    "CategorySetTypeId": 2,
     "CategoryId": 4
   },
   {
-    "Name": "Outdoor Dining Set",
+    "Name": "GO-261-TABLE+6CH",
+    "Availability": 0,
+    "Price": 52500,
+    "Color": "beige",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "Open Air",
+    "CategorySetTypeId": 2,
     "CategoryId": 4
+  },
+  {
+    "Name": "White open plan kitchen",
+    "Availability": 0,
+    "Price": 137450,
+    "Color": "white",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "Kitchen",
+    "CategorySetTypeId": 1,
+    "CategoryId": 5
+  },
+  {
+    "Name": "Modern open plan kitchen",
+    "Availability": 0,
+    "Price": 79965,
+    "Color": "brown",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "Kitchen",
+    "CategorySetTypeId": 1,
+    "CategoryId": 5
   }
 ]

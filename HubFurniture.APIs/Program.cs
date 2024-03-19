@@ -2,12 +2,8 @@ using HubFurniture.APIs.Errors;
 using HubFurniture.APIs.Extensions;
 using HubFurniture.APIs.Helpers;
 using HubFurniture.APIs.Middlewares;
-using HubFurniture.Core.Contracts.Contracts.repositories;
-using HubFurniture.Repository;
 using HubFurniture.Repository.Data;
 using HubFurniture.Repository.DataSeed;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HubFurniture.APIs

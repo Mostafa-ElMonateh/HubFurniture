@@ -12,11 +12,43 @@ namespace HubFurniture.APIs.Helpers
         {
 
             CreateMap<CustomerReview, CustomerReviewToReturnDto>();
-            CreateMap<ProductItem, ProductItemToReturnDto>().ForMember(d => d.ProductPictures, 
-                o => o.MapFrom<ProductPictureUrlResolver>());
 
-            CreateMap<Category, ProductCategoryToReturnDto>().ForMember(d => d.CategorySets,
-                o => o.MapFrom<ProductCategoryResolver>());
+            CreateMap<CategoryItem, ProductItemToReturnDto>().ForMember(d => d.ProductPictures, 
+                o => o.MapFrom<ProductItemPictureUrlResolver>());
+
+            CreateMap<CategoryItem, productFlashCardToReturnDto>().ForMember(d => d.Availability,
+                o => o.MapFrom(s => s.Availability.ToString()))
+                .ForMember(d => d.ProductPictures, 
+                o => o.MapFrom<ProductItemFlashCardPictureUrlResolver>());
+
+            CreateMap<CategorySet, ProductSetToReturnDto>().ForMember(d => d.ProductPictures, 
+                o => o.MapFrom<ProductSetPictureUrlResolver>())
+                .ForMember(d => d.Availability, o => o.MapFrom(s => s.Availability.ToString()))
+                .ForMember(d => d.Suitability, o => o.MapFrom(s => s.Suitability.ToString()));
+
+            CreateMap<CategorySet, productFlashCardToReturnDto>().ForMember(d => d.Availability,
+                    o => o.MapFrom(s => s.Availability.ToString()))
+                .ForMember(d => d.ProductPictures, 
+                    o => o.MapFrom<ProductSetFlashCardPictureUrlResolver>());
+
+            CreateMap<Category, ProductCategoryToReturnDto>().ForMember(d => d.CategorySetsTypes,
+                o => o.MapFrom<ProductCategorySetsResolver>())
+                .ForMember(d => d.CategoryItemsTypes, o=>o.MapFrom<ProductCategoryItemsResolver>());
+
+            CreateMap<CategoryItem, ProductItemToReturnDto>().ForMember(d => d.ProductPictures, 
+                    o => o.MapFrom<ProductItemPictureUrlResolver>())
+                .ForMember(d => d.Availability, o => o.MapFrom(s => s.Availability.ToString()))
+                .ForMember(d => d.Suitability, o => o.MapFrom(s => s.Suitability.ToString()));
+
+            CreateMap<CategoryItem, SetItemToReturnDto>();
+
+            CreateMap<Category, CategorySetsToReturnDto>().ForMember(d => d.CategorySetsTypes,
+                    o => o.MapFrom<CategorySetsResolver>());
+
+            CreateMap<Category, CategoryItemsToReturn>().ForMember(d => d.CategoryItemsTypes,
+                o => o.MapFrom<CategoryItemsResolver>());
+
+
         }
     }
 }
