@@ -11,6 +11,8 @@ using System.Text;
 
 namespace HubFurniture.APIs.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AccountController : BaseApiController
     {
         private readonly UserManager<ApplicationUser> usermanger;
