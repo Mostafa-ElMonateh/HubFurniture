@@ -119,27 +119,27 @@ namespace HubFurniture.APIs.Controllers
             return Ok(mappedProductItem);
         }
 
-        // {{BaseUrl}}/api/Products/sets/types?CategoryName=LivingRoom
+        // {{BaseUrl}}/api/Products/sets/types?CategoryId=1
         [HttpGet("sets/types")]
-        public async Task<ActionResult<IReadOnlyList<CategorySetsToReturnDto>>> GetCategorySets([FromQuery]ProductSpecParams specParams)
+        public async Task<ActionResult<CategorySetsToReturnDto>> GetCategorySets([FromQuery]ProductSpecParams specParams)
         {
             // _dbContext.CategoryItems.Where(c => c.Name == Name).CountAsync();
 
             var specifications = new ProductCategorySpecifications(specParams.CategoryId);
-            var categories = await _categoryRepo.GetAllWithSpecAsync(specifications);
-            var mappedProductsCategory = _mapper.Map<IReadOnlyList<Category>, IReadOnlyList<CategorySetsToReturnDto>>(categories);
+            var categories = await _categoryRepo.GetWithSpecAsync(specifications);
+            var mappedProductsCategory = _mapper.Map<Category, CategorySetsToReturnDto>(categories);
             return Ok(mappedProductsCategory);
         }
 
-        // {{BaseUrl}}/api/Products/sets/types?CategoryName=LivingRoom
+        // {{BaseUrl}}/api/Products/items/types?CategoryId=1
         [HttpGet("items/types")]
-        public async Task<ActionResult<IReadOnlyList<CategoryItemsToReturn>>> GetCategoryItems([FromQuery]ProductSpecParams specParams)
+        public async Task<ActionResult<CategoryItemsToReturn>> GetCategoryItems([FromQuery]ProductSpecParams specParams)
         {
             // _dbContext.CategoryItems.Where(c => c.Name == Name).CountAsync();
 
             var specifications = new ProductCategorySpecifications(specParams.CategoryId);
-            var categories = await _categoryRepo.GetAllWithSpecAsync(specifications);
-            var mappedProductsCategory = _mapper.Map<IReadOnlyList<Category>, IReadOnlyList<CategoryItemsToReturn>>(categories);
+            var categories = await _categoryRepo.GetWithSpecAsync(specifications);
+            var mappedProductsCategory = _mapper.Map<Category, CategoryItemsToReturn>(categories);
             return Ok(mappedProductsCategory);
         }
 
