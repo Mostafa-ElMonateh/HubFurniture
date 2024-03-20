@@ -13,7 +13,7 @@ namespace HubFurniture.APIs.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseApiController
     {
         private readonly UserManager<ApplicationUser> usermanger;
         private readonly IConfiguration config;
