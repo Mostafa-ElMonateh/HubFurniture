@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using HubFurniture.Core.Entities.Order_Aggregate;
 
 namespace HubFurniture.Repository.DataSeed
 {
@@ -19,7 +20,8 @@ namespace HubFurniture.Repository.DataSeed
                 && !dbContext.CategorySets.Any()
                 && !dbContext.CategoryItems.Any()
                 && !dbContext.CustomerReviews.Any()
-                && !dbContext.ProductPictures.Any())
+                && !dbContext.ProductPictures.Any()
+                && !dbContext.DeliveryMethods.Any())
             {
                 // Adding Categories.
                 var categoriesData = File.ReadAllText("../HubFurniture.Repository/DataSeed/categories.json");
@@ -95,6 +97,17 @@ namespace HubFurniture.Repository.DataSeed
                 {
                     foreach (var picturesUrl in picturesUrls)
                         dbContext.ProductPictures.Add(picturesUrl);
+                    await dbContext.SaveChangesAsync();
+                }
+
+                // Adding picturesUrls.
+                var deliveryMethodsData = File.ReadAllText("../HubFurniture.Repository/DataSeed/delivery.json");
+                var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryMethodsData);
+
+                if (deliveryMethods?.Count() > 0)
+                {
+                    foreach (var deliveryMethod in deliveryMethods)
+                        dbContext.DeliveryMethods.Add(deliveryMethod);
                     await dbContext.SaveChangesAsync();
                 }
             }
