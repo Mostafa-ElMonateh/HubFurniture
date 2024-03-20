@@ -11,6 +11,9 @@ namespace HubFurniture.APIs.Helpers
         public MappingProfiles()
         {
 
+            CreateMap<CustomerBasketDto, CustomerBasket>();
+            CreateMap<BasketItemDto, BasketItem>();
+
             CreateMap<CustomerReview, CustomerReviewToReturnDto>();
 
             CreateMap<CategoryItem, ProductItemToReturnDto>().ForMember(d => d.ProductPictures, 

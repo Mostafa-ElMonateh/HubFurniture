@@ -6,6 +6,8 @@ using HubFurniture.Repository.Data;
 using HubFurniture.Repository.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HubFurniture.APIs
 {
@@ -57,6 +59,12 @@ namespace HubFurniture.APIs
             builder.Services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            builder.Services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
+            {
+                var connection = builder.Configuration.GetConnectionString("Redis");
+                return ConnectionMultiplexer.Connect(connection);
             });
 
             builder.Services.AddApplicationServices(builder.Configuration);
