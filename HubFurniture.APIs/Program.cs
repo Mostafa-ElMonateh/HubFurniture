@@ -100,7 +100,7 @@ namespace HubFurniture.APIs
 
             app.UseCors("Default");
 
-            //app.UseStatusCodePagesWithReExecute("/errors/{0}");
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             //app.UseHttpsRedirection();
 
