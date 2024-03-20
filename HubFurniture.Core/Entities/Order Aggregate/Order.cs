@@ -12,6 +12,7 @@ namespace HubFurniture.Core.Entities.Order_Aggregate
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.UtcNow;
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public Address ShippingAddress { get; set; }
+        public int? DeliveryMethodId { get; set; }
         public DeliveryMethod DeliveryMethod { get; set; } // Navigational Property [One]
         
         // Navigational Property [M]

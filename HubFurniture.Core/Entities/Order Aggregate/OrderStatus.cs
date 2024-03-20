@@ -11,8 +11,8 @@ namespace HubFurniture.Core.Entities.Order_Aggregate
     {
         [EnumMember(Value = "Pending")]
         Pending,
-        [EnumMember(Value = "Payment Succeeded")]
-        PaymentSucceeded,
+        [EnumMember(Value = "Payment Received")]
+        PaymentReceived,
         [EnumMember(Value = "Payment Failed")]
         PaymentFailed
     }

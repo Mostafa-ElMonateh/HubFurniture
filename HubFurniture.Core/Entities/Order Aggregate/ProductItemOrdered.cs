@@ -10,13 +10,13 @@ namespace HubFurniture.Core.Entities.Order_Aggregate
     {
         public int ProductId { get; set; }
         public string ProductName { get; set; }
-        public ICollection<string> PictureUrls { get; set; }
+        public string PictureUrl { get; set; }
 
-        public ProductItemOrdered(int productId, string productName)
+        public ProductItemOrdered(int productId, string productName, string pictureUrl)
         {
             ProductId = productId;
             ProductName = productName;
-            PictureUrls = new List<string>();
+            PictureUrl = pictureUrl;
         }
 
         public ProductItemOrdered()
