@@ -41,8 +41,8 @@ namespace HubFurniture.APIs.Controllers
 
                     return Ok(new { message = "Account Add Success" });
                 }
-                var errors = ModelState.Values.SelectMany(v => v.Errors)
-                .Select(e => e.ErrorMessage)
+                var errors = result.Errors
+                .Select(e => e.Description)
                 .ToList();
                 return BadRequest(new { errors });
             }
