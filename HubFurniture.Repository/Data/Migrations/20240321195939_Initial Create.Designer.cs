@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HubFurniture.Repository.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20240320202547_Make ProductItemOrdered has only one picture")]
-    partial class MakeProductItemOrderedhasonlyonepicture
+    [Migration("20240321195939_Initial Create")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -710,6 +710,10 @@ namespace HubFurniture.Repository.Data.Migrations
                                 .HasColumnType("int");
 
                             b1.Property<string>("ProductName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Type")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 

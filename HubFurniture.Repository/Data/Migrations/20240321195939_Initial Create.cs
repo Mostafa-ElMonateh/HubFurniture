@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HubFurniture.Repository.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class OrderModule : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -333,7 +333,8 @@ namespace HubFurniture.Repository.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductOrdered_ProductId = table.Column<int>(type: "int", nullable: false),
                     ProductOrdered_ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductOrdered_PictureUrls = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductOrdered_PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductOrdered_Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: true)
