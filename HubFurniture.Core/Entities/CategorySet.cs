@@ -21,7 +21,7 @@ namespace HubFurniture.Core.Entities
         public int CategorySetTypeId { get; set; }
 
         // Navigational Property 1-M => [M]
-        public ICollection<ProductPicture> ProductPictures{ get; set; } = new HashSet<ProductPicture>();
+        public List<ProductPicture> ProductPictures{ get; set; } = new List<ProductPicture>();
         
         // Navigational Property 1-M => [M]
         public ICollection<CustomerReview> CustomerReviews { get; set; } = new HashSet<CustomerReview>();

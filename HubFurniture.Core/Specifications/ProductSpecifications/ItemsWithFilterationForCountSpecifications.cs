@@ -7,13 +7,13 @@ using HubFurniture.Core.Entities;
 
 namespace HubFurniture.Core.Specifications.ProductSpecifications
 {
-    public class ProductsSetsWithFilterationForCountSpecifications : BaseSpecifications<CategorySet>
+    public class ItemsWithFilterationForCountSpecifications : BaseSpecifications<CategoryItem>
     {
-        public ProductsSetsWithFilterationForCountSpecifications(ProductSpecParams specParams)
+        public ItemsWithFilterationForCountSpecifications(ProductSpecParams specParams)
             :base(cs => 
                 (!specParams.CategoryId.HasValue || cs.CategoryId == specParams.CategoryId) &&
                 (string.IsNullOrEmpty(specParams.ProductColor) || cs.Color == specParams.ProductColor) &&
-                (!specParams.SetTypeId.HasValue || cs.CategorySetTypeId == specParams.SetTypeId) &&
+                (!specParams.ItemTypeId.HasValue || cs.CategoryItemTypeId == specParams.ItemTypeId) &&
                 (!specParams.MinimumPrice.HasValue || cs.Price >= specParams.MinimumPrice) &&
                 (!specParams.MaximumPrice.HasValue || cs.Price <= specParams.MaximumPrice)
             )

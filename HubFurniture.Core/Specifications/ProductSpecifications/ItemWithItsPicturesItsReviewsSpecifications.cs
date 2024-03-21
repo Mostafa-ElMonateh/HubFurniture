@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace HubFurniture.Core.Specifications.ProductSpecifications
 {
-    public class ProductItemWithItsPicturesItsReviewsSpecifications : BaseSpecifications<CategoryItem>
+    public class ItemWithItsPicturesItsReviewsSpecifications : BaseSpecifications<CategoryItem>
     {
         // This Constructor will be used for creating an Object, that will be used to get all productItems
-        public ProductItemWithItsPicturesItsReviewsSpecifications(ProductSpecParams specParams)
+        public ItemWithItsPicturesItsReviewsSpecifications(ProductSpecParams specParams)
             :base(ci => 
                 (string.IsNullOrEmpty(specParams.Search) || ci.Name.ToLower().Contains(specParams.Search))&&
                 (!specParams.ItemTypeId.HasValue || ci.CategoryItemTypeId == specParams.ItemTypeId) &&
@@ -53,7 +53,7 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
         }
 
         // This Constructor will be used for creating an Object, that will be used to get a specific productItem
-        public ProductItemWithItsPicturesItsReviewsSpecifications(int id)
+        public ItemWithItsPicturesItsReviewsSpecifications(int id)
             :base(p => p.Id == id)
         {
             AddIncludes();

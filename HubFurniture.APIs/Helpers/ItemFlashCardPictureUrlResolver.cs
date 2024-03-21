@@ -4,17 +4,17 @@ using HubFurniture.Core.Entities;
 
 namespace HubFurniture.APIs.Helpers
 {
-    public class ProductSetFlashCardPictureUrlResolver : IValueResolver<CategorySet, productFlashCardToReturnDto, IEnumerable<string>>
+    public class ItemFlashCardPictureUrlResolver : IValueResolver<CategoryItem, ItemFlashCardToReturnDto, IEnumerable<string>>
     {
         private readonly IConfiguration _configuration;
 
-        public ProductSetFlashCardPictureUrlResolver(IConfiguration configuration)
+        public ItemFlashCardPictureUrlResolver(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
 
-        public IEnumerable<string> Resolve(CategorySet source, productFlashCardToReturnDto destination, IEnumerable<string> destMember,
+        public IEnumerable<string> Resolve(CategoryItem source, ItemFlashCardToReturnDto destination, IEnumerable<string> destMember,
             ResolutionContext context)
         {
             if (source.ProductPictures.Any())

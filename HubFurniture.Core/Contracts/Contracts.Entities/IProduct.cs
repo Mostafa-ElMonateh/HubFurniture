@@ -18,7 +18,7 @@ namespace HubFurniture.Core.Contracts.Contracts.Entities
         public Suitability Suitability { get; set; }
         public string Room { get; set; }
         public int CategoryId { get; set; }
-        public ICollection<ProductPicture> ProductPictures { get; set; }
+        public List<ProductPicture> ProductPictures { get; set; }
         public ICollection<CustomerReview> CustomerReviews { get; set; }
     }
 }

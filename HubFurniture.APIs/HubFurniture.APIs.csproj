@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HubFurniture.Repository\HubFurniture.Repository.csproj" />
+    <ProjectReference Include="..\HubFurniture.Service\HubFurniture.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,11 +2,11 @@
 
 namespace HubFurniture.Core.Specifications.ProductSpecifications
 {
-    public class ProductSetWithItsPicturesItsReviewsSpecifications : BaseSpecifications<CategorySet>
+    public class SetWithItsPicturesItsReviewsSpecifications : BaseSpecifications<CategorySet>
     {
 
         // This Constructor will be used for creating an Object, that will be used to get all productSets
-        public ProductSetWithItsPicturesItsReviewsSpecifications(ProductSpecParams specParams)
+        public SetWithItsPicturesItsReviewsSpecifications(ProductSpecParams specParams)
             :base(cs => 
                     (string.IsNullOrEmpty(specParams.Search) || cs.Name.ToLower().Contains(specParams.Search))&&
                     (!specParams.SetTypeId.HasValue || cs.CategorySetTypeId == specParams.SetTypeId) &&
@@ -49,7 +49,7 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
         }
 
         // This Constructor will be used for creating an Object, that will be used to get a specific productItem
-        public ProductSetWithItsPicturesItsReviewsSpecifications(int id)
+        public SetWithItsPicturesItsReviewsSpecifications(int id)
             :base(p => p.Id == id)
         {
             AddIncludes();

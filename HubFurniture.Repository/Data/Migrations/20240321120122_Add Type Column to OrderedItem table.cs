@@ -5,21 +5,14 @@
 namespace HubFurniture.Repository.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class addUserColumns : Migration
+    public partial class AddTypeColumntoOrderedItemtable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "FirstName",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
-
-            migrationBuilder.AddColumn<string>(
-                name: "LastName",
-                table: "AspNetUsers",
+                name: "ProductOrdered_Type",
+                table: "OrderItems",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
@@ -29,12 +22,8 @@ namespace HubFurniture.Repository.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "FirstName",
-                table: "AspNetUsers");
-
-            migrationBuilder.DropColumn(
-                name: "LastName",
-                table: "AspNetUsers");
+                name: "ProductOrdered_Type",
+                table: "OrderItems");
         }
     }
 }

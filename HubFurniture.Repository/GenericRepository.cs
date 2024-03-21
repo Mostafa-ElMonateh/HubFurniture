@@ -1,4 +1,5 @@
-﻿using HubFurniture.Core.Entities;
+﻿using System.Linq.Expressions;
+using HubFurniture.Core.Entities;
 using HubFurniture.Core.Specifications;
 using HubFurniture.Repository.Data;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace HubFurniture.Repository
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
-        public async Task<T?> GetAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
@@ -36,6 +37,21 @@ namespace HubFurniture.Repository
         public async Task<int> GetCountAsync(ISpecifications<T> specifications)
         {
             return await ApplySpecifications(specifications).CountAsync();
+        }
+
+        public async Task AddAsync(T entity)
+        {
+            await _dbContext.AddAsync(entity);
+        }
+
+        public void Update(T entity)
+        {
+            _dbContext.Update(entity);
+        }
+
+        public void Delete(T entity)
+        {
+            _dbContext.Remove(entity);
         }
 
 
