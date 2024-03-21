@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using HubFurniture.APIs.Dtos;
 using HubFurniture.APIs.Errors;
 using HubFurniture.Core.Contracts.Contracts.Services;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HubFurniture.APIs.Controllers
 {
+    [Authorize]
     public class OrdersController : BaseApiController
     {
         private readonly IOrderService _orderService;
@@ -26,8 +28,10 @@ namespace HubFurniture.APIs.Controllers
         [HttpPost] // {{BaseUrl}}/api/orders
         public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
         {
+            var buyerEmail = User.FindFirstValue(ClaimTypes.Email);
+
             var address = _mapper.Map<AddressDto, Address>(orderDto.ShippingAddress);
-            var order = await _orderService.CreateOrderAsync(orderDto.BuyerEmail, orderDto.BasketId, orderDto.DeliveryMethodId, address);
+            var order = await _orderService.CreateOrderAsync(buyerEmail, orderDto.BasketId, orderDto.DeliveryMethodId, address);
         
             if (order is null)
             {
@@ -36,20 +40,22 @@ namespace HubFurniture.APIs.Controllers
             return Ok(_mapper.Map<Order, OrderToReturnDto>(order));
         }
 
-        [HttpGet] // {{BaseUrl}}/api/orders?email=mostafa.ahmed@gmail.com
-        public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser(string email)
+        [HttpGet] // {{BaseUrl}}/api/orders
+        public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser()
         {
-            var orders = await _orderService.GetOrdersForUserAsync(email);
+            var buyerEmail = User.FindFirstValue(ClaimTypes.Email);
+            var orders = await _orderService.GetOrdersForUserAsync(buyerEmail);
             
             return Ok(_mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDto>>(orders));
         }
 
         [ProducesResponseType(typeof(OrderToReturnDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        [HttpGet("{id}")] // {{BaseUrl}}/api/orders/1?email=mostafa.ahmed@gmail.com
-        public async Task<ActionResult<OrderToReturnDto>> GetOrderForUser(int id, string email)
+        [HttpGet("{id}")] // {{BaseUrl}}/api/orders/1
+        public async Task<ActionResult<OrderToReturnDto>> GetOrderForUser(int id)
         {
-            var order = await _orderService.GetOrderByIdForUserAsync(id, email);
+            var buyerEmail = User.FindFirstValue(ClaimTypes.Email);
+            var order = await _orderService.GetOrderByIdForUserAsync(id, buyerEmail);
             if (order is null)
             {
                 return NotFound(new ApiResponse(404));
