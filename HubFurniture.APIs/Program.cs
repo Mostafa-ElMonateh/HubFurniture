@@ -15,7 +15,6 @@ namespace HubFurniture.APIs
     {
         public static async Task Main(string[] args)
         {
-
             var builder = WebApplication.CreateBuilder(args);
 
             #region Configure Services
