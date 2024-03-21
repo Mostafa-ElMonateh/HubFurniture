@@ -19,14 +19,9 @@ namespace HubFurniture.Repository
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
-        public async Task<T?> GetAsync(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
-        }
-
-        public async Task<List<T>> GetAllWithCredentialAsync(Expression<Func<T, bool>> criteria)
-        {
-            return await _dbContext.Set<T>().Where(criteria).ToListAsync();
         }
 
         public async Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecifications<T> specifications)

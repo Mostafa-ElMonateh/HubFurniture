@@ -3,6 +3,8 @@ using HubFurniture.Core.Contracts.Contracts.Repositories;
 using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Entities.Order_Aggregate;
+using HubFurniture.Core.Specifications.OrderSpecifications;
+using HubFurniture.Core.Specifications.ProductPictureSpecifications;
 
 namespace HubFurniture.Service
 {
@@ -27,31 +29,36 @@ namespace HubFurniture.Service
 
             if (basket?.BasketItems?.Count > 0)
             {
+                string setType = "set", itemType="item";
                 CategorySet? set;
                 CategoryItem? item;
                 ProductItemOrdered productItemOrdered;
                 OrderItem orderItem;
-                List<ProductPicture> pictures;
+                IReadOnlyList<ProductPicture> pictures;
                 var setsRepository = _unitOfWork.Repository<CategorySet>();
                 var itemsRepository = _unitOfWork.Repository<CategoryItem>();
                 var picturesRepository = _unitOfWork.Repository<ProductPicture>();
+                SetPictureSpecifications setSpecifications;
+                ItemPictureSpecifications itemSpecifications;
                 foreach (var basketItem in basket.BasketItems)
                 {
 
-                    if (basketItem.Type == "set")
+                    if (basketItem.Type == setType)
                     {
-                        set = await setsRepository.GetAsync(basketItem.ProductId);
-                        pictures = await picturesRepository.GetAllWithCredentialAsync(pp => pp.CategorySetId == set.Id);
+                        set = await setsRepository.GetByIdAsync(basketItem.ProductId);
+                        setSpecifications = new SetPictureSpecifications(set.Id);
+                        pictures = await picturesRepository.GetAllWithSpecAsync(setSpecifications);
                         productItemOrdered =
-                            new ProductItemOrdered(basketItem.ProductId, set.Name, pictures[0].PictureUrl);
+                            new ProductItemOrdered(basketItem.ProductId, set.Name, pictures[0].PictureUrl, setType);
                         orderItem = new OrderItem(productItemOrdered, set.Price, basketItem.ProductQuantity);
                     }
                     else
                     {
-                        item = await itemsRepository.GetAsync(basketItem.ProductId);
-                        pictures = await picturesRepository.GetAllWithCredentialAsync(pp => pp.CategoryItemId == item.Id);
+                        item = await itemsRepository.GetByIdAsync(basketItem.ProductId);
+                        itemSpecifications = new ItemPictureSpecifications(item.Id);
+                        pictures = await picturesRepository.GetAllWithSpecAsync(itemSpecifications);
                         productItemOrdered =
-                            new ProductItemOrdered(basketItem.ProductId, item.Name, pictures[0].PictureUrl);
+                            new ProductItemOrdered(basketItem.ProductId, item.Name, pictures[0].PictureUrl, itemType);
                         orderItem = new OrderItem(productItemOrdered, item.Price, basketItem.ProductQuantity);
                     }
 
@@ -63,7 +70,7 @@ namespace HubFurniture.Service
             var subTotal = orderItems.Sum(orderItem => orderItem.Price * orderItem.Quantity);
 
             // 4. Get Delivery Method from DeliveryMethods Repo.
-            var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetAsync(deliveryMethodId);
+            var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
 
             // 5. Create Order.
             var order = new Order(buyerEmail, shippingAddress, deliveryMethod, orderItems, subTotal);
@@ -82,14 +89,28 @@ namespace HubFurniture.Service
 
         }
 
-        public Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail)
+        public async Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail)
         {
-            throw new NotImplementedException();
+            var orderRepository = _unitOfWork.Repository<Order>();
+            var specifications = new OrderSpecifications(buyerEmail);
+            var orders = await orderRepository.GetAllWithSpecAsync(specifications);
+
+            return orders;
         }
 
-        public Task<Order> GetOrderByIdForUserAsync(int orderId, string buyerEmail)
+        public async Task<Order?> GetOrderByIdForUserAsync(int orderId, string buyerEmail)
         {
-            throw new NotImplementedException();
+            var orderRepository = _unitOfWork.Repository<Order>();
+            var specifications = new OrderSpecifications(orderId, buyerEmail);
+            var order = await orderRepository.GetWithSpecAsync(specifications);
+            return order;
+        }
+
+        public Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodsAsync()
+        {
+            var deliveryMethodsRepository = _unitOfWork.Repository<DeliveryMethod>();
+            var deliveryMethods = deliveryMethodsRepository.GetAllAsync();
+            return deliveryMethods;
         }
     }
 }

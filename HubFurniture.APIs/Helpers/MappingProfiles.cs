@@ -12,6 +12,28 @@ namespace HubFurniture.APIs.Helpers
         public MappingProfiles()
         {
 
+            CreateMap<Order, OrderToReturnDto>()
+                .ForMember(d => d.DeliveryMethod, 
+                    o=>
+                        o.MapFrom(s => s.DeliveryMethod.Name))
+                .ForMember(d => d.DeliveryMethodCost,
+                    o =>
+                        o.MapFrom(s => s.DeliveryMethod.Cost));
+
+            CreateMap<OrderItem, OrderItemDto>()
+                .ForMember(d => d.ProductId,
+                    o =>
+                        o.MapFrom(s => s.ProductOrdered.ProductId))
+                .ForMember(d => d.ProductName,
+                    o =>
+                        o.MapFrom(s => s.ProductOrdered.ProductName))
+                .ForMember(d => d.PictureUrl,
+                    o =>
+                        o.MapFrom<OrderItemPictureUrlResolver>())
+                .ForMember(d => d.Type,
+                    o =>
+                        o.MapFrom(s => s.ProductOrdered.Type));
+
             CreateMap<AddressDto, Address>();
 
             CreateMap<CustomerBasketDto, CustomerBasket>();

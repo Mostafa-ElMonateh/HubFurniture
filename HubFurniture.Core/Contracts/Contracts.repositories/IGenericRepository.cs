@@ -12,8 +12,7 @@ namespace HubFurniture.Core.Contracts.Contracts.Repositories
     public interface IGenericRepository<T> where T : BaseEntity
     {
         Task<IReadOnlyList<T>> GetAllAsync();
-        Task<T?> GetAsync(int id);
-        Task<List<T>> GetAllWithCredentialAsync(Expression<Func<T, bool>> criteria);
+        Task<T?> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecifications<T> specifications);
         Task<T?> GetWithSpecAsync(ISpecifications<T> specifications);
         Task<int> GetCountAsync(ISpecifications<T> specifications);
