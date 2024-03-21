@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-using System.Linq; 
+using System.Linq;
+using HubFurniture.Core.Contracts;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace HubFurniture.APIs.Extensions
@@ -19,6 +21,8 @@ namespace HubFurniture.APIs.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

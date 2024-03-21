@@ -2,7 +2,7 @@
 
 namespace HubFurniture.APIs.Dtos
 {
-    public class productFlashCardToReturnDto
+    public class ProductFlashCardToReturnDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

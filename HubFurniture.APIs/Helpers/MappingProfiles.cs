@@ -19,20 +19,20 @@ namespace HubFurniture.APIs.Helpers
             CreateMap<CategoryItem, ProductItemToReturnDto>().ForMember(d => d.ProductPictures, 
                 o => o.MapFrom<ProductItemPictureUrlResolver>());
 
-            CreateMap<CategoryItem, productFlashCardToReturnDto>().ForMember(d => d.Availability,
+            CreateMap<CategoryItem, ItemFlashCardToReturnDto>().ForMember(d => d.Availability,
                 o => o.MapFrom(s => s.Availability.ToString()))
                 .ForMember(d => d.ProductPictures, 
-                o => o.MapFrom<ProductItemFlashCardPictureUrlResolver>());
+                o => o.MapFrom<ItemFlashCardPictureUrlResolver>());
 
             CreateMap<CategorySet, ProductSetToReturnDto>().ForMember(d => d.ProductPictures, 
                 o => o.MapFrom<ProductSetPictureUrlResolver>())
                 .ForMember(d => d.Availability, o => o.MapFrom(s => s.Availability.ToString()))
                 .ForMember(d => d.Suitability, o => o.MapFrom(s => s.Suitability.ToString()));
 
-            CreateMap<CategorySet, productFlashCardToReturnDto>().ForMember(d => d.Availability,
+            CreateMap<CategorySet, SetFlashCardToReturnDto>().ForMember(d => d.Availability,
                     o => o.MapFrom(s => s.Availability.ToString()))
                 .ForMember(d => d.ProductPictures, 
-                    o => o.MapFrom<ProductSetFlashCardPictureUrlResolver>());
+                    o => o.MapFrom<SetFlashCardPictureUrlResolver>());
 
             CreateMap<Category, ProductCategoryToReturnDto>().ForMember(d => d.CategorySetsTypes,
                 o => o.MapFrom<ProductCategorySetsResolver>())

@@ -43,7 +43,7 @@ namespace HubFurniture.APIs.Controllers
 
 
         [HttpGet("sets")]
-        public async Task<ActionResult<Pagination<productFlashCardToReturnDto>>> GetCategorySetsProducts([FromQuery]ProductSpecParams specParams)
+        public async Task<ActionResult<Pagination<SetFlashCardToReturnDto>>> GetCategorySetsProducts([FromQuery]ProductSpecParams specParams)
         {
             decimal minimumPrice = 0, maximumPrice = 0;
             var specifications = new ProductSetWithItsPicturesItsReviewsSpecifications(specParams);
@@ -53,16 +53,16 @@ namespace HubFurniture.APIs.Controllers
                 minimumPrice = setProducts.Min(ci => ci.Price);
                 maximumPrice = setProducts.Max(ci => ci.Price);
             }
-            var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategorySet>, IReadOnlyList<productFlashCardToReturnDto>>(setProducts);
+            var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategorySet>, IReadOnlyList<SetFlashCardToReturnDto>>(setProducts);
             var countSpecifications = new ProductsSetsWithFilterationForCountSpecifications(specParams);
             int count = await _categorySetRepo.GetCountAsync(countSpecifications);
-            return Ok(new Pagination<productFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
+            return Ok(new Pagination<SetFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
         }
 
 
 
         [HttpGet("items")]
-        public async Task<ActionResult<Pagination<productFlashCardToReturnDto>>> GetCategoryItemsProducts([FromQuery]ProductSpecParams specParams)
+        public async Task<ActionResult<Pagination<ItemFlashCardToReturnDto>>> GetCategoryItemsProducts([FromQuery]ProductSpecParams specParams)
         {
             decimal minimumPrice = 0, maximumPrice = 0;
             var specifications = new ProductItemWithItsPicturesItsReviewsSpecifications(specParams);
@@ -72,10 +72,10 @@ namespace HubFurniture.APIs.Controllers
                 minimumPrice = setProducts.Min(ci => ci.Price);
                 maximumPrice = setProducts.Max(ci => ci.Price);
             }
-            var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategoryItem>, IReadOnlyList<productFlashCardToReturnDto>>(setProducts);
+            var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategoryItem>, IReadOnlyList<ItemFlashCardToReturnDto>>(setProducts);
             var countSpecifications = new ProductsItemsWithFilterationForCountSpecifications(specParams);
             int count = await _categoryItemRepo.GetCountAsync(countSpecifications);
-            return Ok(new Pagination<productFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
+            return Ok(new Pagination<ItemFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
         }
 
 
