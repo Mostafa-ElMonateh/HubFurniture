@@ -15,6 +15,7 @@ namespace HubFurniture.Service
             IUnitOfWork unitOfWork)
         {
             _basketRepository = basketRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<Order?> CreateOrderAsync(string buyerEmail, string basketId, int deliveryMethodId, Address shippingAddress)
         {
@@ -30,21 +31,27 @@ namespace HubFurniture.Service
                 CategoryItem? item;
                 ProductItemOrdered productItemOrdered;
                 OrderItem orderItem;
+                List<ProductPicture> pictures;
+                var setsRepository = _unitOfWork.Repository<CategorySet>();
+                var itemsRepository = _unitOfWork.Repository<CategoryItem>();
+                var picturesRepository = _unitOfWork.Repository<ProductPicture>();
                 foreach (var basketItem in basket.BasketItems)
                 {
 
                     if (basketItem.Type == "set")
                     {
-                        set = await _unitOfWork.Repository<CategorySet>().GetAsync(basketItem.ProductId);
+                        set = await setsRepository.GetAsync(basketItem.ProductId);
+                        pictures = await picturesRepository.GetAllWithCredentialAsync(pp => pp.CategorySetId == set.Id);
                         productItemOrdered =
-                            new ProductItemOrdered(basketItem.ProductId, set.Name, set.ProductPictures[0].PictureUrl);
+                            new ProductItemOrdered(basketItem.ProductId, set.Name, pictures[0].PictureUrl);
                         orderItem = new OrderItem(productItemOrdered, set.Price, basketItem.ProductQuantity);
                     }
                     else
                     {
-                        item = await _unitOfWork.Repository<CategoryItem>().GetAsync(basketItem.ProductId);
+                        item = await itemsRepository.GetAsync(basketItem.ProductId);
+                        pictures = await picturesRepository.GetAllWithCredentialAsync(pp => pp.CategoryItemId == item.Id);
                         productItemOrdered =
-                            new ProductItemOrdered(basketItem.ProductId, item.Name, item.ProductPictures[0].PictureUrl);
+                            new ProductItemOrdered(basketItem.ProductId, item.Name, pictures[0].PictureUrl);
                         orderItem = new OrderItem(productItemOrdered, item.Price, basketItem.ProductQuantity);
                     }
 

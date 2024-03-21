@@ -12,6 +12,8 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
 using HubFurniture.Core.Contracts;
+using HubFurniture.Core.Contracts.Contracts.Services;
+using HubFurniture.Service;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -21,6 +23,8 @@ namespace HubFurniture.APIs.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddScoped(typeof(IOrderService), typeof(OrderService));
+
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));

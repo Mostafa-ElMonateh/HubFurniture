@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HubFurniture.APIs.Dtos;
 using HubFurniture.Core.Entities;
+using HubFurniture.Core.Entities.Order_Aggregate;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace HubFurniture.APIs.Helpers
@@ -10,6 +11,8 @@ namespace HubFurniture.APIs.Helpers
 
         public MappingProfiles()
         {
+
+            CreateMap<AddressDto, Address>();
 
             CreateMap<CustomerBasketDto, CustomerBasket>();
             CreateMap<BasketItemDto, BasketItem>();
