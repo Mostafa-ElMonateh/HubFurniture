@@ -107,13 +107,14 @@ namespace HubFurniture.APIs
 
             app.UseCors("Default");
 
-            app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             //app.UseHttpsRedirection();
 
             app.UseAuthentication();
 
             app.UseAuthorization();
+            
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.MapControllers();
 
