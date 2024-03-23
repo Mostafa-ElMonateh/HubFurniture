@@ -33,6 +33,8 @@ namespace HubFurniture.APIs.Extensions
 
             services.AddAutoMapper(typeof(MappingProfiles));
 
+            #region authentication and authorization
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StoreContext>();
@@ -67,6 +69,8 @@ namespace HubFurniture.APIs.Extensions
                     AllowAnyOrigin();
                 });
             });
+
+            #endregion
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
