@@ -5,6 +5,7 @@ using HubFurniture.APIs.Middlewares;
 using HubFurniture.Repository.Data;
 using HubFurniture.Repository.DataSeed;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -109,6 +110,7 @@ namespace HubFurniture.APIs
 
 
             //app.UseHttpsRedirection();
+            app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
             app.UseAuthentication();
 

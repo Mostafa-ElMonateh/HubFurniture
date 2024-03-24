@@ -15,6 +15,7 @@ using HubFurniture.Core.Contracts;
 using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Service;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 
 namespace HubFurniture.APIs.Extensions
@@ -70,6 +71,21 @@ namespace HubFurniture.APIs.Extensions
                 });
             });
 
+            #endregion
+
+            #region Localization
+            var supportedCultures = new[] { "en-US", "ar" };
+            var localizationOptions = new RequestLocalizationOptions()
+                .SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
+                options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
+            });
             #endregion
 
             services.Configure<ApiBehaviorOptions>(options =>

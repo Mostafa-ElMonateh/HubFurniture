@@ -23,11 +23,6 @@ namespace HubFurniture.Core.Specifications.ProductCategorySpecifications
             AddIncludes();
         }
 
-        public ProductCategorySpecifications(string categoryName)
-            :base(c => c.Name == categoryName)
-        {
-            AddIncludes();
-        }
 
         private void AddIncludes()
         {

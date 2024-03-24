@@ -9,6 +9,7 @@ using HubFurniture.Core.Entities;
 using HubFurniture.Core.Specifications.ProductCategorySpecifications;
 using HubFurniture.Core.Specifications.ProductSpecifications;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace HubFurniture.APIs.Controllers
 {
@@ -25,12 +26,24 @@ namespace HubFurniture.APIs.Controllers
         }
 
 
-        // {{BaseUrl}}/api/products/categories
+        // {{BaseUrl}}/api/products/en-US/categories
         [HttpGet("categories")]
-        public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetCategories()
+        public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetCategories(string language)
         {
             var categories = await _productService.GetCategoriesAsync();
-            var mappedProductsCategory = _mapper.Map<IReadOnlyList<Category>, IReadOnlyList<ProductCategoryToReturnDto>>(categories);
+
+            // localization
+            var currentCulture = CultureInfo.CurrentCulture.Name;
+            var mappedProductsCategory = categories.Select(category =>
+            {
+                var dto = _mapper.Map<ProductCategoryToReturnDto>(category);
+
+
+                dto.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+
+                return dto;
+            }).ToList();
+
             return Ok(mappedProductsCategory);
         }
 
