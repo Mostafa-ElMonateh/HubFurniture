@@ -22,6 +22,17 @@
     "CategoryId": 1
   },
   {
+    "Name": "LF-L000301",
+    "Availability": 1,
+    "Price": 90400,
+    "Color": "gray",
+    "Style": "Modern",
+    "Suitability": 0,
+    "Room": "LivingRoom",
+    "CategorySetTypeId": 1,
+    "CategoryId": 1
+  },
+  {
     "Name": "Fontant bedroom set",
     "Availability": 0,
     "Price": 87000,
