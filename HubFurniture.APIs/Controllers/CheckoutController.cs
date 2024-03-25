@@ -12,7 +12,7 @@ namespace HubFurniture.APIs.Controllers
     public class CheckoutController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly IProductService _productService; // Assuming an interface for product retrieval
+        private readonly IProductService _productService; //  an interface for product retrieval
 
         public CheckoutController(IConfiguration configuration, IProductService productService)
         {
@@ -32,7 +32,7 @@ namespace HubFurniture.APIs.Controllers
             {
                 StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
 
-                var products = await _productService.GetProductsAsync(); // Assuming GetProducts is asynchronous
+                var products = await _productService.GetProductsAsync(); // GetProducts is asynchronous
 
                 var lineItems = new List<SessionLineItemOptions>();
                 foreach (var product in products)
