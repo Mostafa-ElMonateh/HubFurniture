@@ -21,19 +21,21 @@ namespace HubFurniture.Core.Entities.Order_Aggregate
         public decimal GetTotal()
             => SubTotal + DeliveryMethod.Cost;
 
-        public string PaymentIntentId { get; set; } = string.Empty;
+        public string PaymentIntentId { get; set; }
 
         public Order(string buyerEmail,
             Address shippingAddress,
             DeliveryMethod deliveryMethod,
             ICollection<OrderItem> items,
-            decimal subTotal)
+            decimal subTotal,
+            string paymentIntentId)
         {
             BuyerEmail = buyerEmail;
             ShippingAddress = shippingAddress;
             DeliveryMethod = deliveryMethod;
             OrderItems = items;
             SubTotal = subTotal;
+            PaymentIntentId = paymentIntentId;
         }
 
         public Order()

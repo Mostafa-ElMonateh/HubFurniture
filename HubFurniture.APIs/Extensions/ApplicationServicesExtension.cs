@@ -9,12 +9,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using System.Linq;
 using HubFurniture.Core.Contracts;
 using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Service;
-using Microsoft.Extensions.DependencyInjection;
 
 
 namespace HubFurniture.APIs.Extensions
@@ -23,6 +20,8 @@ namespace HubFurniture.APIs.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddScoped(typeof(IPaymentService), typeof(PaymentService));
+            
             services.AddScoped(typeof(IProductService), typeof(ProductService));
 
             services.AddScoped(typeof(IOrderService), typeof(OrderService));
