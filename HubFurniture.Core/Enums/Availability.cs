@@ -8,6 +8,6 @@ namespace HubFurniture.Core.Enums
 {
     public enum Availability:byte
     {
-        InStock
+        InStock, OutOfStock
     }
 }
