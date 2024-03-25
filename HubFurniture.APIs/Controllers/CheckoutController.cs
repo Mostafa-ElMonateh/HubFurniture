@@ -51,8 +51,8 @@ namespace HubFurniture.APIs.Controllers
                     PaymentMethodTypes = new List<string> { "card" },
                     LineItems = lineItems,
                     Mode = "payment",
-                    SuccessUrl = "",
-                    CancelUrl = ""
+                    SuccessUrl = "", //redirect users to specific pages after they complete 
+                    CancelUrl = ""  //redirect users to specific pages after they cancel  
                 };
 
                 var service = new SessionService();
