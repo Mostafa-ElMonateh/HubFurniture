@@ -51,8 +51,8 @@ namespace HubFurniture.APIs.Controllers
                     PaymentMethodTypes = new List<string> { "card" },
                     LineItems = lineItems,
                     Mode = "payment",
-                    SuccessUrl = "https://yourwebsite.com/success",
-                    CancelUrl = "https://yourwebsite.com/cancel"
+                    SuccessUrl = "",
+                    CancelUrl = ""
                 };
 
                 var service = new SessionService();
@@ -67,7 +67,7 @@ namespace HubFurniture.APIs.Controllers
         }
     }
 
-    // Interface for retrieving products (replace with your implementation)
+    // Interface for retrieving products 
     public interface IProductService
     {
         Task<IEnumerable<Product>> GetProductsAsync();
@@ -75,14 +75,14 @@ namespace HubFurniture.APIs.Controllers
 
     public class OrderDetails
     {
-        [Required]  // Add data annotation for validation (optional)
+        [Required]  
         public string? Description { get; set; }
 
-        [Required]  // Add data annotation for validation (optional)
+        [Required]  
         public decimal Amount { get; set; }
     }
 
-    public class Product // Replace with your actual product model
+    public class Product 
     {
         public string Name { get; set; }
         public decimal Price { get; set; }
