@@ -34,7 +34,7 @@ namespace HubFurniture.APIs.Helpers
                     o =>
                         o.MapFrom(s => s.ProductOrdered.Type));
 
-            CreateMap<AddressDto, Address>();
+            CreateMap<AddressDto, HubFurniture.Core.Entities.Order_Aggregate.Address>();
 
             CreateMap<CustomerBasketDto, CustomerBasket>();
             CreateMap<BasketItemDto, BasketItem>();

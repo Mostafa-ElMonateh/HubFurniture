@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace HubFurniture.Repository.Data.Config
 {
-    internal class AdressConfigrations : IEntityTypeConfiguration<Address>
+    internal class UserAdressConfigrations : IEntityTypeConfiguration<UserAddress>
     {
-        public void Configure(EntityTypeBuilder<Address> builder)
+        public void Configure(EntityTypeBuilder<UserAddress> builder)
         {
             builder.Property(a => a.StreetAdress)
                  .IsRequired();
@@ -23,7 +23,9 @@ namespace HubFurniture.Repository.Data.Config
                  .IsRequired();
 
             builder.HasOne(a => a.User)
-                .WithMany(u => u.Addresses);
+                    .WithMany(u => u.Addresses)
+                    .HasForeignKey(a => a.UserId)
+                    .IsRequired();
         }
     }
 }

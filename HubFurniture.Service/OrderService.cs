@@ -19,7 +19,8 @@ namespace HubFurniture.Service
             _basketRepository = basketRepository;
             _unitOfWork = unitOfWork;
         }
-        public async Task<Order?> CreateOrderAsync(string buyerEmail, string basketId, int deliveryMethodId, Address shippingAddress)
+        public async Task<Order?> CreateOrderAsync(string buyerEmail, string basketId, int deliveryMethodId,
+          Address shippingAddress)
         {
             // 1. Get Basket from Baskets Repo
             var basket = await _basketRepository.GetBasketAsync(basketId);

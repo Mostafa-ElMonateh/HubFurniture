@@ -11,6 +11,6 @@ namespace HubFurniture.Core.Entities
     public class ApplicationUser : IdentityUser
     {
         // Navigational Property 1-M => [M]
-        public ICollection<Address> Addresses { get; set; } = new HashSet<Address>();
+        public ICollection<UserAddress> Addresses { get; set; } = new HashSet<UserAddress>();
     }
 }
