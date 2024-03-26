@@ -51,6 +51,10 @@ namespace HubFurniture.APIs.Controllers
         {
             var category = await _productService.GetCategoryByIdAsync(specParams);
             var mappedProductsCategory = _mapper.Map<Category, CategorySetsToReturnDto>(category);
+
+            //Localize the category name based on the current culture
+            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+
             return Ok(mappedProductsCategory);
         }
 
@@ -62,6 +66,10 @@ namespace HubFurniture.APIs.Controllers
 
             var category = await _productService.GetCategoryByIdAsync(specParams);
             var mappedProductsCategory = _mapper.Map<Category, CategoryItemsToReturn>(category);
+
+            // Localize the category name based on the current culture
+            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+
             return Ok(mappedProductsCategory);
         }
 
@@ -142,36 +150,6 @@ namespace HubFurniture.APIs.Controllers
             mappedProductItem.Room = currentCulture.StartsWith("ar") ? item.RoomArabic : item.RoomEnglish;
 
             return Ok(mappedProductItem);
-        }
-
-
-        // {{BaseUrl}}/api/Products/sets/types?CategoryId=1
-        [HttpGet("sets/types")]
-        public async Task<ActionResult<CategorySetsToReturnDto>> GetCategorySetsTypes([FromQuery]ProductSpecParams specParams)
-        {
-            var category = await _productService.GetCategoryByIdAsync(specParams);
-            var mappedProductsCategory = _mapper.Map<Category, CategorySetsToReturnDto>(category);
-
-            //Localize the category name based on the current culture
-            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
-
-         
-            return Ok(mappedProductsCategory);
-        }
-
-        // {{BaseUrl}}/api/Products/items/types?CategoryId=1
-        [HttpGet("items/types")]
-        public async Task<ActionResult<CategoryItemsToReturn>> GetCategoryItemsTypes([FromQuery]ProductSpecParams specParams)
-        {
-            // _dbContext.CategoryItems.Where(c => c.Name == Name).CountAsync();
-
-            var category = await _productService.GetCategoryByIdAsync(specParams);
-            var mappedProductsCategory = _mapper.Map<Category, CategoryItemsToReturn>(category);
-
-            // Localize the category name based on the current culture
-            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;     
-
-            return Ok(mappedProductsCategory);
         }
 
 
