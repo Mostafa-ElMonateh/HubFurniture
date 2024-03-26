@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using System.Linq;
 using HubFurniture.Core.Contracts;
 using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Service;
@@ -24,6 +22,8 @@ namespace HubFurniture.APIs.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddScoped(typeof(IPaymentService), typeof(PaymentService));
+            
             services.AddScoped(typeof(IProductService), typeof(ProductService));
 
             services.AddScoped(typeof(IOrderService), typeof(OrderService));
@@ -31,12 +31,18 @@ namespace HubFurniture.APIs.Extensions
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddScoped(typeof(IUserService), typeof(UserService));
+
 
             services.AddAutoMapper(typeof(MappingProfiles));
 
-            #region authentication and authorization
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole> (options =>
+            {
+                // Configure user validation rules
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = ""; 
+            })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StoreContext>();
 

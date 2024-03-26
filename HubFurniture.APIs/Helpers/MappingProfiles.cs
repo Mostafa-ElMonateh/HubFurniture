@@ -81,7 +81,6 @@ namespace HubFurniture.APIs.Helpers
 
 
             CreateMap<RegisterUserDto, ApplicationUser>()
-            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.LastName + src.FirstName))
             .ReverseMap();
 
         }

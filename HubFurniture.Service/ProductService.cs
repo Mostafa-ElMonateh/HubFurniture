@@ -18,7 +18,7 @@ namespace HubFurniture.Service
         public async Task<Category?> GetCategoryByIdAsync(ProductSpecParams specParams)
         {
             var specifications = new ProductCategorySpecifications(specParams.CategoryId);
-            var category = await _unitOfWork.Repository<Category>().GetWithSpecAsync(specifications);
+            var category = await _unitOfWork.Repository<Category>().GetEntityWithSpecAsync(specifications);
             return category;
         }
 
@@ -60,14 +60,14 @@ namespace HubFurniture.Service
         public async Task<CategorySet?> GetSetById(int setId)
         {
             var specifications = new SetWithItsPicturesItsReviewsSpecifications(setId);
-            var set = await _unitOfWork.Repository<CategorySet>().GetWithSpecAsync(specifications);
+            var set = await _unitOfWork.Repository<CategorySet>().GetEntityWithSpecAsync(specifications);
             return set;
         }
 
         public async Task<CategoryItem?> GetItemById(int itemId)
         {
             var specifications = new ItemWithItsPicturesItsReviewsSpecifications(itemId);
-            var item = await _unitOfWork.Repository<CategoryItem>().GetWithSpecAsync(specifications);
+            var item = await _unitOfWork.Repository<CategoryItem>().GetEntityWithSpecAsync(specifications);
             return item;
         }
 

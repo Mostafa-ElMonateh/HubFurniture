@@ -12,12 +12,15 @@ namespace HubFurniture.Service
     {
         private readonly IBasketRepository _basketRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IPaymentService _paymentService;
 
         public OrderService(IBasketRepository basketRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IPaymentService paymentService)
         {
             _basketRepository = basketRepository;
             _unitOfWork = unitOfWork;
+            _paymentService = paymentService;
         }
         public async Task<Order?> CreateOrderAsync(string buyerEmail, string basketId, int deliveryMethodId, Address shippingAddress)
         {
@@ -72,10 +75,23 @@ namespace HubFurniture.Service
             // 4. Get Delivery Method from DeliveryMethods Repo.
             var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
 
-            // 5. Create Order.
-            var order = new Order(buyerEmail, shippingAddress, deliveryMethod, orderItems, subTotal);
+            var orderRepository = _unitOfWork.Repository<Order>();
 
-            await _unitOfWork.Repository<Order>().AddAsync(order);
+            var orderSpecifications = new OrderWithPaymentIntentSpecifications(basket.PaymentIntentId);
+
+            var existingOrder = await orderRepository.GetEntityWithSpecAsync(orderSpecifications);
+
+            if (existingOrder is not null)
+            {
+                orderRepository.Delete(existingOrder);
+
+                await _paymentService.CreateOrUpdatePaymentIntent(basketId);
+            }
+
+            // 5. Create Order.
+            var order = new Order(buyerEmail, shippingAddress, deliveryMethod, orderItems, subTotal, basket.PaymentIntentId);
+
+            await orderRepository.AddAsync(order);
 
             // 6. Save to Database
             var result = await _unitOfWork.CompleteAsync();
@@ -102,7 +118,7 @@ namespace HubFurniture.Service
         {
             var orderRepository = _unitOfWork.Repository<Order>();
             var specifications = new OrderSpecifications(orderId, buyerEmail);
-            var order = await orderRepository.GetWithSpecAsync(specifications);
+            var order = await orderRepository.GetEntityWithSpecAsync(specifications);
             return order;
         }
 
