@@ -22,6 +22,9 @@ namespace HubFurniture.Repository.Data.Config
             builder.Property(a => a.Country)
                  .IsRequired();
 
+            builder.Property(a => a.PhoneNumber)
+                 .IsRequired();
+
             builder.HasOne(a => a.User)
                     .WithMany(u => u.Addresses)
                     .HasForeignKey(a => a.UserId)

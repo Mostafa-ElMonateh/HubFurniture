@@ -9,7 +9,7 @@ namespace HubFurniture.Repository
 {
     public class GenericRepository <T>: IGenericRepository<T> where T : BaseEntity
     {
-        private readonly StoreContext _dbContext;
+        protected readonly StoreContext _dbContext;
 
         public GenericRepository(StoreContext dbContext)
         {
@@ -58,6 +58,11 @@ namespace HubFurniture.Repository
         private IQueryable<T> ApplySpecifications(ISpecifications<T> specifications)
         {
             return SpecificationsEvaluator<T>.GetQuery(_dbContext.Set<T>(), specifications);
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }

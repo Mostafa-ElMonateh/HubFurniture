@@ -30,6 +30,10 @@ namespace HubFurniture.APIs.Extensions
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+            services.AddScoped(typeof(IAddcressService), typeof(AdressServices));
+            services.AddScoped(typeof(IAddressReposatory), typeof(AddressReposatory));
+
+
 
             services.AddAutoMapper(typeof(MappingProfiles));
 
