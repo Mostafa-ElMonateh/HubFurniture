@@ -2,11 +2,8 @@
 using HubFurniture.APIs.Dtos;
 using HubFurniture.APIs.Errors;
 using HubFurniture.APIs.Helpers;
-using HubFurniture.Core.Contracts.Contracts.Entities;
-using HubFurniture.Core.Contracts.Contracts.Repositories;
 using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Core.Entities;
-using HubFurniture.Core.Specifications.ProductCategorySpecifications;
 using HubFurniture.Core.Specifications.ProductSpecifications;
 using Microsoft.AspNetCore.Mvc;
 

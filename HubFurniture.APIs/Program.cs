@@ -91,7 +91,6 @@ namespace HubFurniture.APIs
                 logger.LogError(ex, "Error is happened during update database");
             }
 
-
             #region Configure Kestrel Middlewares
 
             // Configure the HTTP request pipeline.
@@ -106,7 +105,6 @@ namespace HubFurniture.APIs
             app.UseStaticFiles();
 
             app.UseCors("Default");
-
 
             //app.UseHttpsRedirection();
 

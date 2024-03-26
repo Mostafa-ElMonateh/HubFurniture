@@ -14,7 +14,7 @@ namespace HubFurniture.Core.Contracts.Contracts.Repositories
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecifications<T> specifications);
-        Task<T?> GetWithSpecAsync(ISpecifications<T> specifications);
+        Task<T?> GetEntityWithSpecAsync(ISpecifications<T> specifications);
         Task<int> GetCountAsync(ISpecifications<T> specifications);
         Task AddAsync(T entity);
         void Update(T entity);
