@@ -16,14 +16,17 @@ namespace HubFurniture.APIs.Controllers
     public class AccountController : BaseApiController
     {
         private readonly UserManager<ApplicationUser> usermanger;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration config;
         private readonly IMapper _mapper;
 
         public AccountController(UserManager<ApplicationUser> usermanger,
+            RoleManager<IdentityRole> roleManager,
             IConfiguration config,
             IMapper mapper)
         {
             this.usermanger = usermanger;
+            this.roleManager = roleManager;
             this.config = config;
             _mapper = mapper;
         }
@@ -37,6 +40,16 @@ namespace HubFurniture.APIs.Controllers
                 IdentityResult result = await usermanger.CreateAsync(user, userDto.Password);
                 if (result.Succeeded)
                 {
+                    if (!await roleManager.RoleExistsAsync("user"))
+                    {
+                        var roleResult = await roleManager.CreateAsync(new IdentityRole("user"));
+                        if (!roleResult.Succeeded)
+                        {
+                            var roleErrors = roleResult.Errors.Select(e => e.Description).ToList();
+                            return BadRequest(new { roleErrors });
+                        }
+                    }
+
                     await usermanger.AddToRoleAsync(user, "user");
 
                     return Ok(new { message = "Account Add Success" });
