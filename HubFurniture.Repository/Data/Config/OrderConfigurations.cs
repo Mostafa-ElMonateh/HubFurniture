@@ -24,6 +24,10 @@ namespace HubFurniture.Repository.Data.Config
             builder.HasOne(o => o.DeliveryMethod)
                 .WithMany()
                 .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasMany(o => o.OrderItems)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

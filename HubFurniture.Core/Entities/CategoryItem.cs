@@ -32,9 +32,6 @@ namespace HubFurniture.Core.Entities
         // Navigational Property 1-M => [M]
         public ICollection<CustomerReview> CustomerReviews { get; set; } = new HashSet<CustomerReview>();
         
-        // Navigational Property M-M => [M]
-        [JsonIgnore] // Avoid Circle Ref
-        public ICollection<CategorySet> CategorySets { get; set; } = new HashSet<CategorySet>();
         
         public int CategoryId { get; set; }
         

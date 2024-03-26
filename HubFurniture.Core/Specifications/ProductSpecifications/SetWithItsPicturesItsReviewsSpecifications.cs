@@ -63,7 +63,7 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
         {
             Includes.Add(cs => cs.ProductPictures);
             Includes.Add(cs => cs.CustomerReviews);
-            Includes.Add(cs => cs.CategoryItems);
+            Includes.Add(cs => cs.Items);
             
         }
     }

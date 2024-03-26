@@ -71,7 +71,7 @@ namespace HubFurniture.APIs.Helpers
                 .ForMember(d => d.Availability, o => o.MapFrom(s => s.Availability.ToString()))
                 .ForMember(d => d.Suitability, o => o.MapFrom(s => s.Suitability.ToString()));
 
-            CreateMap<CategoryItem, SetItemToReturnDto>();
+            CreateMap<SetItem, SetItemToReturnDto>();
 
             CreateMap<Category, CategorySetsToReturnDto>().ForMember(d => d.CategorySetsTypes,
                     o => o.MapFrom<CategorySetsResolver>());

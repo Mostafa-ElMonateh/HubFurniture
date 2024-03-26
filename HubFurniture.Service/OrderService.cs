@@ -84,9 +84,9 @@ namespace HubFurniture.Service
             if (existingOrder is not null)
             {
                 orderRepository.Delete(existingOrder);
-
                 await _paymentService.CreateOrUpdatePaymentIntent(basketId);
             }
+
 
             // 5. Create Order.
             var order = new Order(buyerEmail, shippingAddress, deliveryMethod, orderItems, subTotal, basket.PaymentIntentId);
