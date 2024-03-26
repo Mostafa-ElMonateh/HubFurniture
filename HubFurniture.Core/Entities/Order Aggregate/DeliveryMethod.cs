@@ -9,15 +9,22 @@ namespace HubFurniture.Core.Entities.Order_Aggregate
     public class DeliveryMethod : BaseEntity
     {
         public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal Cost { get; set; }
-        public string DeliveryTime { get; set; }
+        public string DescriptionArabic { get; set; }
+        public string DescriptionEnglish { get; set; }
 
-        public DeliveryMethod(string name, string description, string deliveryTime)
+        public decimal Cost { get; set; }
+        public string DeliveryTimeArabic { get; set; }
+        public string DeliveryTimeEnglish{ get; set; }
+
+
+        public DeliveryMethod(string name, string descriptionArabic, string descriptionEnglish, decimal cost, string deliveryTimeArabic, string deliveryTimeEnglish)
         {
             Name = name;
-            Description = description;
-            DeliveryTime = deliveryTime;
+            DescriptionArabic = descriptionArabic;
+            DescriptionEnglish = descriptionEnglish;
+            Cost = cost;
+            DeliveryTimeArabic = deliveryTimeArabic;
+            DeliveryTimeEnglish = deliveryTimeEnglish;
         }
 
         public DeliveryMethod()
