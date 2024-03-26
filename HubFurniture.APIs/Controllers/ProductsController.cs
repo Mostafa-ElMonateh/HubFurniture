@@ -97,6 +97,10 @@ namespace HubFurniture.APIs.Controllers
             var mappedProductSet = _mapper.Map<CategorySet, ProductSetToReturnDto>(set);
 
             mappedProductSet.Name = currentCulture.StartsWith("ar") ? set.NameArabic : set.NameEnglish;
+            mappedProductSet.Style = currentCulture.StartsWith("ar") ? set.StyleArabic : set.StyleEnglish;
+            mappedProductSet.Room = currentCulture.StartsWith("ar") ? set.RoomArabic : set.RoomEnglish;
+
+
 
             return Ok(mappedProductSet);
         }
@@ -118,6 +122,8 @@ namespace HubFurniture.APIs.Controllers
             var mappedProductItem = _mapper.Map<CategoryItem, ProductItemToReturnDto>(item);
 
             mappedProductItem.Name = currentCulture.StartsWith("ar") ? item.NameArabic : item.NameEnglish;
+            mappedProductItem.Style = currentCulture.StartsWith("ar") ? item.StyleArabic : item.StyleEnglish;
+            mappedProductItem.Room = currentCulture.StartsWith("ar") ? item.RoomArabic : item.RoomEnglish;
 
             return Ok(mappedProductItem);
         }
