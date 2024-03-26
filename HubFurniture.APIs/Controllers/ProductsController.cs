@@ -17,23 +17,24 @@ namespace HubFurniture.APIs.Controllers
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        string currentCulture;
 
         public ProductsController(IProductService productService,
             IMapper mapper)
         {
             _productService = productService;
             _mapper = mapper;
+            currentCulture = CultureInfo.CurrentCulture.Name;
         }
 
 
         // {{BaseUrl}}/api/products/en-US/categories
         [HttpGet("categories")]
-        public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetCategories(string language)
+        public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetCategories()
         {
             var categories = await _productService.GetCategoriesAsync();
 
             // localization
-            var currentCulture = CultureInfo.CurrentCulture.Name;
             var mappedProductsCategory = categories.Select(category =>
             {
                 var dto = _mapper.Map<ProductCategoryToReturnDto>(category);
@@ -56,6 +57,10 @@ namespace HubFurniture.APIs.Controllers
             decimal maximumPrice = _productService.GetMaximumPriceOfSets(sets);
             int count = await _productService.GetCountOfSetsAsync(specParams);
             var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategorySet>, IReadOnlyList<SetFlashCardToReturnDto>>(sets);
+            for(int i =0; i <sets.Count(); i++)
+            {
+                mappedSetsProducts[i].Name = currentCulture.StartsWith("ar") ? sets[i].NameArabic : sets[i].NameEnglish;
+            }
             return Ok(new Pagination<SetFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
         }
 
@@ -68,6 +73,10 @@ namespace HubFurniture.APIs.Controllers
             decimal maximumPrice = _productService.GetMaximumPriceOfItems(items);
             int count = await _productService.GetCountOfItemsAsync(specParams);
             var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategoryItem>, IReadOnlyList<ItemFlashCardToReturnDto>>(items);
+            for (int i = 0; i < items.Count(); i++)
+            {
+                mappedSetsProducts[i].Name = currentCulture.StartsWith("ar") ? items[i].NameArabic : items[i].NameEnglish;
+            }
             return Ok(new Pagination<ItemFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
         }
 
@@ -86,6 +95,8 @@ namespace HubFurniture.APIs.Controllers
             }
 
             var mappedProductSet = _mapper.Map<CategorySet, ProductSetToReturnDto>(set);
+
+            mappedProductSet.Name = currentCulture.StartsWith("ar") ? set.NameArabic : set.NameEnglish;
 
             return Ok(mappedProductSet);
         }
@@ -106,6 +117,8 @@ namespace HubFurniture.APIs.Controllers
 
             var mappedProductItem = _mapper.Map<CategoryItem, ProductItemToReturnDto>(item);
 
+            mappedProductItem.Name = currentCulture.StartsWith("ar") ? item.NameArabic : item.NameEnglish;
+
             return Ok(mappedProductItem);
         }
 
@@ -116,6 +129,24 @@ namespace HubFurniture.APIs.Controllers
         {
             var category = await _productService.GetCategoryByIdAsync(specParams);
             var mappedProductsCategory = _mapper.Map<Category, CategorySetsToReturnDto>(category);
+
+            // Localize the category name based on the current culture
+            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+
+            // Localize the category set types
+            var categorySetTypes = new List<CategoryTypesToReturnDto>(); 
+
+            foreach (var categorySet in category.CategorySets)
+            {
+                var setTypeDto = new CategoryTypesToReturnDto
+                {
+                    Id = categorySet.Id,
+                    Name = currentCulture.StartsWith("ar") ? categorySet.NameArabic : categorySet.NameEnglish
+                };
+
+                categorySetTypes.Add(setTypeDto);
+            }
+            mappedProductsCategory.CategorySetsTypes = categorySetTypes; 
             return Ok(mappedProductsCategory);
         }
 
@@ -127,6 +158,25 @@ namespace HubFurniture.APIs.Controllers
 
             var category = await _productService.GetCategoryByIdAsync(specParams);
             var mappedProductsCategory = _mapper.Map<Category, CategoryItemsToReturn>(category);
+
+            // Localize the category name based on the current culture
+            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+
+            // Localize the category set types
+            var categoryItemsTypes = new List<CategoryTypesToReturnDto>();
+
+            foreach (var categoryItem in category.CategoryItems)
+            {
+                var setTypeDto = new CategoryTypesToReturnDto
+                {
+                    Id = categoryItem.Id,
+                    Name = currentCulture.StartsWith("ar") ? categoryItem.NameArabic : categoryItem.NameEnglish
+                };
+
+                categoryItemsTypes.Add(setTypeDto);
+            }
+            mappedProductsCategory.CategoryItemsTypes = categoryItemsTypes;
+
             return Ok(mappedProductsCategory);
         }
 

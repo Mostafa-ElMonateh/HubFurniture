@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HubFurniture.APIs.Dtos;
 using HubFurniture.Core.Entities;
+using System.Globalization;
 
 namespace HubFurniture.APIs.Helpers
 {
@@ -11,7 +12,13 @@ namespace HubFurniture.APIs.Helpers
         {
             if (source.CategorySetsTypes.Any())
             {
-                return source.CategorySetsTypes.Select(cst => new CategoryTypesToReturnDto(){Id = cst.Id, NameArabic = cst.NameArabic, NameEnglish =cst.NameEnglish});
+                var currentCulture = CultureInfo.CurrentCulture.Name;
+
+                return source.CategorySetsTypes.Select(cst =>
+                {
+                    var name = currentCulture.StartsWith("ar") ? cst.NameArabic : cst.NameEnglish;
+                    return new CategoryTypesToReturnDto { Id = cst.Id, Name = name };
+                });
             }
 
             return Enumerable.Empty<CategoryTypesToReturnDto>();
