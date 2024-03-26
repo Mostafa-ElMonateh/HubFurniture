@@ -33,7 +33,12 @@ namespace HubFurniture.APIs.Extensions
 
             services.AddAutoMapper(typeof(MappingProfiles));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole> (options =>
+            {
+                // Configure user validation rules
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = ""; 
+            })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StoreContext>();
 
