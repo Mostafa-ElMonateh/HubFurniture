@@ -10,14 +10,17 @@ namespace HubFurniture.Core.Entities.Order_Aggregate
     {
         private readonly int _setTypeId;
         public int ProductId { get; set; }
-        public string ProductName { get; set; }
+        public string ProductNameArabic { get; set; }
+        public string ProductNameEnglish { get; set; }
+
         public string PictureUrl { get; set; }
         public string Type { get; set; }
 
-        public ProductItemOrdered(int productId, string productName, string pictureUrl, string type)
+        public ProductItemOrdered(int productId, string productNameArabic,  string productNameEnglish,  string pictureUrl, string type)
         {
             ProductId = productId;
-            ProductName = productName;
+            ProductNameArabic =   productNameArabic;
+            ProductNameEnglish = productNameEnglish;
             PictureUrl = pictureUrl;
             Type = type;
         }

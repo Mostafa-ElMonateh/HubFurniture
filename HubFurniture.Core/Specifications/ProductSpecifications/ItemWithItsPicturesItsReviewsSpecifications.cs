@@ -1,6 +1,7 @@
 ﻿using HubFurniture.Core.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,14 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
 {
     public class ItemWithItsPicturesItsReviewsSpecifications : BaseSpecifications<CategoryItem>
     {
+        // localization
+        string currentCulture;
+
         // This Constructor will be used for creating an Object, that will be used to get all productItems
         public ItemWithItsPicturesItsReviewsSpecifications(ProductSpecParams specParams)
             :base(ci => 
-                (string.IsNullOrEmpty(specParams.Search) || ci.Name.ToLower().Contains(specParams.Search))&&
+                (string.IsNullOrEmpty(specParams.Search) ||
+             (CultureInfo.CurrentCulture.Name == "ar" ? ci.NameArabic.ToLower().Contains(specParams.Search) : ci.NameEnglish.ToLower().Contains(specParams.Search))) &&
                 (!specParams.ItemTypeId.HasValue || ci.CategoryItemTypeId == specParams.ItemTypeId) &&
                 (!specParams.CategoryId.HasValue || ci.CategoryId == specParams.CategoryId) &&
                 (string.IsNullOrEmpty(specParams.ProductColor) || ci.Color == specParams.ProductColor) &&
@@ -20,6 +25,7 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
                 (!specParams.MaximumPrice.HasValue || ci.Price <= specParams.MaximumPrice)
             )
         {
+            currentCulture = CultureInfo.CurrentCulture.Name;
             AddIncludes();
 
             if (!string.IsNullOrEmpty(specParams.Sort))
@@ -33,19 +39,19 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
                         AddOrderByDesc(ci => ci.Price);
                         break;
                     case "nameAsc":
-                        AddOrderBy(ci => ci.Name);
+                        AddOrderBy(ci => currentCulture == "ar" ? ci.NameArabic : ci.NameEnglish);
                         break;
                     case "nameDesc":
-                        AddOrderByDesc(ci => ci.Name);
+                        AddOrderByDesc(ci => currentCulture == "ar" ? ci.NameArabic : ci.NameEnglish);
                         break;
                     default:
-                        AddOrderBy(ci => ci.Name);
+                        AddOrderBy(ci => currentCulture == "ar" ? ci.NameArabic : ci.NameEnglish);
                         break;
                 }
             }
             else
             {
-                AddOrderBy(ci => ci.Name);
+                AddOrderBy(ci => currentCulture == "ar" ? ci.NameArabic : ci.NameEnglish);
             }
 
             ApplyPagination((specParams.PageIndex - 1) * specParams.PageSize,specParams.PageSize);

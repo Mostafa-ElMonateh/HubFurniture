@@ -24,9 +24,12 @@ namespace HubFurniture.APIs.Helpers
                 .ForMember(d => d.ProductId,
                     o =>
                         o.MapFrom(s => s.ProductOrdered.ProductId))
-                .ForMember(d => d.ProductName,
+                .ForMember(d => d.ProductNameArabic,
                     o =>
-                        o.MapFrom(s => s.ProductOrdered.ProductName))
+                        o.MapFrom(s => s.ProductOrdered.ProductNameArabic))
+                .ForMember(d => d.ProductNameEnglish,
+                    o =>
+                        o.MapFrom(s => s.ProductOrdered.ProductNameEnglish))
                 .ForMember(d => d.PictureUrl,
                     o =>
                         o.MapFrom<OrderItemPictureUrlResolver>())

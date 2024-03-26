@@ -15,7 +15,11 @@ namespace HubFurniture.Repository.Data.Config
         {
            
 
-            builder.Property(cst => cst.Name)
+            builder.Property(cst => cst.NameArabic)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(cst => cst.NameEnglish)
                 .IsRequired()
                 .HasMaxLength(50);
 

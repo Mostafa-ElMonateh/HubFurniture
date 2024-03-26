@@ -11,7 +11,7 @@ namespace HubFurniture.APIs.Helpers
         {
             if (source.CategoryItemsTypes.Any())
             {
-                return source.CategoryItemsTypes.Select(cst => new CategoryTypesToReturnDto(){Id = cst.Id, Name = cst.Name});
+                return source.CategoryItemsTypes.Select(cst => new CategoryTypesToReturnDto(){Id = cst.Id, NameArabic = cst.NameArabic, NameEnglish = cst.NameEnglish});
             }
 
             return Enumerable.Empty<CategoryTypesToReturnDto>();

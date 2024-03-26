@@ -1,6 +1,7 @@
 [
   {
-    "Name": "Modern luxury living room set",
+    "NameEnglish": "Modern luxury living room set",
+    "NameArabic": "مجموعة غرفة المعيشة الفاخرة الحديثة",
     "Availability": 0,
     "Price": 111950,
     "Color": "black",
@@ -11,7 +12,8 @@
     "CategoryId": 1
   },
   {
-    "Name": "Billy - Blue",
+    "NameEnglish": "Billy - Blue",
+    "NameArabic": "بيلي - أزرق",
     "Availability": 0,
     "Price": 90650,
     "Color": "blue",
@@ -22,7 +24,8 @@
     "CategoryId": 1
   },
   {
-    "Name": "Fontant bedroom set",
+    "NameEnglish": "Fontant bedroom set",
+    "NameArabic": "مجموعة غرفة النوم فونتانت",
     "Availability": 0,
     "Price": 87000,
     "Color": "gray",
@@ -33,7 +36,8 @@
     "CategoryId": 2
   },
   {
-    "Name": "Diamon bedroom set",
+    "NameEnglish": "Diamon bedroom set",
+    "NameArabic": "مجموعة غرفة النوم ديامون",
     "Availability": 0,
     "Price": 100000,
     "Color": "brown",
@@ -44,7 +48,8 @@
     "CategoryId": 2
   },
   {
-    "Name": "METROPOL-EM-DN Dining room set",
+    "NameEnglish": "METROPOL-EM-DN Dining room set",
+    "NameArabic": "مجموعة غرفة الطعام ميتروبول-EM-DN",
     "Availability": 0,
     "Price": 75250,
     "Color": "black",
@@ -55,7 +60,8 @@
     "CategoryId": 3
   },
   {
-    "Name": "AE-D545 Dining full set",
+    "NameEnglish": "AE-D545 Dining full set",
+    "NameArabic": "مجموعة كاملة لتناول الطعام AE-D545",
     "Availability": 0,
     "Price": 86700,
     "Color": "white",
@@ -66,7 +72,8 @@
     "CategoryId": 3
   },
   {
-    "Name": "HOD-GO-255-4CHR/T",
+    "NameEnglish": "HOD-GO-255-4CHR/T",
+    "NameArabic": "HOD-GO-255-4CHR/T",
     "Availability": 0,
     "Price": 38865,
     "Color": "black",
@@ -77,7 +84,8 @@
     "CategoryId": 4
   },
   {
-    "Name": "GO-261-TABLE+6CH",
+    "NameEnglish": "GO-261-TABLE+6CH",
+    "NameArabic": "GO-261-TABLE+6CH",
     "Availability": 0,
     "Price": 52500,
     "Color": "beige",
@@ -88,7 +96,8 @@
     "CategoryId": 4
   },
   {
-    "Name": "White open plan kitchen",
+    "NameEnglish": "White open plan kitchen",
+    "NameArabic": "مطبخ مفتوح باللون الأبيض",
     "Availability": 0,
     "Price": 137450,
     "Color": "white",
@@ -99,7 +108,8 @@
     "CategoryId": 5
   },
   {
-    "Name": "Modern open plan kitchen",
+    "NameEnglish": "Modern open plan kitchen",
+    "NameArabic": "مطبخ مفتوح الحديث",
     "Availability": 0,
     "Price": 79965,
     "Color": "brown",
