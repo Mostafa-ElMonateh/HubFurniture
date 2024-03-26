@@ -18,6 +18,7 @@ namespace HubFurniture.Repository.DataSeed
                 && !dbContext.CategorySetsTypes.Any()
                 && !dbContext.CategoryItemsTypes.Any()
                 && !dbContext.CategorySets.Any()
+                && !dbContext.SetItems.Any()
                 && !dbContext.CategoryItems.Any()
                 && !dbContext.CustomerReviews.Any()
                 && !dbContext.ProductPictures.Any()
@@ -75,6 +76,17 @@ namespace HubFurniture.Repository.DataSeed
                 {
                     foreach (var categorySet in categorySets)
                         dbContext.CategorySets.Add(categorySet);
+                    await dbContext.SaveChangesAsync();
+                }
+
+                // Adding SetsItems.
+                var setsItemsData = File.ReadAllText("../HubFurniture.Repository/DataSeed/setItems.json");
+                var setsItems = JsonSerializer.Deserialize<List<SetItem>>(setsItemsData);
+
+                if (setsItems?.Count() > 0)
+                {
+                    foreach (var setItem in setsItems)
+                        dbContext.SetItems.Add(setItem);
                     await dbContext.SaveChangesAsync();
                 }
 
