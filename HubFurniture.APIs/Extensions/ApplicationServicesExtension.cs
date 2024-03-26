@@ -37,6 +37,7 @@ namespace HubFurniture.APIs.Extensions
 
             services.AddAutoMapper(typeof(MappingProfiles));
 
+            #region Identity
             services.AddIdentity<ApplicationUser, IdentityRole> (options =>
             {
                 // Configure user validation rules
@@ -45,7 +46,9 @@ namespace HubFurniture.APIs.Extensions
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StoreContext>();
+            #endregion
 
+            #region JWT
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
