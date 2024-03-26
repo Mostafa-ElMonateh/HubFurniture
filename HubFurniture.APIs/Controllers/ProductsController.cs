@@ -21,13 +21,33 @@ namespace HubFurniture.APIs.Controllers
             _mapper = mapper;
         }
 
-
         // {{BaseUrl}}/api/products/categories
         [HttpGet("categories")]
         public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetCategories()
         {
             var categories = await _productService.GetCategoriesAsync();
             var mappedProductsCategory = _mapper.Map<IReadOnlyList<Category>, IReadOnlyList<ProductCategoryToReturnDto>>(categories);
+            return Ok(mappedProductsCategory);
+        }
+
+
+        // {{BaseUrl}}/api/Products/sets/types?CategoryId=1
+        [HttpGet("sets/types")]
+        public async Task<ActionResult<CategorySetsToReturnDto>> GetCategorySetsTypes([FromQuery]ProductSpecParams specParams)
+        {
+            var category = await _productService.GetCategoryByIdAsync(specParams);
+            var mappedProductsCategory = _mapper.Map<Category, CategorySetsToReturnDto>(category);
+            return Ok(mappedProductsCategory);
+        }
+
+        // {{BaseUrl}}/api/Products/items/types?CategoryId=1
+        [HttpGet("items/types")]
+        public async Task<ActionResult<CategoryItemsToReturn>> GetCategoryItemsTypes([FromQuery]ProductSpecParams specParams)
+        {
+            // _dbContext.CategoryItems.Where(c => c.Name == Name).CountAsync();
+
+            var category = await _productService.GetCategoryByIdAsync(specParams);
+            var mappedProductsCategory = _mapper.Map<Category, CategoryItemsToReturn>(category);
             return Ok(mappedProductsCategory);
         }
 
@@ -55,12 +75,11 @@ namespace HubFurniture.APIs.Controllers
             return Ok(new Pagination<ItemFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
         }
 
-
         // {{BaseUrl}}/api/products/sets?SetId=1
-        [ProducesResponseType(typeof(ProductItemToReturnDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProductSetToReturnDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         [HttpGet("set")]
-        public async Task<ActionResult<ProductItemToReturnDto>> GetSet(int setId)
+        public async Task<ActionResult<ProductSetToReturnDto>> GetSet(int setId)
         {
             var set = await _productService.GetSetById(setId);
 
@@ -91,27 +110,6 @@ namespace HubFurniture.APIs.Controllers
             var mappedProductItem = _mapper.Map<CategoryItem, ProductItemToReturnDto>(item);
 
             return Ok(mappedProductItem);
-        }
-
-
-        // {{BaseUrl}}/api/Products/sets/types?CategoryId=1
-        [HttpGet("sets/types")]
-        public async Task<ActionResult<CategorySetsToReturnDto>> GetCategorySetsTypes([FromQuery]ProductSpecParams specParams)
-        {
-            var category = await _productService.GetCategoryByIdAsync(specParams);
-            var mappedProductsCategory = _mapper.Map<Category, CategorySetsToReturnDto>(category);
-            return Ok(mappedProductsCategory);
-        }
-
-        // {{BaseUrl}}/api/Products/items/types?CategoryId=1
-        [HttpGet("items/types")]
-        public async Task<ActionResult<CategoryItemsToReturn>> GetCategoryItemsTypes([FromQuery]ProductSpecParams specParams)
-        {
-            // _dbContext.CategoryItems.Where(c => c.Name == Name).CountAsync();
-
-            var category = await _productService.GetCategoryByIdAsync(specParams);
-            var mappedProductsCategory = _mapper.Map<Category, CategoryItemsToReturn>(category);
-            return Ok(mappedProductsCategory);
         }
 
 

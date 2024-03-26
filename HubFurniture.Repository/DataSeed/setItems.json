@@ -1,0 +1,23 @@
+[
+  {
+    "Name": "Sofa",
+    "Height": 70,
+    "Depth": 100,
+    "Width": 270,
+    "CategorySetId": 2
+  },
+  {
+    "Name": "Loveseat",
+    "Height": 70,
+    "Depth": 100,
+    "Width": 210,
+    "CategorySetId": 2
+  },
+  {
+    "Name": "Chair",
+    "Height": 70,
+    "Depth": 100,
+    "Width": 145,
+    "CategorySetId": 2
+  }
+]
