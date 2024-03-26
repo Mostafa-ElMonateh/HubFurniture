@@ -133,23 +133,10 @@ namespace HubFurniture.APIs.Controllers
             var category = await _productService.GetCategoryByIdAsync(specParams);
             var mappedProductsCategory = _mapper.Map<Category, CategorySetsToReturnDto>(category);
 
-            // Localize the category name based on the current culture
+            //Localize the category name based on the current culture
             mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
 
-            // Localize the category set types
-            var categorySetTypes = new List<CategoryTypesToReturnDto>(); 
-
-            foreach (var categorySet in category.CategorySets)
-            {
-                var setTypeDto = new CategoryTypesToReturnDto
-                {
-                    Id = categorySet.Id,
-                    Name = currentCulture.StartsWith("ar") ? categorySet.NameArabic : categorySet.NameEnglish
-                };
-
-                categorySetTypes.Add(setTypeDto);
-            }
-            mappedProductsCategory.CategorySetsTypes = categorySetTypes; 
+         
             return Ok(mappedProductsCategory);
         }
 
@@ -163,22 +150,7 @@ namespace HubFurniture.APIs.Controllers
             var mappedProductsCategory = _mapper.Map<Category, CategoryItemsToReturn>(category);
 
             // Localize the category name based on the current culture
-            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
-
-            // Localize the category set types
-            var categoryItemsTypes = new List<CategoryTypesToReturnDto>();
-
-            foreach (var categoryItem in category.CategoryItems)
-            {
-                var setTypeDto = new CategoryTypesToReturnDto
-                {
-                    Id = categoryItem.Id,
-                    Name = currentCulture.StartsWith("ar") ? categoryItem.NameArabic : categoryItem.NameEnglish
-                };
-
-                categoryItemsTypes.Add(setTypeDto);
-            }
-            mappedProductsCategory.CategoryItemsTypes = categoryItemsTypes;
+            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;     
 
             return Ok(mappedProductsCategory);
         }
