@@ -22,7 +22,6 @@ namespace HubFurniture.APIs.Controllers
 
         public BasketController(IBasketRepository basketRepository,
             IProductService productService,
-            IMapper mapper)
             IMapper mapper,
             UserManager<ApplicationUser> userManager)
         {
@@ -42,22 +41,6 @@ namespace HubFurniture.APIs.Controllers
             if (currentUser is not null && currentUser.BasketId is not null)
             {
                 basket = await _basketRepository.GetBasketAsync(currentUser.BasketId);
-            }
-
-            return Ok(basket ?? new CustomerBasket(currentUser.BasketId));
-        }
-
-        [HttpPost("userBasket")] // {{BaseUrl}}/api/basket/userBasket?basketId=123asd
-        public async Task UpdateCustomerBasketId([FromQuery]string basketId)
-        {
-            var basket = await _basketRepository.GetBasketAsync(id);
-
-            if (basket == null)
-            {
-                basket = new CustomerBasket(id);
-            }
-            else
-            {
                 string currentCulture = CultureInfo.CurrentCulture.Name;
 
                 foreach (var item in basket.BasketItems)
@@ -74,10 +57,21 @@ namespace HubFurniture.APIs.Controllers
                     }
                 }
 
-
             }
 
-            return Ok(basket ?? new CustomerBasket(id));
+            return Ok(basket ?? new CustomerBasket(currentUser.BasketId));
+
+        }
+
+        [HttpPost("userBasket")] // {{BaseUrl}}/api/basket/userBasket?basketId=123asd
+        public async Task UpdateCustomerBasketId([FromQuery] string basketId)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser is not null)
+            {
+                currentUser.BasketId = basketId;
+            }
+            await _userManager.UpdateAsync(currentUser);
         }
 
         [HttpPost] // {{BaseUrl}}/api/basket
@@ -89,7 +83,6 @@ namespace HubFurniture.APIs.Controllers
             currentUser.BasketId ??= basket?.BasketId;
 
             var mappedBasket = _mapper.Map<CustomerBasketDto, CustomerBasket>(basket);
-
             var createdOrUpdatedBasket = await _basketRepository.UpdateBasketAsync(mappedBasket);
             if (createdOrUpdatedBasket is null)
             {
