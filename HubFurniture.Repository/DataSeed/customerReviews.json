@@ -12,6 +12,12 @@
     "CategorySetId": 2
   },
   {
+    "Rate": 2,
+    "CustomerName": "Mostafa Ahmed",
+    "Review": "Bad Product, don't buy it",
+    "CategorySetId": 2
+  },
+  {
     "Rate": 5,
     "CustomerName": "Ahmed Mamdouh",
     "Review": "This is a good product I have never seen before",

@@ -44,7 +44,7 @@ namespace HubFurniture.APIs.Controllers
                 return Unauthorized(); 
             }
 
-            var basketId = await _userService.GetBasketId(currentUser.Id);
+            var basketId = await _userService.GetBasketId(currentUser.BasketId);
             return Ok(new { BasketId = basketId });
         }
     }
