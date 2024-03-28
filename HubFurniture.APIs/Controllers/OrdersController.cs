@@ -24,7 +24,6 @@ namespace HubFurniture.APIs.Controllers
             _orderService = orderService;
             _mapper = mapper;
             currentCulture = CultureInfo.CurrentCulture.Name;
-
         }
 
 
@@ -71,13 +70,14 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("deliveryMethods")] // {{BaseUrl}}/api/deliveryMethod
         public async Task<ActionResult<IReadOnlyList<DeliveryMethodDto>>> GetDeliveryMethods()
         {
+            bool checkCulture = currentCulture.StartsWith("ar");
             var deliveryMethods = await _orderService.GetDeliveryMethodsAsync();
             var deliveryMethodDtos = deliveryMethods.Select(method => new DeliveryMethodDto
             {
                 Name = method.Name,
-                Description = currentCulture.StartsWith("ar") ? method.DescriptionArabic : method.DescriptionEnglish,
+                Description = checkCulture ? method.DescriptionArabic : method.DescriptionEnglish,
                 Cost = method.Cost,
-                DeliveryTime = currentCulture.StartsWith("ar") ? method.DeliveryTimeArabic : method.DeliveryTimeEnglish
+                DeliveryTime = checkCulture ? method.DeliveryTimeArabic : method.DeliveryTimeEnglish
             }).ToList();
 
             return Ok(deliveryMethodDtos);

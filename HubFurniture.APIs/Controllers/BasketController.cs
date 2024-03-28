@@ -34,32 +34,41 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet] // {{BaseUrl}}/api/basket
         public async Task<ActionResult<CustomerBasket>> GetBasket()
         {
+            string currentCulture = CultureInfo.CurrentCulture.Name;
+            bool checkCulture = currentCulture.StartsWith("ar");
+
             var currentUser = await _userManager.GetUserAsync(User);
 
-            CustomerBasket? basket = new();
+            CustomerBasket? basket = null;
 
             if (currentUser is not null && currentUser.BasketId is not null)
             {
                 basket = await _basketRepository.GetBasketAsync(currentUser.BasketId);
-                string currentCulture = CultureInfo.CurrentCulture.Name;
-
-                foreach (var item in basket.BasketItems)
+                if (basket is null)
                 {
-                    if (item.Type == "item")
+                    basket = await _basketRepository.UpdateBasketAsync(new CustomerBasket(){BasketId = currentUser.BasketId});
+                    basket.BasketItems = new List<BasketItem>();
+                }
+                else if (basket.BasketItems is not null && basket.BasketItems.Count > 0)
+                {
+                    foreach (var item in basket.BasketItems)
                     {
-                        var product = await _productService.GetItemById(item.ProductId);
-                        item.ProductName = currentCulture.StartsWith("ar") ? product.NameArabic : product.NameEnglish;
-                    }
-                    else if (item.Type == "set")
-                    {
-                        var product = await _productService.GetSetById(item.ProductId);
-                        item.ProductName = currentCulture.StartsWith("ar") ? product.NameArabic : product.NameEnglish;
+                        if (item.Type == "item")
+                        {
+                            var product = await _productService.GetItemById(item.ProductId);
+                            item.ProductName = checkCulture ? product.NameArabic : product.NameEnglish;
+                        }
+                        else if (item.Type == "set")
+                        {
+                            var product = await _productService.GetSetById(item.ProductId);
+                            item.ProductName = checkCulture ? product.NameArabic : product.NameEnglish;
+                        }
                     }
                 }
 
             }
 
-            return Ok(basket ?? new CustomerBasket(currentUser.BasketId));
+            return Ok(basket?? new CustomerBasket());
 
         }
 

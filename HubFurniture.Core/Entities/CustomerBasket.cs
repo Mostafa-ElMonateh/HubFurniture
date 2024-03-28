@@ -9,7 +9,7 @@ namespace HubFurniture.Core.Entities
     public class CustomerBasket
     {
         public string BasketId { get; set; }
-        public List<BasketItem> BasketItems{ get; set; }
+        public List<BasketItem> BasketItems { get; set; } = new List<BasketItem>();
         public int? DeliveryMethodId { get; set; }
         public decimal ShippingPrice { get; set; }
         public string PaymentIntentId { get; set; }

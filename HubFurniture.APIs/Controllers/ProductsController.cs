@@ -77,6 +77,8 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("sets")]
         public async Task<ActionResult<Pagination<SetFlashCardToReturnDto>>> GetSets([FromQuery]ProductSpecParams specParams)
         {
+            bool checkCulture = currentCulture.StartsWith("ar");
+
             IReadOnlyList<CategorySet> sets = await _productService.GetSetsAsync(specParams);
             decimal minimumPrice = _productService.GetMinimumPriceOfSets(sets);
             decimal maximumPrice = _productService.GetMaximumPriceOfSets(sets);
@@ -84,7 +86,7 @@ namespace HubFurniture.APIs.Controllers
             var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategorySet>, IReadOnlyList<SetFlashCardToReturnDto>>(sets);
             for(int i =0; i <sets.Count(); i++)
             {
-                mappedSetsProducts[i].Name = currentCulture.StartsWith("ar") ? sets[i].NameArabic : sets[i].NameEnglish;
+                mappedSetsProducts[i].Name = checkCulture ? sets[i].NameArabic : sets[i].NameEnglish;
             }
             return Ok(new Pagination<SetFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
         }
@@ -93,6 +95,7 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("items")]
         public async Task<ActionResult<Pagination<ItemFlashCardToReturnDto>>> GetItems([FromQuery]ProductSpecParams specParams)
         {
+            bool checkCulture = currentCulture.StartsWith("ar");
             IReadOnlyList<CategoryItem> items = await _productService.GetItemsAsync(specParams);
             decimal minimumPrice = _productService.GetMinimumPriceOfItems(items);
             decimal maximumPrice = _productService.GetMaximumPriceOfItems(items);
@@ -100,7 +103,7 @@ namespace HubFurniture.APIs.Controllers
             var mappedSetsProducts = _mapper.Map<IReadOnlyList<CategoryItem>, IReadOnlyList<ItemFlashCardToReturnDto>>(items);
             for (int i = 0; i < items.Count(); i++)
             {
-                mappedSetsProducts[i].Name = currentCulture.StartsWith("ar") ? items[i].NameArabic : items[i].NameEnglish;
+                mappedSetsProducts[i].Name = checkCulture ? items[i].NameArabic : items[i].NameEnglish;
             }
             return Ok(new Pagination<ItemFlashCardToReturnDto>(specParams.PageIndex, specParams.PageSize, count, minimumPrice,maximumPrice, mappedSetsProducts));
         }
@@ -111,6 +114,7 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("set")]
         public async Task<ActionResult<ProductSetToReturnDto>> GetSet(int setId)
         {
+            bool checkCulture = currentCulture.StartsWith("ar");
             var set = await _productService.GetSetById(setId);
 
             if (set is null)
@@ -120,16 +124,14 @@ namespace HubFurniture.APIs.Controllers
 
             var mappedProductSet = _mapper.Map<CategorySet, ProductSetToReturnDto>(set);
 
-            mappedProductSet.Name = currentCulture.StartsWith("ar") ? set.NameArabic : set.NameEnglish;
-            mappedProductSet.Style = currentCulture.StartsWith("ar") ? set.StyleArabic : set.StyleEnglish;
-            mappedProductSet.Room = currentCulture.StartsWith("ar") ? set.RoomArabic : set.RoomEnglish;
+            mappedProductSet.Name = checkCulture ? set.NameArabic : set.NameEnglish;
+            mappedProductSet.Style = checkCulture ? set.StyleArabic : set.StyleEnglish;
+            mappedProductSet.Room = checkCulture ? set.RoomArabic : set.RoomEnglish;
             List <SetItemToReturnDto> items = new List<SetItemToReturnDto>();
             for (int i =0; i < mappedProductSet.Items.Count(); i++)
             {
-                mappedProductSet.Items[i].Name = currentCulture.StartsWith("ar") ? set.Items[i].NameArabic : set.Items[i].NameEnglish;
+                mappedProductSet.Items[i].Name = checkCulture ? set.Items[i].NameArabic : set.Items[i].NameEnglish;
             }
-
-
 
             return Ok(mappedProductSet);
         }
@@ -141,6 +143,8 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("item")]
         public async Task<ActionResult<ProductItemToReturnDto>> GetItem(int itemId)
         {
+            bool checkCulture = currentCulture.StartsWith("ar");
+
             var item = await _productService.GetItemById(itemId);
 
             if (item is null)
@@ -150,9 +154,9 @@ namespace HubFurniture.APIs.Controllers
 
             var mappedProductItem = _mapper.Map<CategoryItem, ProductItemToReturnDto>(item);
 
-            mappedProductItem.Name = currentCulture.StartsWith("ar") ? item.NameArabic : item.NameEnglish;
-            mappedProductItem.Style = currentCulture.StartsWith("ar") ? item.StyleArabic : item.StyleEnglish;
-            mappedProductItem.Room = currentCulture.StartsWith("ar") ? item.RoomArabic : item.RoomEnglish;
+            mappedProductItem.Name = checkCulture ? item.NameArabic : item.NameEnglish;
+            mappedProductItem.Style = checkCulture ? item.StyleArabic : item.StyleEnglish;
+            mappedProductItem.Room = checkCulture ? item.RoomArabic : item.RoomEnglish;
 
             return Ok(mappedProductItem);
         }
