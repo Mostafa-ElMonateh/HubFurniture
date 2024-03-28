@@ -31,7 +31,7 @@ namespace HubFurniture.Core.Entities
         
         [JsonIgnore] // Avoid Circle Ref
         // Navigational Property M-M => [M]
-        public ICollection<SetItem> Items { get; set; } = new HashSet<SetItem>();
+        public IReadOnlyList<SetItem> Items { get; set; } = new List<SetItem>();
         
         public int CategoryId { get; set; }
 

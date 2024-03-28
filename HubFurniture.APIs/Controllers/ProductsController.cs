@@ -123,6 +123,11 @@ namespace HubFurniture.APIs.Controllers
             mappedProductSet.Name = currentCulture.StartsWith("ar") ? set.NameArabic : set.NameEnglish;
             mappedProductSet.Style = currentCulture.StartsWith("ar") ? set.StyleArabic : set.StyleEnglish;
             mappedProductSet.Room = currentCulture.StartsWith("ar") ? set.RoomArabic : set.RoomEnglish;
+            List <SetItemToReturnDto> items = new List<SetItemToReturnDto>();
+            for (int i =0; i < mappedProductSet.Items.Count(); i++)
+            {
+                mappedProductSet.Items[i].Name = currentCulture.StartsWith("ar") ? set.Items[i].NameArabic : set.Items[i].NameEnglish;
+            }
 
 
 

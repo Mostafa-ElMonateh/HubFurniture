@@ -5,20 +5,21 @@
 namespace HubFurniture.Repository.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class CaregotyAarabicNameColumn : Migration
+    public partial class refactoringSetItem : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
                 name: "Name",
-                table: "Categories",
+                table: "SetItems",
                 newName: "NameEnglish");
 
             migrationBuilder.AddColumn<string>(
                 name: "NameArabic",
-                table: "Categories",
-                type: "nvarchar(max)",
+                table: "SetItems",
+                type: "nvarchar(50)",
+                maxLength: 50,
                 nullable: false,
                 defaultValue: "");
         }
@@ -28,11 +29,11 @@ namespace HubFurniture.Repository.Data.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "NameArabic",
-                table: "Categories");
+                table: "SetItems");
 
             migrationBuilder.RenameColumn(
                 name: "NameEnglish",
-                table: "Categories",
+                table: "SetItems",
                 newName: "Name");
         }
     }

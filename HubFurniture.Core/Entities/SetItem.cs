@@ -8,7 +8,8 @@ namespace HubFurniture.Core.Entities
 {
     public class SetItem : BaseEntity
     {
-        public string Name { get; set; }
+        public string NameEnglish { get; set; }
+        public string NameArabic { get; set; }
         public decimal? Height { get; set; }
         public decimal? Width { get; set; }
         public decimal? Depth { get; set; }

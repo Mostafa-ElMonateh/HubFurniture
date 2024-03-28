@@ -484,7 +484,12 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.Property<decimal?>("Height")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameArabic")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameEnglish")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");

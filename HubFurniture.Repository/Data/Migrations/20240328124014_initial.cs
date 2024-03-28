@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HubFurniture.Repository.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreation : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,7 +59,8 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    NameArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,9 +74,11 @@ namespace HubFurniture.Repository.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DescriptionArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DescriptionEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DeliveryTime = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DeliveryTimeArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DeliveryTimeEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -194,7 +197,8 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -214,7 +218,8 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -263,13 +268,16 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Availability = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Style = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StyleArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StyleEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Suitability = table.Column<byte>(type: "tinyint", nullable: false),
-                    Room = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoomArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoomEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Height = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Depth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Width = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
@@ -299,13 +307,16 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Availability = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Style = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StyleArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StyleEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Suitability = table.Column<byte>(type: "tinyint", nullable: false),
-                    Room = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoomArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RoomEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategorySetTypeId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -333,7 +344,8 @@ namespace HubFurniture.Repository.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductOrdered_ProductId = table.Column<int>(type: "int", nullable: false),
-                    ProductOrdered_ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductOrdered_ProductNameArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductOrdered_ProductNameEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductOrdered_PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductOrdered_Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),

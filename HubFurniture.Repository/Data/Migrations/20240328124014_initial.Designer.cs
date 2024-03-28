@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HubFurniture.Repository.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20240323095116_CaregotyAarabicNameColumn")]
-    partial class CaregotyAarabicNameColumn
+    [Migration("20240328124014_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,21 +25,6 @@ namespace HubFurniture.Repository.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CategoryItemCategorySet", b =>
-                {
-                    b.Property<int>("CategoryItemsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategorySetsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoryItemsId", "CategorySetsId");
-
-                    b.HasIndex("CategorySetsId");
-
-                    b.ToTable("CategoryItemCategorySet");
-                });
-
             modelBuilder.Entity("HubFurniture.Core.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -47,6 +32,9 @@ namespace HubFurniture.Repository.Data.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("BasketId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -162,7 +150,12 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.Property<decimal?>("Height")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameArabic")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameEnglish")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -170,11 +163,19 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Room")
+                    b.Property<string>("RoomArabic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Style")
+                    b.Property<string>("RoomEnglish")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StyleArabic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StyleEnglish")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -204,7 +205,12 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameArabic")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameEnglish")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -237,7 +243,12 @@ namespace HubFurniture.Repository.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameArabic")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameEnglish")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -245,11 +256,19 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Room")
+                    b.Property<string>("RoomArabic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Style")
+                    b.Property<string>("RoomEnglish")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StyleArabic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StyleEnglish")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -276,7 +295,12 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("NameArabic")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameEnglish")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -334,11 +358,19 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("DeliveryTime")
+                    b.Property<string>("DeliveryTimeArabic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("DeliveryTimeEnglish")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionArabic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionEnglish")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -436,6 +468,38 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.HasIndex("CategorySetId");
 
                     b.ToTable("ProductPictures");
+                });
+
+            modelBuilder.Entity("HubFurniture.Core.Entities.SetItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategorySetId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Depth")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("Height")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal?>("Width")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategorySetId");
+
+                    b.ToTable("SetItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -571,21 +635,6 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CategoryItemCategorySet", b =>
-                {
-                    b.HasOne("HubFurniture.Core.Entities.CategoryItem", null)
-                        .WithMany()
-                        .HasForeignKey("CategoryItemsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HubFurniture.Core.Entities.CategorySet", null)
-                        .WithMany()
-                        .HasForeignKey("CategorySetsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HubFurniture.Core.Entities.CategoryItem", b =>
                 {
                     b.HasOne("HubFurniture.Core.Entities.Category", "Category")
@@ -699,7 +748,8 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     b.HasOne("HubFurniture.Core.Entities.Order_Aggregate.Order", null)
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.OwnsOne("HubFurniture.Core.Entities.Order_Aggregate.ProductItemOrdered", "ProductOrdered", b1 =>
                         {
@@ -713,7 +763,11 @@ namespace HubFurniture.Repository.Data.Migrations
                             b1.Property<int>("ProductId")
                                 .HasColumnType("int");
 
-                            b1.Property<string>("ProductName")
+                            b1.Property<string>("ProductNameArabic")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("ProductNameEnglish")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
@@ -742,6 +796,15 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.HasOne("HubFurniture.Core.Entities.CategorySet", null)
                         .WithMany("ProductPictures")
                         .HasForeignKey("CategorySetId");
+                });
+
+            modelBuilder.Entity("HubFurniture.Core.Entities.SetItem", b =>
+                {
+                    b.HasOne("HubFurniture.Core.Entities.CategorySet", null)
+                        .WithMany("Items")
+                        .HasForeignKey("CategorySetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -821,6 +884,8 @@ namespace HubFurniture.Repository.Data.Migrations
             modelBuilder.Entity("HubFurniture.Core.Entities.CategorySet", b =>
                 {
                     b.Navigation("CustomerReviews");
+
+                    b.Navigation("Items");
 
                     b.Navigation("ProductPictures");
                 });
