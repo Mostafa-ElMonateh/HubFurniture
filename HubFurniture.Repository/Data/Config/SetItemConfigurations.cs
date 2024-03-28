@@ -13,7 +13,11 @@ namespace HubFurniture.Repository.Data.Config
     {
         public void Configure(EntityTypeBuilder<SetItem> builder)
         {
-            builder.Property(pi => pi.Name)
+            builder.Property(pi => pi.NameArabic)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(pi => pi.NameEnglish)
                 .IsRequired()
                 .HasMaxLength(50);
 

@@ -1,90 +1,112 @@
 [
   {
-    "Name": "Recliner Chair",
+    "NameEnglish": "Recliner Chair",
+    "NameArabic": "فوتيهات ريكلينر",
     "CategoryId": 1
   },
   {
-    "Name": "Sofa 3 Seaters",
+    "NameEnglish": "Sofa 3 Seaters",
+    "NameArabic": "كنب ٣ مقعد",
     "CategoryId": 1
   },
   {
-    "Name": "Loveseat",
+    "NameEnglish": "Loveseat",
+    "NameArabic": "كنب ٣ مقعد",
     "CategoryId": 1
   },
   {
-    "Name": "Shoe rack",
+    "NameEnglish": "Shoe rack",
+    "NameArabic": "جزامات",
     "CategoryId": 1
   },
   {
-    "Name": "Coffee table",
+    "NameEnglish": "Coffee table",
+    "NameArabic": "ترابيزات قهوة",
     "CategoryId": 1
   },
   {
-    "Name": "Side Table",
+    "NameEnglish": "Side Table",
+    "NameArabic": "ترابيزات جانبية",
     "CategoryId": 1
   },
   {
-    "Name": "Massage Chairs",
+    "NameEnglish": "Massage Chairs",
+    "NameArabic": " كراسي مساج",
     "CategoryId": 1
   },
   {
-    "Name": "King Bed",
+    "NameEnglish": "King Bed",
+    "NameArabic": " سراير 180 سم",
     "CategoryId": 2
   },
   {
-    "Name": "Queen Bed",
+    "NameEnglish": "Queen Bed",
+    "NameArabic": " سراير 160 سم",
     "CategoryId": 2
   },
   {
-    "Name": "Youth Beds",
+    "NameEnglish": "Youth Beds",
+    "NameArabic": " غرف نم شبابي",
     "CategoryId": 2
   },
   {
-    "Name": "Bunk bed",
+    "NameEnglish": "Bunk bed",
+    "NameArabic": " سراير دورين",
     "CategoryId": 2
   },
   {
-    "Name": "Nightstand",
+    "NameEnglish": "Nightstand",
+    "NameArabic": " كمود",
     "CategoryId": 2
   },
   {
-    "Name": "Dresser",
+    "NameEnglish": "Dresser",
+    "NameArabic": " تسريحات",
     "CategoryId": 2
   },
   {
-    "Name": "Study desk",
+    "NameEnglish": "Study desk",
+    "NameArabic": " مكاتب",
     "CategoryId": 2
   },
   {
-    "Name": "Dining Table",
+    "NameEnglish": "Dining Table",
+    "NameArabic": "ترابيزات سفرة",
     "CategoryId": 3
   },
   {
-    "Name": "Dining Chair",
+    "NameEnglish": "Dining Chair",
+    "NameArabic": "كراسي سفرة",
     "CategoryId": 3
   },
   {
-    "Name": "Dining Bench",
+    "NameEnglish": "Dining Bench",
+    "NameArabic": "بنشات سفرة",
     "CategoryId": 3
   },
   {
-    "Name": "Display Unit",
+    "NameEnglish": "Display Unit",
+    "NameArabic": "نيش سفرة",
     "CategoryId": 3
   },
   {
-    "Name": "Buffet",
+    "NameEnglish": "Buffet",
+    "NameArabic": "بوفيهات سفرة",
     "CategoryId": 3
   },
   {
-    "Name": "Hammock",
+    "NameEnglish": "Hammock",
+    "NameArabic": "هاموك",
     "CategoryId": 4
   },
   {
-    "Name": "Relax chair",
+    "NameEnglish": "Relax chair",
+    "NameArabic": "كراسي استرخاء",
     "CategoryId": 4
   },
   {
-    "Name": "Swings",
+    "NameEnglish": "Swings",
+    "NameArabic": "مرجيحة",
     "CategoryId": 4
   }
 ]

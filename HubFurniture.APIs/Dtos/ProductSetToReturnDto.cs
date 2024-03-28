@@ -5,6 +5,6 @@ namespace HubFurniture.APIs.Dtos
 {
     public class ProductSetToReturnDto : ProductToReturnDto
     {
-        public ICollection<SetItemToReturnDto> Items { get; set; } = new HashSet<SetItemToReturnDto>();
+        public List<SetItemToReturnDto> Items { get; set; } = new List<SetItemToReturnDto>();
     }
 }

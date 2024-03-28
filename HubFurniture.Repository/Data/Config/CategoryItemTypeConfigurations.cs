@@ -15,9 +15,13 @@ namespace HubFurniture.Repository.Data.Config
         {
            
 
-            builder.Property(cit => cit.Name)
+            builder.Property(cit => cit.NameArabic)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            builder.Property(cit => cit.NameEnglish)
+               .IsRequired()
+               .HasMaxLength(50);
 
             builder.HasMany(cit => cit.CategoryItems)
                 .WithOne()

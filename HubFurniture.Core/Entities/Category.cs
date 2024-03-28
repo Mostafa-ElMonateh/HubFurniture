@@ -9,7 +9,9 @@ namespace HubFurniture.Core.Entities
 {
     public class Category : BaseEntity
     {
-        public string Name { get; set; }
+        public string NameArabic { get; set; }
+        public string NameEnglish { get; set; }
+
 
         // Navigational Property 1-M => [M]
         public ICollection<CategorySetType> CategorySetsTypes { get; set; } = new HashSet<CategorySetType>();

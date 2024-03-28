@@ -1,26 +1,34 @@
 [
   {
     "Name": "UPS1",
-    "Description": "Fastest Delivery Time",
-    "DeliveryTime": "1-2 Days",
+    "DescriptionArabic": "أسرع وقت توصيل",
+    "DescriptionEnglish": "Fastest Delivery Time",
+    "DeliveryTimeArabic": "1-2 أيام",
+    "DeliveryTimeEnglish": "1-2 Days",
     "Cost": 10
   },
   {
     "Name": "UPS2",
-    "Description": "Get it within 5 days",
-    "DeliveryTime": "2-5 Days",
+    "DescriptionArabic": "احصل عليه في غضون 5 أيام",
+    "DescriptionEnglish": "Get it within 5 days",
+    "DeliveryTimeArabic": "2-5 أيام",
+    "DeliveryTimeEnglish": "2-5 Days",
     "Cost": 5
   },
   {
     "Name": "UPS3",
-    "Description": "Slower but cheap",
-    "DeliveryTime": "5-10 Days",
+    "DescriptionArabic": "أبطأ ولكن أقل تكلفة",
+    "DescriptionEnglish": "Slower but cheap",
+    "DeliveryTimeArabic": "5-10 أيام",
+    "DeliveryTimeEnglish": "5-10 Days",
     "Cost": 2
   },
   {
     "Name": "Free",
-    "Description": "Free! You get what you pay for",
-    "DeliveryTime": "1-2 Weeks",
+    "DescriptionArabic": "مجانا! ",
+    "DescriptionEnglish": "Free! You get what you pay for",
+    "DeliveryTimeArabic": "1-2 أسابيع",
+    "DeliveryTimeEnglish": "1-2 Weeks",
     "Cost": 0
   }
 ]

@@ -52,7 +52,7 @@ namespace HubFurniture.Service
                         setSpecifications = new SetPictureSpecifications(set.Id);
                         pictures = await picturesRepository.GetAllWithSpecAsync(setSpecifications);
                         productItemOrdered =
-                            new ProductItemOrdered(basketItem.ProductId, set.Name, pictures[0].PictureUrl, setType);
+                            new ProductItemOrdered(basketItem.ProductId, set.NameArabic, set.NameEnglish, pictures[0].PictureUrl, setType);
                         orderItem = new OrderItem(productItemOrdered, set.Price, basketItem.ProductQuantity);
                     }
                     else
@@ -61,7 +61,7 @@ namespace HubFurniture.Service
                         itemSpecifications = new ItemPictureSpecifications(item.Id);
                         pictures = await picturesRepository.GetAllWithSpecAsync(itemSpecifications);
                         productItemOrdered =
-                            new ProductItemOrdered(basketItem.ProductId, item.Name, pictures[0].PictureUrl, itemType);
+                            new ProductItemOrdered(basketItem.ProductId, item.NameArabic, item.NameEnglish, pictures[0].PictureUrl, itemType);
                         orderItem = new OrderItem(productItemOrdered, item.Price, basketItem.ProductQuantity);
                     }
 

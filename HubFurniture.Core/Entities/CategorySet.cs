@@ -11,13 +11,16 @@ namespace HubFurniture.Core.Entities
 {
     public class CategorySet: BaseEntity, IProduct
     {
-        public string Name { get; set; }
+        public string NameArabic { get; set; }
+        public string NameEnglish { get; set; }
         public Availability Availability { get; set; }
         public decimal Price { get; set; }
         public string Color { get; set; }
-        public string Style { get; set; }
+        public string StyleArabic { get; set; }
+        public string StyleEnglish { get; set; }
         public Suitability Suitability { get; set; }
-        public string Room { get; set; }
+        public string RoomArabic { get; set; }
+        public string RoomEnglish { get; set; }
         public int CategorySetTypeId { get; set; }
 
         // Navigational Property 1-M => [M]
@@ -28,7 +31,7 @@ namespace HubFurniture.Core.Entities
         
         [JsonIgnore] // Avoid Circle Ref
         // Navigational Property M-M => [M]
-        public ICollection<SetItem> Items { get; set; } = new HashSet<SetItem>();
+        public IReadOnlyList<SetItem> Items { get; set; } = new List<SetItem>();
         
         public int CategoryId { get; set; }
 

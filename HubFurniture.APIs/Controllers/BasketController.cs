@@ -2,11 +2,13 @@
 using HubFurniture.APIs.Dtos;
 using HubFurniture.APIs.Errors;
 using HubFurniture.Core.Contracts.Contracts.Repositories;
+using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace HubFurniture.APIs.Controllers
 {
@@ -14,14 +16,17 @@ namespace HubFurniture.APIs.Controllers
     public class BasketController : BaseApiController
     {
         private readonly IBasketRepository _basketRepository;
+        private readonly IProductService _productService;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public BasketController(IBasketRepository basketRepository,
+            IProductService productService,
             IMapper mapper,
             UserManager<ApplicationUser> userManager)
         {
             _basketRepository = basketRepository;
+            _productService = productService;
             _mapper = mapper;
             _userManager = userManager;
         }
@@ -36,13 +41,30 @@ namespace HubFurniture.APIs.Controllers
             if (currentUser is not null && currentUser.BasketId is not null)
             {
                 basket = await _basketRepository.GetBasketAsync(currentUser.BasketId);
+                string currentCulture = CultureInfo.CurrentCulture.Name;
+
+                foreach (var item in basket.BasketItems)
+                {
+                    if (item.Type == "item")
+                    {
+                        var product = await _productService.GetItemById(item.ProductId);
+                        item.ProductName = currentCulture.StartsWith("ar") ? product.NameArabic : product.NameEnglish;
+                    }
+                    else if (item.Type == "set")
+                    {
+                        var product = await _productService.GetSetById(item.ProductId);
+                        item.ProductName = currentCulture.StartsWith("ar") ? product.NameArabic : product.NameEnglish;
+                    }
+                }
+
             }
 
             return Ok(basket ?? new CustomerBasket(currentUser.BasketId));
+
         }
 
         [HttpPost("userBasket")] // {{BaseUrl}}/api/basket/userBasket?basketId=123asd
-        public async Task UpdateCustomerBasketId([FromQuery]string basketId)
+        public async Task UpdateCustomerBasketId([FromQuery] string basketId)
         {
             var currentUser = await _userManager.GetUserAsync(User);
             if (currentUser is not null)

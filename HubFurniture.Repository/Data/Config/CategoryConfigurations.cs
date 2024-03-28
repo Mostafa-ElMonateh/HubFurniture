@@ -13,7 +13,7 @@ namespace HubFurniture.Repository.Data.Config
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.Property(c => c.Name)
+            builder.Property(c => c.NameEnglish)
                 .IsRequired()
                 .HasMaxLength(50);
 

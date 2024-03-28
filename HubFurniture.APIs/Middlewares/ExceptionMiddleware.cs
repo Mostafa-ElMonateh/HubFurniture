@@ -16,7 +16,7 @@ namespace HubFurniture.APIs.Middlewares
             IHostEnvironment environment)
         {
             _next = next;
-            _logger = logger;
+            _logger = logger; 
             _environment = environment;
         }
 
