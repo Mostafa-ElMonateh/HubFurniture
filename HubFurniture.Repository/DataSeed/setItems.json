@@ -1,0 +1,28 @@
+[
+  {
+    "NameEnglish": "Sofa",
+    "NameArabic": "كنبة",
+    "Height": 70,
+    "Depth": 100,
+    "Width": 270,
+    "CategorySetId": 2
+  },
+  {
+    "NameEnglish": "Loveseat",
+    "NameArabic": "أريكة لشخصين",
+
+    "Height": 70,
+    "Depth": 100,
+    "Width": 210,
+    "CategorySetId": 2
+  },
+  {
+    "NameEnglish": "Chair",
+    "NameArabic": "كرسي",
+
+    "Height": 70,
+    "Depth": 100,
+    "Width": 145,
+    "CategorySetId": 2
+  }
+]

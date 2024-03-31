@@ -1,17 +1,22 @@
 [
   {
-    "Name": "LivingRoom"
+    "NameEnglish": "LivingRoom",
+    "NameArabic" : "انتريهات"
   },
   {
-    "Name": "Bedroom"
+    "NameEnglish": "Bedroom",
+    "NameArabic": "غرف النوم"
   },
   {
-    "Name": "DiningRoom"
+    "NameEnglish": "DiningRoom",
+    "NameArabic": "غرف السفرة"
   },
   {
-    "Name": "GardenFurniture"
+    "NameEnglish": "GardenFurniture",
+    "NameArabic": "أثاث الحديقة"
   },
   {
-    "Name": "Kitchen"
+    "NameEnglish": "Kitchen",
+    "NameArabic": "مطابخ"
   }
 ]

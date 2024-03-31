@@ -24,9 +24,12 @@ namespace HubFurniture.APIs.Helpers
                 .ForMember(d => d.ProductId,
                     o =>
                         o.MapFrom(s => s.ProductOrdered.ProductId))
-                .ForMember(d => d.ProductName,
+                .ForMember(d => d.ProductNameArabic,
                     o =>
-                        o.MapFrom(s => s.ProductOrdered.ProductName))
+                        o.MapFrom(s => s.ProductOrdered.ProductNameArabic))
+                .ForMember(d => d.ProductNameEnglish,
+                    o =>
+                        o.MapFrom(s => s.ProductOrdered.ProductNameEnglish))
                 .ForMember(d => d.PictureUrl,
                     o =>
                         o.MapFrom<OrderItemPictureUrlResolver>())
@@ -68,7 +71,7 @@ namespace HubFurniture.APIs.Helpers
                 .ForMember(d => d.Availability, o => o.MapFrom(s => s.Availability.ToString()))
                 .ForMember(d => d.Suitability, o => o.MapFrom(s => s.Suitability.ToString()));
 
-            CreateMap<CategoryItem, SetItemToReturnDto>();
+            CreateMap<SetItem, SetItemToReturnDto>();
 
             CreateMap<Category, CategorySetsToReturnDto>().ForMember(d => d.CategorySetsTypes,
                     o => o.MapFrom<CategorySetsResolver>());
@@ -78,7 +81,6 @@ namespace HubFurniture.APIs.Helpers
 
 
             CreateMap<RegisterUserDto, ApplicationUser>()
-            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.LastName + src.FirstName))
             .ReverseMap();
 
             CreateMap<UserAddressDto, UserAddress>().ReverseMap();

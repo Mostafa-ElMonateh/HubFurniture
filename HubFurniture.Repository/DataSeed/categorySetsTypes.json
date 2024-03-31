@@ -1,66 +1,82 @@
 [
   {
-    "Name": "Sofa Set",
+    "NameEnglish": "Sofa Set",
+    "NameArabic": "انتريهات",
     "CategoryId": 1
   },
   {
-    "Name": "U-Shape",
+    "NameEnglish": "U-Shape",
+    "NameArabic": "كنب حرف U",
     "CategoryId": 1
   },
   {
-    "Name": "L-Shape",
+    "NameEnglish": "L-Shape",
+    "NameArabic": "ركنات",
     "CategoryId": 1
   },
   {
-    "Name": "Recliner Sofa Sets",
+    "NameEnglish": "Recliner Sofa Sets",
+    "NameArabic": "انتريهات ريكلاينر",
     "CategoryId": 1
   },
   {
-    "Name": "Tv Tables",
+    "NameEnglish": "Tv Tables",
+    "NameArabic": "ترابيزات تليفزيون",
     "CategoryId": 1
   },
   {
-    "Name": "King Bedroom Set",
+    "NameEnglish": "King Bedroom Set",
+    "NameArabic": "غرف نوم 180 سم",
     "CategoryId": 2
   },
   {
-    "Name": "Queen Bedroom Set",
+    "NameEnglish": "Queen Bedroom Set",
+    "NameArabic": "غرف نوم 160 سم",
     "CategoryId": 2
   },
   {
-    "Name": "Youth beedrooms",
+    "NameEnglish": "Youth beedrooms",
+    "NameArabic": "غرف نم شبابي",
     "CategoryId": 2
   },
   {
-    "Name": "Kids beedrooms",
+    "NameEnglish": "Kids beedrooms",
+    "NameArabic": "غرف نوم اطفال",
     "CategoryId": 2
   },
   {
-    "Name": "Complete Dining room sets",
+    "NameEnglish": "Complete Dining room sets",
+    "NameArabic": "غرف سفرة كاملة",
     "CategoryId": 3
   },
   {
-    "Name": "Dining room with 8 chairs",
+    "NameEnglish": "Dining room with 8 chairs",
+    "NameArabic": "ترابيزة سفرة و 8 كراسي",
     "CategoryId": 3
   },
   {
-    "Name": "Dining room with 6 chairs",
+    "NameEnglish": "Dining room with 6 chairs",
+    "NameArabic": "ترابيزة سفرة و 6 كراسي",
     "CategoryId": 3
   },
   {
-    "Name": "Dining room with 4 chairs",
+    "NameEnglish": "Dining room with 4 chairs",
+    "NameArabic": "ترابيزة سفرة و 4 كراسي",
     "CategoryId": 3
   },
   {
-    "Name": "Outdoor table",
+    "NameEnglish": "Outdoor table",
+    "NameArabic": "ترابيزات",
     "CategoryId": 4
   },
   {
-    "Name": "Outdoor Dining Set",
+    "NameEnglish": "Outdoor Dining Set",
+    "NameArabic": "أطقم سفرة خارجية",
     "CategoryId": 4
   },
   {
-    "Name": "Kitchen Set",
+    "NameEnglish": "Kitchen Set",
+    "NameArabic": "مطابخ",
     "CategoryId": 5
   }
 ]

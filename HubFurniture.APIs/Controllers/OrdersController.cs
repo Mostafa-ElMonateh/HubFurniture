@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Globalization;
+using System.Security.Claims;
 using AutoMapper;
 using HubFurniture.APIs.Dtos;
 using HubFurniture.APIs.Errors;
@@ -14,12 +15,15 @@ namespace HubFurniture.APIs.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
+        string currentCulture;
+
 
         public OrdersController(IOrderService orderService,
             IMapper mapper)
         {
             _orderService = orderService;
             _mapper = mapper;
+            currentCulture = CultureInfo.CurrentCulture.Name;
         }
 
 
@@ -64,10 +68,19 @@ namespace HubFurniture.APIs.Controllers
         }
 
         [HttpGet("deliveryMethods")] // {{BaseUrl}}/api/deliveryMethod
-        public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
+        public async Task<ActionResult<IReadOnlyList<DeliveryMethodDto>>> GetDeliveryMethods()
         {
+            bool checkCulture = currentCulture.StartsWith("ar");
             var deliveryMethods = await _orderService.GetDeliveryMethodsAsync();
-            return Ok(deliveryMethods);
+            var deliveryMethodDtos = deliveryMethods.Select(method => new DeliveryMethodDto
+            {
+                Name = method.Name,
+                Description = checkCulture ? method.DescriptionArabic : method.DescriptionEnglish,
+                Cost = method.Cost,
+                DeliveryTime = checkCulture ? method.DeliveryTimeArabic : method.DeliveryTimeEnglish
+            }).ToList();
+
+            return Ok(deliveryMethodDtos);
         }
 
 

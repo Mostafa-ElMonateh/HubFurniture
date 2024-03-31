@@ -29,7 +29,7 @@ namespace HubFurniture.Repository
             return await ApplySpecifications(specifications).ToListAsync();
         }
 
-        public async Task<T?> GetWithSpecAsync(ISpecifications<T> specifications)
+        public async Task<T?> GetEntityWithSpecAsync(ISpecifications<T> specifications)
         {
             return await ApplySpecifications(specifications).FirstOrDefaultAsync();
         }

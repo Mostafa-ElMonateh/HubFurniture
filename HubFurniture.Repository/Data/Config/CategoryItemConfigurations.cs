@@ -15,7 +15,11 @@ namespace HubFurniture.Repository.Data.Config
         {
            
 
-            builder.Property(pi => pi.Name)
+            builder.Property(pi => pi.NameArabic)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(pi => pi.NameEnglish)
                 .IsRequired()
                 .HasMaxLength(50);
 
@@ -32,10 +36,16 @@ namespace HubFurniture.Repository.Data.Config
             builder.Property(pi => pi.Color)
                 .IsRequired();
 
-            builder.Property(pi => pi.Style)
+            builder.Property(pi => pi.StyleArabic)
                 .IsRequired();
 
-            builder.Property(pi => pi.Room)
+            builder.Property(pi => pi.StyleEnglish)
+                .IsRequired();
+
+            builder.Property(pi => pi.RoomArabic)
+                .IsRequired();
+
+            builder.Property(pi => pi.RoomEnglish)
                 .IsRequired();
 
             builder.Property(pi => pi.Height)

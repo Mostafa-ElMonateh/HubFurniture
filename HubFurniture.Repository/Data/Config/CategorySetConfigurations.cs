@@ -14,9 +14,12 @@ namespace HubFurniture.Repository.Data.Config
         public void Configure(EntityTypeBuilder<CategorySet> builder)
         {
 
-            
 
-            builder.Property(cs => cs.Name)
+            builder.Property(cs => cs.NameArabic)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(cs => cs.NameEnglish)
                 .IsRequired()
                 .HasMaxLength(50);
 
@@ -33,10 +36,16 @@ namespace HubFurniture.Repository.Data.Config
             builder.Property(cs => cs.Color)
                 .IsRequired();
 
-            builder.Property(cs => cs.Style)
+            builder.Property(cs => cs.StyleArabic)
                 .IsRequired();
 
-            builder.Property(cs => cs.Room)
+            builder.Property(cs => cs.StyleEnglish)
+                .IsRequired();
+
+            builder.Property(cs => cs.RoomArabic)
+                .IsRequired();
+
+            builder.Property(cs => cs.RoomEnglish)
                 .IsRequired();
 
             builder.HasMany(cs => cs.ProductPictures)
@@ -44,6 +53,11 @@ namespace HubFurniture.Repository.Data.Config
 
             builder.HasMany(cs => cs.CustomerReviews)
                 .WithOne();
+
+            builder.HasMany(cs => cs.Items)
+                .WithOne()
+                .HasForeignKey(i => i.CategorySetId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -9,12 +9,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using System.Linq;
 using HubFurniture.Core.Contracts;
 using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Service;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 
 namespace HubFurniture.APIs.Extensions
@@ -23,6 +22,8 @@ namespace HubFurniture.APIs.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.AddScoped(typeof(IPaymentService), typeof(PaymentService));
+            
             services.AddScoped(typeof(IProductService), typeof(ProductService));
 
             services.AddScoped(typeof(IOrderService), typeof(OrderService));
@@ -34,13 +35,24 @@ namespace HubFurniture.APIs.Extensions
             services.AddScoped(typeof(IAddressReposatory), typeof(AddressReposatory));
 
 
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
+            services.AddScoped(typeof(IUserService), typeof(UserService));
+
 
             services.AddAutoMapper(typeof(MappingProfiles));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            #region Identity
+            services.AddIdentity<ApplicationUser, IdentityRole> (options =>
+            {
+                // Configure user validation rules
+                options.User.RequireUniqueEmail = true;
+                options.User.AllowedUserNameCharacters = ""; 
+            })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<StoreContext>();
+            #endregion
 
+            #region JWT
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -71,6 +83,23 @@ namespace HubFurniture.APIs.Extensions
                     AllowAnyOrigin();
                 });
             });
+
+            #endregion
+
+            #region Localization
+            var supportedCultures = new[] { "en-US", "ar" };
+            var localizationOptions = new RequestLocalizationOptions()
+                .SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture(culture: "en-US", uiCulture: "en-US");
+                options.SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
+                options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
+            });
+            #endregion
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
