@@ -83,7 +83,8 @@ namespace HubFurniture.APIs.Helpers
             CreateMap<RegisterUserDto, ApplicationUser>()
             .ReverseMap();
 
-            CreateMap<UserAddressDto, UserAddress>().ReverseMap();
+            CreateMap<UserAddressDto, UserAddress>()
+                .ReverseMap();
 
         }
     }

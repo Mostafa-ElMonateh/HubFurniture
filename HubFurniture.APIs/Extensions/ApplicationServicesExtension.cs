@@ -70,6 +70,8 @@ namespace HubFurniture.APIs.Extensions
                     ValidAudience = Configuration["JWT:ValidAudience"],
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+
+
                 };
             });
 
