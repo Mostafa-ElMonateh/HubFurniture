@@ -3,10 +3,13 @@ using System.Security.Claims;
 using AutoMapper;
 using HubFurniture.APIs.Dtos;
 using HubFurniture.APIs.Errors;
+using HubFurniture.Core.Contracts;
 using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Core.Entities.Order_Aggregate;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Stripe.Checkout;
 
 namespace HubFurniture.APIs.Controllers
 {
@@ -14,14 +17,17 @@ namespace HubFurniture.APIs.Controllers
     public class OrdersController : BaseApiController
     {
         private readonly IOrderService _orderService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         string currentCulture;
 
 
         public OrdersController(IOrderService orderService,
+            IUnitOfWork unitOfWork,
             IMapper mapper)
         {
             _orderService = orderService;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             currentCulture = CultureInfo.CurrentCulture.Name;
         }
@@ -29,19 +35,32 @@ namespace HubFurniture.APIs.Controllers
 
         [ProducesResponseType(typeof(OrderToReturnDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-        [HttpPost] // {{BaseUrl}}/api/orders
-        public async Task<ActionResult<OrderToReturnDto>> CreateOrder(OrderDto orderDto)
+        [HttpPost("{orderId}")] // {{BaseUrl}}/api/orders/123
+        public async Task<ActionResult<OrderToReturnDto>> CreateOrder([FromRoute]int orderId)
         {
+
             var buyerEmail = User.FindFirstValue(ClaimTypes.Email);
 
-            var address = _mapper.Map<AddressDto, Address>(orderDto.ShippingAddress);
-            var order = await _orderService.CreateOrderAsync(buyerEmail, orderDto.BasketId, orderDto.DeliveryMethodId, address);
-        
-            if (order is null)
+            var order = await _orderService.GetOrderByIdForUserAsync(orderId, buyerEmail);
+
+            var service = new SessionService();
+
+            var session = service.Get(order.PaymentIntentId);
+
+            if (session.PaymentStatus == "paid")
             {
-                return BadRequest(new ApiResponse(400));
+                if (order is null)
+                {
+                    return BadRequest(new ApiResponse(400));
+                }
+
+                order.Status = OrderStatus.PaymentReceived;
+
+                await _unitOfWork.CompleteAsync();
+
+                return Ok(_mapper.Map<Order, OrderToReturnDto>(order));
             }
-            return Ok(_mapper.Map<Order, OrderToReturnDto>(order));
+            return BadRequest(new ApiResponse(400));
         }
 
         [HttpGet] // {{BaseUrl}}/api/orders
@@ -74,6 +93,7 @@ namespace HubFurniture.APIs.Controllers
             var deliveryMethods = await _orderService.GetDeliveryMethodsAsync();
             var deliveryMethodDtos = deliveryMethods.Select(method => new DeliveryMethodDto
             {
+                Id = method.Id,
                 Name = method.Name,
                 Description = checkCulture ? method.DescriptionArabic : method.DescriptionEnglish,
                 Cost = method.Cost,

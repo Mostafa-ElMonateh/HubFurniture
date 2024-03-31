@@ -38,7 +38,7 @@
     "Suitability": 0,
     "RoomEnglish": "Bedroom",
     "RoomArabic": "غرفة النوم",
-    "CategorySetTypeId": 1,
+    "CategorySetTypeId": 2,
     "CategoryId": 2
   },
   {
@@ -52,7 +52,7 @@
     "Suitability": 0,
     "RoomEnglish": "Bedroom",
     "RoomArabic": "غرفة النوم",
-    "CategorySetTypeId": 1,
+    "CategorySetTypeId": 2,
     "CategoryId": 2
   },
   {
