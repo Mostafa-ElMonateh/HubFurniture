@@ -7,6 +7,7 @@ using HubFurniture.Core.Entities;
 using HubFurniture.Core.Specifications.ProductSpecifications;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using HubFurniture.Core.Contracts;
 
 namespace HubFurniture.APIs.Controllers
 {
@@ -14,13 +15,16 @@ namespace HubFurniture.APIs.Controllers
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         string currentCulture;
 
         public ProductsController(IProductService productService,
-            IMapper mapper)
+            IMapper mapper,
+            IUnitOfWork unitOfWork)
         {
             _productService = productService;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
             currentCulture = CultureInfo.CurrentCulture.Name;
         }
 
@@ -160,6 +164,19 @@ namespace HubFurniture.APIs.Controllers
 
             return Ok(mappedProductItem);
         }
+
+
+        [HttpPost("review")]
+        public async Task CreateReview([FromBody]CustomerReview? review)
+        {
+            var customerReview = _unitOfWork.Repository<CustomerReview>();
+            if (review is not null)
+            {
+                await customerReview.AddAsync(review);
+                await _unitOfWork.CompleteAsync();
+            }
+        }
+
 
 
     }
