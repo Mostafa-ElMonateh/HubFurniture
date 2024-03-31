@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using HubFurniture.Core.Entities;
+using HubFurniture.APIs.Dtos;
+using AutoMapper;
+using static StackExchange.Redis.Role;
 
 namespace HubFurniture.APIs.Controllers
 {
@@ -15,11 +18,15 @@ namespace HubFurniture.APIs.Controllers
     {
         private readonly IUserService _userService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, UserManager<ApplicationUser> userManager)
+
+        public UserController(IUserService userService, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _userService = userService;
             _userManager = userManager;
+            _mapper = mapper;
+
         }
 
         [HttpPost("setBasketId")]
@@ -46,6 +53,20 @@ namespace HubFurniture.APIs.Controllers
 
             var basketId = await _userService.GetBasketId(currentUser.BasketId);
             return Ok(new { BasketId = basketId });
+        }
+
+        [HttpGet("getUserInfo")]
+        public async Task<IActionResult> GetUserInfo()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+
+            var currentApplicationUser = await _userService.GetUserById(currentUser.Id);
+            var userInfoDto = _mapper.Map<UserInfoDto>(currentApplicationUser);
+            return Ok(userInfoDto );
         }
     }
 }

@@ -192,6 +192,34 @@ namespace HubFurniture.Repository.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserAddress",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Company = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Fax = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StreetAdress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAddress", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserAddress_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CategoryItemsTypes",
                 columns: table => new
                 {
@@ -421,7 +449,8 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Height = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Width = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Depth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
@@ -541,6 +570,11 @@ namespace HubFurniture.Repository.Data.Migrations
                 name: "IX_SetItems_CategorySetId",
                 table: "SetItems",
                 column: "CategorySetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAddress_UserId",
+                table: "UserAddress",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -574,10 +608,10 @@ namespace HubFurniture.Repository.Data.Migrations
                 name: "SetItems");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "UserAddress");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -587,6 +621,9 @@ namespace HubFurniture.Repository.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "CategorySets");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "DeliveryMethods");

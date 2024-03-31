@@ -44,6 +44,14 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -459,6 +467,43 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.ToTable("ProductPictures");
                 });
 
+            modelBuilder.Entity("HubFurniture.Core.Entities.SetItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategorySetId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Depth")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("Height")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("NameArabic")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NameEnglish")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal?>("Width")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategorySetId");
+
+                    b.ToTable("SetItems");
+                });
+
             modelBuilder.Entity("HubFurniture.Core.Entities.UserAddress", b =>
                 {
                     b.Property<int>("Id")
@@ -809,6 +854,15 @@ namespace HubFurniture.Repository.Data.Migrations
                         .HasForeignKey("CategorySetId");
                 });
 
+            modelBuilder.Entity("HubFurniture.Core.Entities.SetItem", b =>
+                {
+                    b.HasOne("HubFurniture.Core.Entities.CategorySet", null)
+                        .WithMany("Items")
+                        .HasForeignKey("CategorySetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HubFurniture.Core.Entities.UserAddress", b =>
                 {
                     b.HasOne("HubFurniture.Core.Entities.ApplicationUser", "User")
@@ -818,15 +872,6 @@ namespace HubFurniture.Repository.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("HubFurniture.Core.Entities.SetItem", b =>
-                {
-                    b.HasOne("HubFurniture.Core.Entities.CategorySet", null)
-                        .WithMany("Items")
-                        .HasForeignKey("CategorySetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

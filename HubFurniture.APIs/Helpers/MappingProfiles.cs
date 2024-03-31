@@ -2,6 +2,7 @@
 using HubFurniture.APIs.Dtos;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Entities.Order_Aggregate;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace HubFurniture.APIs.Helpers
@@ -84,6 +85,9 @@ namespace HubFurniture.APIs.Helpers
             .ReverseMap();
 
             CreateMap<UserAddressDto, UserAddress>()
+                .ReverseMap();
+
+            CreateMap<ApplicationUser, UserInfoDto>()
                 .ReverseMap();
 
         }
