@@ -10,7 +10,7 @@ namespace HubFurniture.Core.Specifications.ProductPictureSpecifications
     public class SetPictureSpecifications : BaseSpecifications<ProductPicture>
     {
         public SetPictureSpecifications(int setId)
-            :base(pp => pp.CategoryItemId == setId)
+            :base(pp => pp.CategorySetId == setId)
         {
 
         }

@@ -8,7 +8,6 @@ using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Core.Entities.Order_Aggregate;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Stripe.Checkout;
 
 namespace HubFurniture.APIs.Controllers
@@ -66,10 +65,20 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet] // {{BaseUrl}}/api/orders
         public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser()
         {
+            bool culture = currentCulture.StartsWith("ar");
             var buyerEmail = User.FindFirstValue(ClaimTypes.Email);
             var orders = await _orderService.GetOrdersForUserAsync(buyerEmail);
+            dynamic mappedOrders;
+            if (!culture)
+            {
+                mappedOrders = _mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderEnToReturnDto>>(orders);
+            }
+            else
+            {
+                mappedOrders = _mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderArToReturnDto>>(orders);
+            }
             
-            return Ok(_mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDto>>(orders));
+            return Ok(mappedOrders);
         }
 
         [ProducesResponseType(typeof(OrderToReturnDto), StatusCodes.Status200OK)]
@@ -77,13 +86,20 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("{id}")] // {{BaseUrl}}/api/orders/1
         public async Task<ActionResult<OrderToReturnDto>> GetOrderForUser(int id)
         {
+            bool culture = currentCulture.StartsWith("ar");
             var buyerEmail = User.FindFirstValue(ClaimTypes.Email);
             var order = await _orderService.GetOrderByIdForUserAsync(id, buyerEmail);
             if (order is null)
             {
                 return NotFound(new ApiResponse(404));
             }
-            return Ok(_mapper.Map<Order, OrderToReturnDto>(order));
+
+            if (!culture)
+            {
+                return Ok(_mapper.Map<Order, OrderEnToReturnDto>(order));
+            }
+            return Ok(_mapper.Map<Order, OrderArToReturnDto>(order));
+            
         }
 
         [HttpGet("deliveryMethods")] // {{BaseUrl}}/api/deliveryMethod
@@ -103,6 +119,25 @@ namespace HubFurniture.APIs.Controllers
             return Ok(deliveryMethodDtos);
         }
 
+
+        [HttpPost("cancel/{orderId}")] // {{BaseUrl}}/api/orders/123
+        public async Task<ActionResult> CancelOrder([FromRoute]int orderId)
+        {
+            bool culture = currentCulture.StartsWith("ar");
+            var buyerEmail = User.FindFirstValue(ClaimTypes.Email);
+            var order = await _orderService.GetOrderByIdForUserAsync(orderId, buyerEmail);
+            if (order is null)
+            {
+                return NotFound(new ApiResponse(404));
+            }
+
+            order.Status = OrderStatus.Cancelled;
+
+            await _unitOfWork.CompleteAsync();
+
+            return Ok();
+
+        }
 
     }
 }
