@@ -66,8 +66,11 @@ namespace AdminPanel.Controllers
             {
                 if (itemViewModel.Image != null)
                 {
-                    itemViewModel.ProductPictures[0].PictureUrl =
-                        PictureSettings.UploadFile(itemViewModel.Image, "categoryProducts");
+                    string pictureUrl = PictureSettings.UploadFile(itemViewModel.Image, "categoryProducts");
+                    itemViewModel.ProductPictures.Add(new ProductPicture()
+                    {
+                        PictureUrl = pictureUrl
+                    });
                 }
                 else
                 {
@@ -81,6 +84,26 @@ namespace AdminPanel.Controllers
                 await _unitOfWork.CompleteAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            var availabilities = Enum.GetValues(typeof(Availability))
+                .Cast<Availability>()
+                .Select(v => new SelectListItem
+                {
+                    Text = v.ToString(),
+                    Value = v.ToString()
+                }).ToList();
+
+            var suitabilities = Enum.GetValues(typeof(Suitability))
+                .Cast<Suitability>()
+                .Select(v => new SelectListItem
+                {
+                    Text = v.ToString(),
+                    Value = v.ToString()
+                }).ToList();
+
+    
+            ViewBag.Availabilities = availabilities;
+            ViewBag.Suitabilities = suitabilities;
 
             return View(itemViewModel);
         }

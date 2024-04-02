@@ -65,9 +65,6 @@ namespace HubFurniture.Repository.Data.Config
             builder.HasMany(pi => pi.CustomerReviews)
                 .WithOne();
 
-            builder.HasOne(ci => ci.CategoryItemType)
-                .WithMany();
-
 
         }
     }

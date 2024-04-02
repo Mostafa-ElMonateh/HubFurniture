@@ -40,19 +40,21 @@ namespace AdminPanel.Models
         [Range(50, 400)]
         public decimal? Width { get; set; }
 
+        [Required(ErrorMessage = "Type is Required")]
         public int CategoryItemTypeId { get; set; }
 
-        [Required(ErrorMessage = "Category Item Type Id is Required")]
-        public CategoryItemType CategoryItemType { get; set; }
+        public ItemTypeViewModel? CategoryItemType { get; set; }
         // Navigational Property 1-M => [M]
         public List<ProductPicture> ProductPictures{ get; set; } = new List<ProductPicture>();
         // Navigational Property 1-M => [M]
         
-        public ICollection<CustomerReview> CustomerReviews { get; set; } = new HashSet<CustomerReview>();
+        public ICollection<CustomerReview>? CustomerReviews { get; set; }
+        
+        [Required(ErrorMessage = "Category is Required")]
         public int CategoryId { get; set; }
 
-        [Required(ErrorMessage = "Category Item Type Id is Required")]
+
         [JsonIgnore] // Avoid Circle Ref
-        public Category Category { get; set; }
+        public ItemCategoryViewModel? Category { get; set; }
     }
 }
