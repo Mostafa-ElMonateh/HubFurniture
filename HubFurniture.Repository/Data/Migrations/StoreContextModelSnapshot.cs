@@ -188,6 +188,12 @@ namespace HubFurniture.Repository.Data.Migrations
 
                     b.HasIndex("CategoryItemTypeId");
 
+                    b.HasIndex("NameArabic")
+                        .IsUnique();
+
+                    b.HasIndex("NameEnglish")
+                        .IsUnique();
+
                     b.ToTable("CategoryItems");
                 });
 
@@ -645,13 +651,15 @@ namespace HubFurniture.Repository.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("HubFurniture.Core.Entities.CategoryItemType", null)
+                    b.HasOne("HubFurniture.Core.Entities.CategoryItemType", "CategoryItemType")
                         .WithMany("CategoryItems")
                         .HasForeignKey("CategoryItemTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("CategoryItemType");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CategoryItemType", b =>

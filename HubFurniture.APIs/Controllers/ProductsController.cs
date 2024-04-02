@@ -32,6 +32,7 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("categories")]
         public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetCategories()
         {
+            bool culture = currentCulture.StartsWith("ar");
             var categories = await _productService.GetCategoriesAsync();
 
             // localization
@@ -39,8 +40,7 @@ namespace HubFurniture.APIs.Controllers
             {
                 var dto = _mapper.Map<ProductCategoryToReturnDto>(category);
 
-
-                dto.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+                dto.Name = culture ? category.NameArabic : category.NameEnglish;
 
                 return dto;
             }).ToList();
@@ -53,11 +53,12 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("sets/types")]
         public async Task<ActionResult<CategorySetsToReturnDto>> GetCategorySetsTypes([FromQuery]ProductSpecParams specParams)
         {
+            bool culture = currentCulture.StartsWith("ar");
             var category = await _productService.GetCategoryByIdAsync(specParams);
             var mappedProductsCategory = _mapper.Map<Category, CategorySetsToReturnDto>(category);
 
             //Localize the category name based on the current culture
-            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+            mappedProductsCategory.Name = culture ? category.NameArabic : category.NameEnglish;
 
             return Ok(mappedProductsCategory);
         }
@@ -67,12 +68,12 @@ namespace HubFurniture.APIs.Controllers
         public async Task<ActionResult<CategoryItemsToReturn>> GetCategoryItemsTypes([FromQuery]ProductSpecParams specParams)
         {
             // _dbContext.CategoryItems.Where(c => c.Name == Name).CountAsync();
-
+            bool culture = currentCulture.StartsWith("ar");
             var category = await _productService.GetCategoryByIdAsync(specParams);
             var mappedProductsCategory = _mapper.Map<Category, CategoryItemsToReturn>(category);
 
             // Localize the category name based on the current culture
-            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+            mappedProductsCategory.Name = culture ? category.NameArabic : category.NameEnglish;
 
             return Ok(mappedProductsCategory);
         }

@@ -1,6 +1,7 @@
 ﻿using HubFurniture.Core.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace HubFurniture.Core.Entities
         public decimal? Depth { get; set; }
         public decimal? Width { get; set; }
         public int CategoryItemTypeId { get; set; }
+        public CategoryItemType CategoryItemType { get; set; }
 
         // Navigational Property 1-M => [M]
         public List<ProductPicture> ProductPictures{ get; set; } = new List<ProductPicture>();

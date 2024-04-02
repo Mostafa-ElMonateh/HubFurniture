@@ -13,7 +13,9 @@ namespace HubFurniture.Repository.Data.Config
     {
         public void Configure(EntityTypeBuilder<CategoryItem> builder)
         {
-           
+
+            builder.HasIndex(ci => ci.NameEnglish).IsUnique();
+            builder.HasIndex(ci => ci.NameArabic).IsUnique();
 
             builder.Property(pi => pi.NameArabic)
                 .IsRequired()
@@ -62,6 +64,9 @@ namespace HubFurniture.Repository.Data.Config
 
             builder.HasMany(pi => pi.CustomerReviews)
                 .WithOne();
+
+            builder.HasOne(ci => ci.CategoryItemType)
+                .WithMany();
 
 
         }

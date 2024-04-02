@@ -11,7 +11,6 @@ namespace HubFurniture.APIs.Helpers
 
         public MappingProfiles()
         {
-
             CreateMap<Order, OrderToReturnDto>()
                 .ForMember(d => d.DeliveryMethod, 
                     o=>
@@ -20,14 +19,41 @@ namespace HubFurniture.APIs.Helpers
                     o =>
                         o.MapFrom(s => s.DeliveryMethod.Cost));
 
-            CreateMap<OrderItem, OrderItemDto>()
+            CreateMap<Order, OrderEnToReturnDto>()
+                .ForMember(d => d.DeliveryMethod, 
+                    o=>
+                        o.MapFrom(s => s.DeliveryMethod.Name))
+                .ForMember(d => d.DeliveryMethodCost,
+                    o =>
+                        o.MapFrom(s => s.DeliveryMethod.Cost));
+
+            CreateMap<Order, OrderArToReturnDto>()
+                .ForMember(d => d.DeliveryMethod, 
+                    o=>
+                        o.MapFrom(s => s.DeliveryMethod.Name))
+                .ForMember(d => d.DeliveryMethodCost,
+                    o =>
+                        o.MapFrom(s => s.DeliveryMethod.Cost));
+
+            CreateMap<OrderItem, OrderItemArToReturnDto>()
                 .ForMember(d => d.ProductId,
                     o =>
                         o.MapFrom(s => s.ProductOrdered.ProductId))
-                .ForMember(d => d.ProductNameArabic,
+                .ForMember(d => d.productName,
                     o =>
                         o.MapFrom(s => s.ProductOrdered.ProductNameArabic))
-                .ForMember(d => d.ProductNameEnglish,
+                .ForMember(d => d.PictureUrl,
+                    o =>
+                        o.MapFrom<OrderItemPictureUrlResolver>())
+                .ForMember(d => d.Type,
+                    o =>
+                        o.MapFrom(s => s.ProductOrdered.Type));
+
+            CreateMap<OrderItem, OrderItemEnToReturnDto>()
+                .ForMember(d => d.ProductId,
+                    o =>
+                        o.MapFrom(s => s.ProductOrdered.ProductId))
+                .ForMember(d => d.productName,
                     o =>
                         o.MapFrom(s => s.ProductOrdered.ProductNameEnglish))
                 .ForMember(d => d.PictureUrl,
