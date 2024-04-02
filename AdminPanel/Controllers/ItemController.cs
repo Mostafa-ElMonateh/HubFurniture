@@ -4,6 +4,7 @@ using AutoMapper;
 using HubFurniture.Core.Contracts;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Enums;
+using HubFurniture.Core.Specifications.ProductCategorySpecifications;
 using HubFurniture.Core.Specifications.ProductSpecifications;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -106,6 +107,16 @@ namespace AdminPanel.Controllers
             ViewBag.Suitabilities = suitabilities;
 
             return View(itemViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTypesByCategoryId(int categoryId)
+        {
+            var typesSpecifications = new ItemsTypesOfCategorySpecifications(categoryId);
+            var types = await _unitOfWork.Repository<CategoryItemType>().GetAllWithSpecAsync(typesSpecifications);
+            var mappedTypes =
+                _mapper.Map<IReadOnlyList<CategoryItemType>, IReadOnlyList<ItemsTypesInCategoryViewModel>>(types);
+            return Json(mappedTypes);
         }
     }
 }
