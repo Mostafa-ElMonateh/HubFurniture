@@ -67,6 +67,31 @@ namespace HubFurniture.APIs.Controllers
             var currentApplicationUser = await _userService.GetUserById(currentUser.Id);
             var userInfoDto = _mapper.Map<UserInfoDto>(currentApplicationUser);
             return Ok(userInfoDto );
+
+        }
+
+        [HttpPut("editName")]
+        public async Task<IActionResult> EditUserName([FromBody] EditUserDto editUserDto)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return Unauthorized();
+            }
+
+            currentUser.FirstName = editUserDto.FirstName;
+            currentUser.LastName = editUserDto.LastName;
+
+            var result = await _userManager.UpdateAsync(currentUser);
+
+            if (result.Succeeded)
+            {
+                return Ok("User's name updated successfully.");
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }
         }
     }
 }
