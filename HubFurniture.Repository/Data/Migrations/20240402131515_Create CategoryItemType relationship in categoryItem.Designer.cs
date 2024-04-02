@@ -4,6 +4,7 @@ using HubFurniture.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HubFurniture.Repository.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20240402131515_Create CategoryItemType relationship in categoryItem")]
+    partial class CreateCategoryItemTyperelationshipincategoryItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,12 +190,6 @@ namespace HubFurniture.Repository.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CategoryItemTypeId");
-
-                    b.HasIndex("NameArabic")
-                        .IsUnique();
-
-                    b.HasIndex("NameEnglish")
-                        .IsUnique();
 
                     b.ToTable("CategoryItems");
                 });
