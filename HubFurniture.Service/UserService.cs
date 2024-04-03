@@ -1,5 +1,6 @@
 ﻿using HubFurniture.Core.Contracts.Contracts.Repositories;
 using HubFurniture.Core.Contracts.Contracts.Services;
+using HubFurniture.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,11 @@ namespace HubFurniture.Service
         {
             var user = await _userRepository.GetUserById(userId);
             return user?.BasketId;
+        }
+
+        public async Task<ApplicationUser?> GetUserById(string userId)
+        {
+            return await _userRepository.GetUserById(userId);
         }
     }
 }

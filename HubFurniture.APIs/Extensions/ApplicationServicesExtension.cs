@@ -31,6 +31,10 @@ namespace HubFurniture.APIs.Extensions
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+            services.AddScoped(typeof(IAddcressService), typeof(AdressServices));
+            services.AddScoped(typeof(IAddressReposatory), typeof(AddressReposatory));
+
+
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddScoped(typeof(IUserService), typeof(UserService));
 
@@ -66,6 +70,8 @@ namespace HubFurniture.APIs.Extensions
                     ValidAudience = Configuration["JWT:ValidAudience"],
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+
+
                 };
             });
 

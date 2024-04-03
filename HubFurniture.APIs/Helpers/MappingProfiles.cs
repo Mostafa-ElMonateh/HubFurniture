@@ -2,6 +2,7 @@
 using HubFurniture.APIs.Dtos;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Entities.Order_Aggregate;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace HubFurniture.APIs.Helpers
@@ -63,7 +64,7 @@ namespace HubFurniture.APIs.Helpers
                     o =>
                         o.MapFrom(s => s.ProductOrdered.Type));
 
-            CreateMap<AddressDto, Address>();
+            CreateMap<AddressDto, HubFurniture.Core.Entities.Order_Aggregate.Address>();
 
             CreateMap<CustomerBasketDto, CustomerBasket>();
             CreateMap<BasketItemDto, BasketItem>();
@@ -108,6 +109,12 @@ namespace HubFurniture.APIs.Helpers
 
             CreateMap<RegisterUserDto, ApplicationUser>()
             .ReverseMap();
+
+            CreateMap<UserAddressDto, UserAddress>()
+                .ReverseMap();
+
+            CreateMap<ApplicationUser, UserInfoDto>()
+                .ReverseMap();
 
         }
     }
