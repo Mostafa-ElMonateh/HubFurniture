@@ -27,7 +27,7 @@ namespace AdminPanel.Helpers
 
         public static void DeleteFile(string folderName, string fileName)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", folderName, fileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);
 
             if (File.Exists(filePath))
             {
