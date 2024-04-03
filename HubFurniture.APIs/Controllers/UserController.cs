@@ -86,12 +86,109 @@ namespace HubFurniture.APIs.Controllers
 
             if (result.Succeeded)
             {
-                return Ok("User's name updated successfully.");
+                return Ok(new { message = "User's name updated successfully." });
             }
             else
             {
-                return BadRequest(result.Errors);
+                return BadRequest(new { message = result.Errors });
             }
         }
+
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+
+            if (changePasswordDto.newPassword != changePasswordDto.confirmPassword)
+            {
+                ModelState.AddModelError(string.Empty, "The new password and confirmation password do not match.");
+                return BadRequest(ModelState);
+            }
+
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return NotFound(new { message = $"Unable to load user with ID '{_userManager.GetUserId(User)}'." });
+                }
+
+                var changePasswordResult = await _userManager.ChangePasswordAsync(user, changePasswordDto.currentPassword, changePasswordDto.newPassword);
+                if (!changePasswordResult.Succeeded)
+                {
+                    foreach (var error in changePasswordResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return BadRequest(ModelState);
+                }
+
+                return Ok(new { message = "Password changed successfully." });
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpPost("ChangeEmail")]
+        public async Task<IActionResult> ChangeEmail(ChangeEmailDto changeEmailDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                }
+
+                // Check if the current password is correct
+                var isPasswordValid = await _userManager.CheckPasswordAsync(user, changeEmailDto.Password);
+                if (!isPasswordValid)
+                {
+                    ModelState.AddModelError(string.Empty, "The current password is incorrect.");
+                    return BadRequest(new {message = "The current password is incorrect." });
+                }
+
+                var changeEmailResult = await _userManager.SetEmailAsync(user, changeEmailDto.Email);
+                if (!changeEmailResult.Succeeded)
+                {
+                    foreach (var error in changeEmailResult.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return BadRequest(ModelState);
+                }
+
+                return Ok(new { message = "Email changed successfully." });
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpPost("ValidatePassword")]
+        public async Task<IActionResult> ValidatePassword(ValidatePasswordDto validatePasswordDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                }
+
+                var isPasswordValid = await _userManager.CheckPasswordAsync(user, validatePasswordDto.currentPassword);
+                if (isPasswordValid)
+                {
+                    return Ok(new { message = "Password is valid." });
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "The current password is incorrect.");
+                    return BadRequest(new {message = "The current password is incorrect."});
+                }
+            }
+
+            return BadRequest(ModelState);
+        }
+
+
     }
 }
