@@ -24,14 +24,19 @@ namespace AdminPanel
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<StoreContext>();
+
             builder.Services.AddIdentity<ApplicationUser, IdentityRole> (options => 
             {
                 // Configure user validation rules
                 options.User.RequireUniqueEmail = true;
-                options.User.AllowedUserNameCharacters = ""; 
+                options.User.AllowedUserNameCharacters = "";
+                options.SignIn.RequireConfirmedEmail = false;
             })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<StoreContext>();
+
+            builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
@@ -53,6 +58,7 @@ namespace AdminPanel
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
 
             app.Run();
         }
