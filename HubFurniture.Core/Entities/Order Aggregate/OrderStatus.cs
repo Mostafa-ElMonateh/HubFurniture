@@ -14,6 +14,14 @@ namespace HubFurniture.Core.Entities.Order_Aggregate
         [EnumMember(Value = "Payment Received")]
         PaymentReceived,
         [EnumMember(Value = "Payment Failed")]
-        PaymentFailed
+        PaymentFailed,
+        [EnumMember(Value = "Ready For Shipping")]
+        ReadyForShipping,
+        [EnumMember(Value = "Shipping")]
+        Shipping,
+        [EnumMember(Value = "Delivered")]
+        Delivered,
+        [EnumMember(Value = "Cancelled")]
+        Cancelled
     }
 }

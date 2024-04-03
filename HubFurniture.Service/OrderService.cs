@@ -22,8 +22,7 @@ namespace HubFurniture.Service
             _unitOfWork = unitOfWork;
             _paymentService = paymentService;
         }
-        public async Task<Order?> CreateOrderAsync(string buyerEmail, string basketId, int deliveryMethodId,
-          Address shippingAddress)
+        public async Task<Order?> CreateOrderAsync(string buyerEmail, string basketId, int deliveryMethodId, Address shippingAddress, string paymentIntentId)
         {
             // 1. Get Basket from Baskets Repo
             var basket = await _basketRepository.GetBasketAsync(basketId);
@@ -90,7 +89,7 @@ namespace HubFurniture.Service
 
 
             // 5. Create Order.
-            var order = new Order(buyerEmail, shippingAddress, deliveryMethod, orderItems, subTotal, basket.PaymentIntentId);
+            var order = new Order(buyerEmail, shippingAddress, deliveryMethod, orderItems, subTotal, paymentIntentId);
 
             await orderRepository.AddAsync(order);
 

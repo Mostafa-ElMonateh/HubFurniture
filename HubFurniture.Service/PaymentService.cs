@@ -3,6 +3,7 @@ using HubFurniture.Core.Contracts.Contracts.Repositories;
 using HubFurniture.Core.Contracts.Contracts.Services;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Entities.Order_Aggregate;
+using HubFurniture.Core.Specifications.OrderSpecifications;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 
@@ -97,6 +98,26 @@ namespace HubFurniture.Service
 
             return basket;
 
+        }
+
+        public async Task<Order> UpdatePaymentIntentToSucceededOrFailed(string paymentIntentId, bool isSucceeded)
+        {
+            var orderSpecifications = new OrderWithPaymentIntentSpecifications(paymentIntentId);
+            var order = await _unitOfWork.Repository<Order>().GetEntityWithSpecAsync(orderSpecifications);
+            if (isSucceeded == true)
+            {
+                order.Status = OrderStatus.PaymentReceived;
+            }
+            else
+            {
+                order.Status = OrderStatus.PaymentFailed;
+            }
+            
+            _unitOfWork.Repository<Order>().Update(order);
+
+            await _unitOfWork.CompleteAsync();
+
+            return order;
         }
     }
 }

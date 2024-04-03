@@ -24,7 +24,7 @@ namespace HubFurniture.Repository.Data.Config
                .HasMaxLength(50);
 
             builder.HasMany(cit => cit.CategoryItems)
-                .WithOne()
+                .WithOne(ci => ci.CategoryItemType)
                 .HasForeignKey(ci => ci.CategoryItemTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

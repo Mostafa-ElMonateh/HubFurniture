@@ -11,7 +11,6 @@ namespace HubFurniture.APIs.Dtos
         public Address ShippingAddress { get; set; }
         public string DeliveryMethod { get; set; }
         public decimal DeliveryMethodCost { get; set; }
-        public ICollection<OrderItemDto> OrderItems { get; set; } = new HashSet<OrderItemDto>();
         public decimal SubTotal { get; set; }
         public decimal Total { get; set; }
         public string PaymentIntentId { get; set; } = string.Empty;

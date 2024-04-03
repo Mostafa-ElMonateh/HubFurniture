@@ -13,7 +13,9 @@ namespace HubFurniture.Repository.Data.Config
     {
         public void Configure(EntityTypeBuilder<CategoryItem> builder)
         {
-           
+
+            builder.HasIndex(ci => ci.NameEnglish).IsUnique();
+            builder.HasIndex(ci => ci.NameArabic).IsUnique();
 
             builder.Property(pi => pi.NameArabic)
                 .IsRequired()
@@ -58,7 +60,8 @@ namespace HubFurniture.Repository.Data.Config
                 .HasColumnType("decimal(18,2)");
 
             builder.HasMany(pi => pi.ProductPictures)
-                .WithOne();
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(pi => pi.CustomerReviews)
                 .WithOne();

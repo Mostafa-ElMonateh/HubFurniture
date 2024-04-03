@@ -7,6 +7,7 @@ using HubFurniture.Core.Entities;
 using HubFurniture.Core.Specifications.ProductSpecifications;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using HubFurniture.Core.Contracts;
 
 namespace HubFurniture.APIs.Controllers
 {
@@ -14,13 +15,16 @@ namespace HubFurniture.APIs.Controllers
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         string currentCulture;
 
         public ProductsController(IProductService productService,
-            IMapper mapper)
+            IMapper mapper,
+            IUnitOfWork unitOfWork)
         {
             _productService = productService;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
             currentCulture = CultureInfo.CurrentCulture.Name;
         }
 
@@ -28,6 +32,7 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("categories")]
         public async Task<ActionResult<IReadOnlyList<ProductCategoryToReturnDto>>> GetCategories()
         {
+            bool culture = currentCulture.StartsWith("ar");
             var categories = await _productService.GetCategoriesAsync();
 
             // localization
@@ -35,8 +40,7 @@ namespace HubFurniture.APIs.Controllers
             {
                 var dto = _mapper.Map<ProductCategoryToReturnDto>(category);
 
-
-                dto.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+                dto.Name = culture ? category.NameArabic : category.NameEnglish;
 
                 return dto;
             }).ToList();
@@ -49,11 +53,12 @@ namespace HubFurniture.APIs.Controllers
         [HttpGet("sets/types")]
         public async Task<ActionResult<CategorySetsToReturnDto>> GetCategorySetsTypes([FromQuery]ProductSpecParams specParams)
         {
+            bool culture = currentCulture.StartsWith("ar");
             var category = await _productService.GetCategoryByIdAsync(specParams);
             var mappedProductsCategory = _mapper.Map<Category, CategorySetsToReturnDto>(category);
 
             //Localize the category name based on the current culture
-            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+            mappedProductsCategory.Name = culture ? category.NameArabic : category.NameEnglish;
 
             return Ok(mappedProductsCategory);
         }
@@ -63,12 +68,12 @@ namespace HubFurniture.APIs.Controllers
         public async Task<ActionResult<CategoryItemsToReturn>> GetCategoryItemsTypes([FromQuery]ProductSpecParams specParams)
         {
             // _dbContext.CategoryItems.Where(c => c.Name == Name).CountAsync();
-
+            bool culture = currentCulture.StartsWith("ar");
             var category = await _productService.GetCategoryByIdAsync(specParams);
             var mappedProductsCategory = _mapper.Map<Category, CategoryItemsToReturn>(category);
 
             // Localize the category name based on the current culture
-            mappedProductsCategory.Name = currentCulture.StartsWith("ar") ? category.NameArabic : category.NameEnglish;
+            mappedProductsCategory.Name = culture ? category.NameArabic : category.NameEnglish;
 
             return Ok(mappedProductsCategory);
         }
@@ -160,6 +165,19 @@ namespace HubFurniture.APIs.Controllers
 
             return Ok(mappedProductItem);
         }
+
+
+        [HttpPost("review")]
+        public async Task CreateReview([FromBody]CustomerReview? review)
+        {
+            var customerReview = _unitOfWork.Repository<CustomerReview>();
+            if (review is not null)
+            {
+                await customerReview.AddAsync(review);
+                await _unitOfWork.CompleteAsync();
+            }
+        }
+
 
 
     }
