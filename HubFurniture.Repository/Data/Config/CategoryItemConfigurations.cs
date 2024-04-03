@@ -60,7 +60,8 @@ namespace HubFurniture.Repository.Data.Config
                 .HasColumnType("decimal(18,2)");
 
             builder.HasMany(pi => pi.ProductPictures)
-                .WithOne();
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(pi => pi.CustomerReviews)
                 .WithOne();

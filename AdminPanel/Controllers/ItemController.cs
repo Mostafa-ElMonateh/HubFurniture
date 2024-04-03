@@ -118,5 +118,113 @@ namespace AdminPanel.Controllers
                 _mapper.Map<IReadOnlyList<CategoryItemType>, IReadOnlyList<ItemsTypesInCategoryViewModel>>(types);
             return Json(mappedTypes);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            var availabilities = Enum.GetValues(typeof(Availability))
+                .Cast<Availability>()
+                .Select(v => new SelectListItem
+                {
+                    Text = v.ToString(),
+                    Value = v.ToString()
+                }).ToList();
+
+            var suitabilities = Enum.GetValues(typeof(Suitability))
+                .Cast<Suitability>()
+                .Select(v => new SelectListItem
+                {
+                    Text = v.ToString(),
+                    Value = v.ToString()
+                }).ToList();
+
+    
+            ViewBag.Availabilities = availabilities;
+            ViewBag.Suitabilities = suitabilities;
+
+            var itemSpecifications = new ItemWithItsPicturesItsReviewsSpecifications(id);
+            var item = await _unitOfWork.Repository<CategoryItem>().GetEntityWithSpecAsync(itemSpecifications);
+            var mappedItem = _mapper.Map<CategoryItem, ItemViewModel>(item);
+            return View(mappedItem);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, ItemViewModel itemViewModel)
+        {
+            if (id != itemViewModel.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (itemViewModel.Image != null)
+                {
+                    PictureSettings.DeleteFile("categoryProducts", itemViewModel.ProductPictures[0].PictureUrl);
+                    itemViewModel.ProductPictures[0].PictureUrl =
+                        PictureSettings.UploadFile(itemViewModel.Image, "categoryProducts");
+                }
+                else
+                {
+                    itemViewModel.ProductPictures[0].PictureUrl =
+                        PictureSettings.UploadFile(itemViewModel.Image, "categoryProducts");
+                }
+
+                var mappedItem = _mapper.Map<ItemViewModel, CategoryItem>(itemViewModel);
+
+                _unitOfWork.Repository<CategoryItem>().Update(mappedItem);
+
+                var result = await _unitOfWork.CompleteAsync();
+
+                if (result > 0)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View(itemViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var itemSpecifications = new ItemWithItsPicturesItsReviewsSpecifications(id);
+            var item = await _unitOfWork.Repository<CategoryItem>().GetEntityWithSpecAsync(itemSpecifications);
+            var mappedItem = _mapper.Map<CategoryItem, ItemViewModel>(item);
+            return View(mappedItem);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, ItemViewModel itemViewModel)
+        {
+            if (id != itemViewModel.Id)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var itemSpecifications = new ItemWithItsPicturesItsReviewsSpecifications(id);
+                var item = await _unitOfWork.Repository<CategoryItem>().GetEntityWithSpecAsync(itemSpecifications);
+                if (item.ProductPictures.Any())
+                {
+                    foreach (var picture in item.ProductPictures)
+                    {
+                        PictureSettings.DeleteFile("categoryProducts", picture.PictureUrl);
+                    }
+
+                    _unitOfWork.Repository<CategoryItem>().Delete(item);
+
+                    await _unitOfWork.CompleteAsync();
+
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception e)
+            {
+                return View(itemViewModel);
+            }
+
+            return View(itemViewModel);
+        }
     }
 }

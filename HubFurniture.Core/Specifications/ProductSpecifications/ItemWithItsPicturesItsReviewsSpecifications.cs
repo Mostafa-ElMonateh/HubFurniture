@@ -63,6 +63,8 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
             :base(p => p.Id == id)
         {
             AddIncludes();
+            Includes.Add(ci => ci.Category);
+            Includes.Add(ci => ci.CategoryItemType);
         }
 
         public ItemWithItsPicturesItsReviewsSpecifications():base()
