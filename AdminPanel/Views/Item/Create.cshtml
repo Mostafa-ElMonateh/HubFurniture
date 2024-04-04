@@ -4,12 +4,6 @@
     ViewData["Title"] = "Create";
 }
 
-@inject IUnitOfWork UnitOfWork
-@{
-    var types = new SelectList(UnitOfWork.Repository<CategoryItemType>().GetAllAsync().Result, "Id", "NameEnglish");
-    var categories = new SelectList(UnitOfWork.Repository<Category>().GetAllAsync().Result, "Id", "NameEnglish");
-}
-
 <h1>Create a New Item</h1>
 
 <div class="container">

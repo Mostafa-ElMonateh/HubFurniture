@@ -12,7 +12,7 @@
 <h1>Edit @Model.NameEnglish</h1>
 <div class="container">
     <form method="post" asp-action="Edit" enctype="multipart/form-data">
-        
+        <input asp-for="Id" hidden />
         @for (int i = 0; i < Model.ProductPictures.Count; i++)
         {
             <input type="hidden" name="ProductPictures[@i].Id" value="@Model.ProductPictures[i].Id" />

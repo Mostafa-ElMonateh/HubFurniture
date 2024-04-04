@@ -9,10 +9,8 @@ using HubFurniture.Core.Contracts.Contracts.Entities;
 
 namespace HubFurniture.Core.Entities
 {
-    public class CategorySet: BaseEntity, IProduct
+    public class CategorySet: BaseEntityWithNames, IProduct
     {
-        public string NameArabic { get; set; }
-        public string NameEnglish { get; set; }
         public Availability Availability { get; set; }
         public decimal Price { get; set; }
         public string Color { get; set; }

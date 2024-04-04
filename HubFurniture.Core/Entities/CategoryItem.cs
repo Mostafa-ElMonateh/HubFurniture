@@ -10,10 +10,8 @@ using System.Text.Json.Serialization;
 
 namespace HubFurniture.Core.Entities
 {
-    public class CategoryItem : BaseEntity, IProduct
+    public class CategoryItem : BaseEntityWithNames, IProduct
     {
-        public string NameArabic { get; set; }
-        public string NameEnglish { get; set; }
         public Availability Availability { get; set; }
         public decimal Price { get; set; }
         public string Color { get; set; }

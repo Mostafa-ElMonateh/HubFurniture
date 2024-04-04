@@ -1,5 +1,7 @@
-﻿using HubFurniture.Core.Entities;
+﻿using AdminPanel.Validations;
+using HubFurniture.Core.Entities;
 using HubFurniture.Core.Enums;
+using HubFurniture.Repository.Data;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -9,10 +11,15 @@ namespace AdminPanel.Models
     {
         public int Id { get; set; }
         public IFormFile Image { get; set; }
+
+        [CheckExistingName<CategoryItem>(typeof(StoreContext), "NameArabic")]
         [Required(ErrorMessage = "Arabic Name is Required")]
         public string NameArabic { get; set; }
+
+        [CheckExistingName<CategoryItem>(typeof(StoreContext), "NameEnglish")]
         [Required(ErrorMessage = "English Name is Required")]
         public string NameEnglish { get; set; }
+
         [Required(ErrorMessage = "Availability is Required")]
         public Availability Availability { get; set; }
         [Required(ErrorMessage = "Price is Required")]
@@ -43,7 +50,7 @@ namespace AdminPanel.Models
         [Required(ErrorMessage = "Type is Required")]
         public int CategoryItemTypeId { get; set; }
 
-        public ItemTypeViewModel? CategoryItemType { get; set; }
+        public ItemTypeToReturnViewModel? CategoryItemType { get; set; }
         // Navigational Property 1-M => [M]
         public List<ProductPicture> ProductPictures{ get; set; } = new List<ProductPicture>();
         // Navigational Property 1-M => [M]

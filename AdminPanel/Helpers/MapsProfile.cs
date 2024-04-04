@@ -10,9 +10,10 @@ namespace AdminPanel.Helpers
         {
             CreateMap<Category, CategoryViewModel>().ReverseMap();
             CreateMap<CategoryItem, ItemViewModel>().ReverseMap();
-            CreateMap<CategoryItemType, ItemTypeViewModel>().ReverseMap();
+            CreateMap<CategoryItemType, ItemTypeToReturnViewModel>().ReverseMap();
             CreateMap<Category, ItemCategoryViewModel>().ReverseMap();
             CreateMap<CategoryItemType, ItemsTypesInCategoryViewModel>();
+            CreateMap<CategoryItemType, ItemTypeViewModel>().ReverseMap();
         }
     }
 }

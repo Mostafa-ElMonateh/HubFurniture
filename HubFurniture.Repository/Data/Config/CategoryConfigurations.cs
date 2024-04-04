@@ -22,7 +22,7 @@ namespace HubFurniture.Repository.Data.Config
                 .HasForeignKey(cst => cst.CategoryId);
 
             builder.HasMany(c => c.CategoryItemsTypes)
-                .WithOne()
+                .WithOne(ci => ci.Category)
                 .HasForeignKey(cit => cit.CategoryId);
 
             builder.HasMany(c => c.CategorySets)

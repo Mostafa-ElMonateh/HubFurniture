@@ -16,10 +16,11 @@ namespace AdminPanel.Helpers
             var filePath = Path.Combine(folderPath, fileName);
 
             // 4. Save File as Streams
-            var fileStream = new FileStream(filePath, FileMode.Create);
-
-            // 5. Copy File into Streams
-            file.CopyTo(fileStream);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                // 5. Copy File into Streams
+                file.CopyTo(fileStream);
+            }
 
             // 6. Return FileName
             return Path.Combine("images\\categoryProducts", fileName);

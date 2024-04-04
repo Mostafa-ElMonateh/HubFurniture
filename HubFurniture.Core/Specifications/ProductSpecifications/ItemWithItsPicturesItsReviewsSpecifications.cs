@@ -69,6 +69,7 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
 
         public ItemWithItsPicturesItsReviewsSpecifications():base()
         {
+            AddOrderByDesc(i => i.Id);
             Includes.Add(ci => ci.ProductPictures);
             Includes.Add(ci => ci.Category);
             Includes.Add(ci => ci.CategoryItemType);

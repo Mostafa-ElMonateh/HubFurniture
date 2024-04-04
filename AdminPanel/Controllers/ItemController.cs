@@ -4,6 +4,7 @@ using AutoMapper;
 using HubFurniture.Core.Contracts;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Enums;
+using HubFurniture.Core.Specifications.ItemTypeSpecifications;
 using HubFurniture.Core.Specifications.ProductCategorySpecifications;
 using HubFurniture.Core.Specifications.ProductSpecifications;
 using Microsoft.AspNetCore.Mvc;
@@ -119,8 +120,7 @@ namespace AdminPanel.Controllers
             return Json(mappedTypes);
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Edit(int id)
+        public async Task<IActionResult> Details(int id, string view="Details")
         {
             var availabilities = Enum.GetValues(typeof(Availability))
                 .Cast<Availability>()
@@ -145,7 +145,14 @@ namespace AdminPanel.Controllers
             var itemSpecifications = new ItemWithItsPicturesItsReviewsSpecifications(id);
             var item = await _unitOfWork.Repository<CategoryItem>().GetEntityWithSpecAsync(itemSpecifications);
             var mappedItem = _mapper.Map<CategoryItem, ItemViewModel>(item);
-            return View(mappedItem);
+
+            return View(view, mappedItem);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id)
+        {
+            return RedirectToAction(nameof(Details), new{id, view="Edit"});
         }
 
         [HttpPost]
@@ -161,6 +168,7 @@ namespace AdminPanel.Controllers
                 if (itemViewModel.Image != null)
                 {
                     PictureSettings.DeleteFile("categoryProducts", itemViewModel.ProductPictures[0].PictureUrl);
+                    
                     itemViewModel.ProductPictures[0].PictureUrl =
                         PictureSettings.UploadFile(itemViewModel.Image, "categoryProducts");
                 }
