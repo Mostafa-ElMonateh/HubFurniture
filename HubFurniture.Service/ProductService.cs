@@ -76,7 +76,7 @@ namespace HubFurniture.Service
             decimal minimumPrice = 0;
             if (sets.Any())
             {
-                minimumPrice = sets.Min(cs => cs.Price);
+                minimumPrice = sets.Min(cs => cs.Price * (cs.Discount == 0 ? 1 : (1 - (cs.Discount / 100))));
             }
 
             return minimumPrice;
@@ -86,7 +86,7 @@ namespace HubFurniture.Service
             decimal minimumPrice = 0;
             if (items.Any())
             {
-                minimumPrice = items.Min(ci => ci.Price);
+                minimumPrice = items.Min(ci => ci.Price * (ci.Discount == 0 ? 1 : (1 - (ci.Discount / 100))));
             }
 
             return minimumPrice;
@@ -96,7 +96,7 @@ namespace HubFurniture.Service
             decimal maximumPrice = 0;
             if (sets.Any())
             {
-                maximumPrice = sets.Max(cs => cs.Price);
+                maximumPrice = sets.Max(cs => cs.Price * (cs.Discount == 0 ? 1 : (1 - (cs.Discount / 100))));
             }
 
             return maximumPrice;
@@ -106,7 +106,7 @@ namespace HubFurniture.Service
             decimal maximumPrice = 0;
             if (items.Any())
             {
-                maximumPrice = items.Max(ci => ci.Price);
+                maximumPrice = items.Max(ci => ci.Price * (ci.Discount == 0 ? 1 : (1 - (ci.Discount / 100))));
             }
 
             return maximumPrice;

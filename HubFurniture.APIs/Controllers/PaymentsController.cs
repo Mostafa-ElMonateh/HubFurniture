@@ -119,7 +119,7 @@ namespace HubFurniture.APIs.Controllers
                         {
                             Currency = currency,
                             UnitAmount =
-                                (long)basket.BasketItems.Sum(item => item.ProductPrice * 100 * item.ProductQuantity) +
+                                (long)basket.BasketItems.Sum(item => item.ProductPrice * 100 * item.ProductQuantity * (item.ProductDiscount == 0 ? 1 : 1 - (item.ProductDiscount / 100))) +
                                 (long)basket.ShippingPrice * 100,
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {

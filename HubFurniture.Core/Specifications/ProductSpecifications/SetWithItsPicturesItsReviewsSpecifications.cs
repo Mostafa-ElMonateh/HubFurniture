@@ -15,8 +15,8 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
                     (!specParams.SetTypeId.HasValue || cs.CategorySetTypeId == specParams.SetTypeId) &&
                     (!specParams.CategoryId.HasValue || cs.CategoryId == specParams.CategoryId) &&
                     (string.IsNullOrEmpty(specParams.ProductColor) || cs.Color == specParams.ProductColor) &&
-                    (!specParams.MinimumPrice.HasValue || cs.Price >= specParams.MinimumPrice) &&
-                    (!specParams.MaximumPrice.HasValue || cs.Price <= specParams.MaximumPrice)
+                    (!specParams.MinimumPrice.HasValue || cs.Price * (cs.Discount == 0 ? 1 : (1 - (cs.Discount / 100))) >= specParams.MinimumPrice) &&
+                    (!specParams.MaximumPrice.HasValue || cs.Price * (cs.Discount == 0 ? 1 : (1 - (cs.Discount / 100))) <= specParams.MaximumPrice)
                 )
         {
             currentCulture = CultureInfo.CurrentCulture.Name;
@@ -27,10 +27,10 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
                 switch (specParams.Sort)
                 { 
                     case "priceAsc":
-                        AddOrderBy(cs => cs.Price);
+                        AddOrderBy(cs => cs.Price * (cs.Discount == 0 ? 1 : (1 - (cs.Discount / 100))));
                         break;
                     case "priceDesc":
-                        AddOrderByDesc(cs => cs.Price);
+                        AddOrderByDesc(cs => cs.Price * (cs.Discount == 0 ? 1 : (1 - (cs.Discount / 100))));
                         break;
                     case "nameAsc":
                         AddOrderBy(cs => currentCulture == "ar" ? cs.NameArabic : cs.NameEnglish);

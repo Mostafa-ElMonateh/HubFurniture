@@ -14,8 +14,8 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
                 (!specParams.CategoryId.HasValue || cs.CategoryId == specParams.CategoryId) &&
                 (string.IsNullOrEmpty(specParams.ProductColor) || cs.Color == specParams.ProductColor) &&
                 (!specParams.SetTypeId.HasValue || cs.CategorySetTypeId == specParams.SetTypeId) &&
-                (!specParams.MinimumPrice.HasValue || cs.Price >= specParams.MinimumPrice) &&
-                (!specParams.MaximumPrice.HasValue || cs.Price <= specParams.MaximumPrice)
+                (!specParams.MinimumPrice.HasValue || cs.Price * (cs.Discount == 0 ? 1 : (1 - (cs.Discount / 100))) >= specParams.MinimumPrice) &&
+                (!specParams.MaximumPrice.HasValue || cs.Price * (cs.Discount == 0 ? 1 : (1 - (cs.Discount / 100))) <= specParams.MaximumPrice)
             )
         {
             

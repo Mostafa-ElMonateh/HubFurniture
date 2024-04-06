@@ -17,6 +17,9 @@ namespace HubFurniture.Repository.Data.Config
 
             builder.Property(oi => oi.Price)
                 .HasColumnType("decimal(18,2)");
+
+            builder.Property(oi => oi.Discount)
+                .HasColumnType("decimal(18,2)");
         }
     }
 }
