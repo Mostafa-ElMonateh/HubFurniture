@@ -53,7 +53,7 @@ namespace HubFurniture.Service
                         pictures = await picturesRepository.GetAllWithSpecAsync(setSpecifications);
                         productItemOrdered =
                             new ProductItemOrdered(basketItem.ProductId, set.NameArabic, set.NameEnglish, pictures[0].PictureUrl, setType);
-                        orderItem = new OrderItem(productItemOrdered, set.Price, basketItem.ProductQuantity);
+                        orderItem = new OrderItem(productItemOrdered, set.Price, set.Discount, basketItem.ProductQuantity);
                     }
                     else
                     {
@@ -62,7 +62,7 @@ namespace HubFurniture.Service
                         pictures = await picturesRepository.GetAllWithSpecAsync(itemSpecifications);
                         productItemOrdered =
                             new ProductItemOrdered(basketItem.ProductId, item.NameArabic, item.NameEnglish, pictures[0].PictureUrl, itemType);
-                        orderItem = new OrderItem(productItemOrdered, item.Price, basketItem.ProductQuantity);
+                        orderItem = new OrderItem(productItemOrdered, item.Price, item.Discount, basketItem.ProductQuantity);
                     }
 
                     orderItems.Add(orderItem);
@@ -70,7 +70,7 @@ namespace HubFurniture.Service
             }
 
             // 3. Calculate SubTotal.
-            var subTotal = orderItems.Sum(orderItem => orderItem.Price * orderItem.Quantity);
+            var subTotal = orderItems.Sum(orderItem => orderItem.Price * orderItem.Quantity * (orderItem.Discount == 0 ? 1 : 1 - (orderItem.Discount / 100)));
 
             // 4. Get Delivery Method from DeliveryMethods Repo.
             var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);

@@ -76,7 +76,8 @@ namespace AdminPanel.Controllers
                 }
                 else
                 {
-                    itemViewModel.ProductPictures[0].PictureUrl = "images/categoryProducts/noImage.png";
+                    var picture = new ProductPicture(){ PictureUrl = "images/categoryProducts/noImage.png"};
+                    itemViewModel.ProductPictures.Add(picture);
                 }
 
                 var mappedItem = _mapper.Map<ItemViewModel, CategoryItem>(itemViewModel);
@@ -158,6 +159,26 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, ItemViewModel itemViewModel)
         {
+            var availabilities = Enum.GetValues(typeof(Availability))
+                .Cast<Availability>()
+                .Select(v => new SelectListItem
+                {
+                    Text = v.ToString(),
+                    Value = v.ToString()
+                }).ToList();
+
+            var suitabilities = Enum.GetValues(typeof(Suitability))
+                .Cast<Suitability>()
+                .Select(v => new SelectListItem
+                {
+                    Text = v.ToString(),
+                    Value = v.ToString()
+                }).ToList();
+
+    
+            ViewBag.Availabilities = availabilities;
+            ViewBag.Suitabilities = suitabilities;
+
             if (id != itemViewModel.Id)
             {
                 return NotFound();
@@ -169,11 +190,6 @@ namespace AdminPanel.Controllers
                 {
                     PictureSettings.DeleteFile("categoryProducts", itemViewModel.ProductPictures[0].PictureUrl);
                     
-                    itemViewModel.ProductPictures[0].PictureUrl =
-                        PictureSettings.UploadFile(itemViewModel.Image, "categoryProducts");
-                }
-                else
-                {
                     itemViewModel.ProductPictures[0].PictureUrl =
                         PictureSettings.UploadFile(itemViewModel.Image, "categoryProducts");
                 }

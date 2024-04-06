@@ -13,6 +13,7 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
         public int? CategoryId { get; set; }
 
         public string? Sort { get; set; }
+
         private string? search;
 
         public string? Search

@@ -32,6 +32,10 @@ namespace HubFurniture.Repository.Data.Config
             builder.Property(cs => cs.Price)
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
+            
+            builder.Property(cs => cs.Discount)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
 
             builder.Property(cs => cs.Color)
                 .IsRequired();

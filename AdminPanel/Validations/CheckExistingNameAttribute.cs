@@ -37,7 +37,7 @@ namespace AdminPanel.Validations
                 entity = dbSet?.Where(e => e.NameArabic == columnName).AsNoTracking().ToList();
             }
 
-            if (entity == null || !entity.Any())
+            if (entity == null || entity.Count() <= 1)
             {
                 return ValidationResult.Success;
             }

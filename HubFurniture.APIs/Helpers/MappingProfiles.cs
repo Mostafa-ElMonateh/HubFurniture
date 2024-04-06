@@ -14,41 +14,31 @@ namespace HubFurniture.APIs.Helpers
         {
             CreateMap<Order, OrderToReturnDto>()
                 .ForMember(d => d.DeliveryMethod, 
-                    o=>
-                        o.MapFrom(s => s.DeliveryMethod.Name))
+                    o=> o.MapFrom(s => s.DeliveryMethod.Name))
                 .ForMember(d => d.DeliveryMethodCost,
-                    o =>
-                        o.MapFrom(s => s.DeliveryMethod.Cost));
+                    o => o.MapFrom(s => s.DeliveryMethod.Cost));
 
             CreateMap<Order, OrderEnToReturnDto>()
                 .ForMember(d => d.DeliveryMethod, 
-                    o=>
-                        o.MapFrom(s => s.DeliveryMethod.Name))
+                    o=> o.MapFrom(s => s.DeliveryMethod.Name))
                 .ForMember(d => d.DeliveryMethodCost,
-                    o =>
-                        o.MapFrom(s => s.DeliveryMethod.Cost));
+                    o => o.MapFrom(s => s.DeliveryMethod.Cost));
 
             CreateMap<Order, OrderArToReturnDto>()
                 .ForMember(d => d.DeliveryMethod, 
-                    o=>
-                        o.MapFrom(s => s.DeliveryMethod.Name))
+                    o=> o.MapFrom(s => s.DeliveryMethod.Name))
                 .ForMember(d => d.DeliveryMethodCost,
-                    o =>
-                        o.MapFrom(s => s.DeliveryMethod.Cost));
+                    o => o.MapFrom(s => s.DeliveryMethod.Cost));
 
             CreateMap<OrderItem, OrderItemArToReturnDto>()
                 .ForMember(d => d.ProductId,
-                    o =>
-                        o.MapFrom(s => s.ProductOrdered.ProductId))
+                    o => o.MapFrom(s => s.ProductOrdered.ProductId))
                 .ForMember(d => d.productName,
-                    o =>
-                        o.MapFrom(s => s.ProductOrdered.ProductNameArabic))
+                    o => o.MapFrom(s => s.ProductOrdered.ProductNameArabic))
                 .ForMember(d => d.PictureUrl,
-                    o =>
-                        o.MapFrom<OrderItemPictureUrlResolver>())
+                    o => o.MapFrom<OrderItemPictureUrlResolver>())
                 .ForMember(d => d.Type,
-                    o =>
-                        o.MapFrom(s => s.ProductOrdered.Type));
+                    o => o.MapFrom(s => s.ProductOrdered.Type));
 
             CreateMap<OrderItem, OrderItemEnToReturnDto>()
                 .ForMember(d => d.ProductId,

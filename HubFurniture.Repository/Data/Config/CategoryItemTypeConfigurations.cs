@@ -13,7 +13,6 @@ namespace HubFurniture.Repository.Data.Config
     {
         public void Configure(EntityTypeBuilder<CategoryItemType> builder)
         {
-           
 
             builder.Property(cit => cit.NameArabic)
                 .IsRequired()
