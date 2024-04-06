@@ -108,8 +108,6 @@ namespace AdminPanel.Areas.Identity.Pages.Account
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            Console.Write(ModelState.IsValid);
-
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -118,7 +116,7 @@ namespace AdminPanel.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return RedirectToAction("Index", "Home");
                 }
                 if (result.RequiresTwoFactor)
                 {

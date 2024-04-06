@@ -6,11 +6,13 @@ using HubFurniture.Core.Entities;
 using HubFurniture.Core.Enums;
 using HubFurniture.Core.Specifications.ProductCategorySpecifications;
 using HubFurniture.Core.Specifications.ProductSpecifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AdminPanel.Controllers
 {
+    [Authorize]
     public class ItemController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
