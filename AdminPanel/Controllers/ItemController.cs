@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AdminPanel.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class ItemController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

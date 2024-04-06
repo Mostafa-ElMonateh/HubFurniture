@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace AdminPanel.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
