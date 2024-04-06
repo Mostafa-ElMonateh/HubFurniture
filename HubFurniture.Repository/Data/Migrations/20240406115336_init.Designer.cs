@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HubFurniture.Repository.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20240331044557_initial")]
-    partial class initial
+    [Migration("20240406115336_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -191,6 +191,12 @@ namespace HubFurniture.Repository.Data.Migrations
 
                     b.HasIndex("CategoryItemTypeId");
 
+                    b.HasIndex("NameArabic")
+                        .IsUnique();
+
+                    b.HasIndex("NameEnglish")
+                        .IsUnique();
+
                     b.ToTable("CategoryItems");
                 });
 
@@ -202,7 +208,7 @@ namespace HubFurniture.Repository.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("NameArabic")
@@ -702,22 +708,24 @@ namespace HubFurniture.Repository.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("HubFurniture.Core.Entities.CategoryItemType", null)
+                    b.HasOne("HubFurniture.Core.Entities.CategoryItemType", "CategoryItemType")
                         .WithMany("CategoryItems")
                         .HasForeignKey("CategoryItemTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("CategoryItemType");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CategoryItemType", b =>
                 {
-                    b.HasOne("HubFurniture.Core.Entities.Category", null)
+                    b.HasOne("HubFurniture.Core.Entities.Category", "Category")
                         .WithMany("CategoryItemsTypes")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CategorySet", b =>
@@ -728,22 +736,26 @@ namespace HubFurniture.Repository.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("HubFurniture.Core.Entities.CategorySetType", null)
+                    b.HasOne("HubFurniture.Core.Entities.CategorySetType", "CategorySetType")
                         .WithMany("CategorySets")
                         .HasForeignKey("CategorySetTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("CategorySetType");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CategorySetType", b =>
                 {
-                    b.HasOne("HubFurniture.Core.Entities.Category", null)
+                    b.HasOne("HubFurniture.Core.Entities.Category", "Category")
                         .WithMany("CategorySetsTypes")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CustomerReview", b =>
@@ -850,7 +862,8 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     b.HasOne("HubFurniture.Core.Entities.CategoryItem", null)
                         .WithMany("ProductPictures")
-                        .HasForeignKey("CategoryItemId");
+                        .HasForeignKey("CategoryItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HubFurniture.Core.Entities.CategorySet", null)
                         .WithMany("ProductPictures")

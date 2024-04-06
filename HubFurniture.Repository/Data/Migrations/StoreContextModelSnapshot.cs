@@ -733,22 +733,26 @@ namespace HubFurniture.Repository.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("HubFurniture.Core.Entities.CategorySetType", null)
+                    b.HasOne("HubFurniture.Core.Entities.CategorySetType", "CategorySetType")
                         .WithMany("CategorySets")
                         .HasForeignKey("CategorySetTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("CategorySetType");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CategorySetType", b =>
                 {
-                    b.HasOne("HubFurniture.Core.Entities.Category", null)
+                    b.HasOne("HubFurniture.Core.Entities.Category", "Category")
                         .WithMany("CategorySetsTypes")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("HubFurniture.Core.Entities.CustomerReview", b =>

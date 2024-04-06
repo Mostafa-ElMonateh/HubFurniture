@@ -37,6 +37,9 @@ namespace HubFurniture.Core.Entities
         [JsonIgnore] // Avoid Circle Ref
         public Category Category { get; set; }
 
+        public CategorySetType CategorySetType { get; set; }
+
+
 
     }
 }

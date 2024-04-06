@@ -59,12 +59,23 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
             AddIncludes();
         }
 
+        public SetWithItsPicturesItsReviewsSpecifications() : base()
+        {
+            AddOrderByDesc(i => i.Id);
+            Includes.Add(ci => ci.ProductPictures);
+            Includes.Add(ci => ci.Category);
+            Includes.Add(ci => ci.CategorySetType);
+        }
+
         private void AddIncludes()
         {
             Includes.Add(cs => cs.ProductPictures);
             Includes.Add(cs => cs.CustomerReviews);
             Includes.Add(cs => cs.Items);
-            
+            Includes.Add(cs => cs.Category);
+            Includes.Add(cs => cs.CategorySetType);
+
+
         }
     }
 }
