@@ -26,7 +26,7 @@ namespace HubFurniture.Repository.Data.Config
             builder.HasMany(cst => cst.CategorySets)
                 .WithOne()
                 .HasForeignKey(cs => cs.CategorySetTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

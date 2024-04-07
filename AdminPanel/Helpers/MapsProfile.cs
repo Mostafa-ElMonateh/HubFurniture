@@ -1,6 +1,7 @@
 ﻿using AdminPanel.Models;
 using AutoMapper;
 using HubFurniture.Core.Entities;
+using HubFurniture.Core.Entities.Order_Aggregate;
 
 namespace AdminPanel.Helpers
 {
@@ -14,6 +15,7 @@ namespace AdminPanel.Helpers
             CreateMap<Category, ItemCategoryViewModel>().ReverseMap();
             CreateMap<CategoryItemType, ItemsTypesInCategoryViewModel>();
             CreateMap<CategoryItemType, ItemTypeViewModel>().ReverseMap();
+            CreateMap<DeliveryMethod, DeliveryMethodViewModel>().ReverseMap();
         }
     }
 }

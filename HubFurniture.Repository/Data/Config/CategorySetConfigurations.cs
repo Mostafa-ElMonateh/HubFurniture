@@ -56,12 +56,14 @@ namespace HubFurniture.Repository.Data.Config
                 .WithOne();
 
             builder.HasMany(cs => cs.CustomerReviews)
-                .WithOne();
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(cs => cs.Items)
                 .WithOne()
                 .HasForeignKey(i => i.CategorySetId)
                 .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

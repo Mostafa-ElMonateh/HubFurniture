@@ -20,7 +20,7 @@ namespace HubFurniture.Core.Entities
         public Suitability Suitability { get; set; }
         public string RoomArabic { get; set; }
         public string RoomEnglish { get; set; }
-        public int CategorySetTypeId { get; set; }
+        public int? CategorySetTypeId { get; set; }
 
         // Navigational Property 1-M => [M]
         public List<ProductPicture> ProductPictures{ get; set; } = new List<ProductPicture>();
@@ -32,7 +32,7 @@ namespace HubFurniture.Core.Entities
         // Navigational Property M-M => [M]
         public IReadOnlyList<SetItem> Items { get; set; } = new List<SetItem>();
         
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         // Navigational Property 1-M => [1]
         [JsonIgnore] // Avoid Circle Ref

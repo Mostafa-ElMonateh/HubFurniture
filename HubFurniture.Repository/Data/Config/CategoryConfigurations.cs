@@ -19,21 +19,23 @@ namespace HubFurniture.Repository.Data.Config
 
             builder.HasMany(c => c.CategorySetsTypes)
                 .WithOne()
-                .HasForeignKey(cst => cst.CategoryId);
+                .HasForeignKey(cst => cst.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasMany(c => c.CategoryItemsTypes)
                 .WithOne(ci => ci.Category)
-                .HasForeignKey(cit => cit.CategoryId);
+                .HasForeignKey(cit => cit.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasMany(c => c.CategorySets)
                 .WithOne(cs => cs.Category)
                 .HasForeignKey(cs => cs.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasMany(c => c.CategoryItems)
                 .WithOne(ci => ci.Category)
                 .HasForeignKey(ci => ci.CategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

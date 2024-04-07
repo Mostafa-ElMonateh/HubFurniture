@@ -68,7 +68,8 @@ namespace HubFurniture.Repository.Data.Config
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(pi => pi.CustomerReviews)
-                .WithOne();
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
 
         }

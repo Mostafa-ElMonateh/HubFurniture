@@ -24,7 +24,7 @@ namespace HubFurniture.Core.Entities
         public decimal? Height { get; set; }
         public decimal? Depth { get; set; }
         public decimal? Width { get; set; }
-        public int CategoryItemTypeId { get; set; }
+        public int? CategoryItemTypeId { get; set; }
         public CategoryItemType CategoryItemType { get; set; }
 
         // Navigational Property 1-M => [M]
@@ -34,7 +34,7 @@ namespace HubFurniture.Core.Entities
         public ICollection<CustomerReview> CustomerReviews { get; set; } = new HashSet<CustomerReview>();
         
         
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         
         [JsonIgnore] // Avoid Circle Ref
         public Category Category { get; set; }
