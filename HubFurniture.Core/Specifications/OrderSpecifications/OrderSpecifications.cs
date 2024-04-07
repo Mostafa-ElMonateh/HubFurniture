@@ -9,8 +9,7 @@ namespace HubFurniture.Core.Specifications.OrderSpecifications
         : base(o => o.BuyerEmail == buyerEmail)
         {
             Includes.Add(o => o.DeliveryMethod);
-            Includes.Add(O => O.OrderItems);
-
+            Includes.Add(o => o.OrderItems);
             AddOrderByDesc(o => o.OrderDate);
         }
 
@@ -18,7 +17,19 @@ namespace HubFurniture.Core.Specifications.OrderSpecifications
             : base(o => o.BuyerEmail == buyerEmail && o.Id == orderId)
         {
             Includes.Add(o => o.DeliveryMethod);
-            Includes.Add(O => O.OrderItems);
+            Includes.Add(o => o.OrderItems);
+        }
+        public OrderSpecifications()
+        {
+            Includes.Add(o => o.DeliveryMethod);
+        }
+
+        public OrderSpecifications(int id)
+        {
+            Includes.Add(o => o.DeliveryMethod);
+            Includes.Add(o => o.OrderItems);
+            Includes.Add(o => o.ShippingAddress);
+            AddOrderByDesc(o => o.OrderDate);
         }
     }
 }

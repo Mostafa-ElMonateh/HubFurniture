@@ -16,6 +16,8 @@ namespace AdminPanel.Helpers
             CreateMap<CategoryItemType, ItemsTypesInCategoryViewModel>();
             CreateMap<CategoryItemType, ItemTypeViewModel>().ReverseMap();
             CreateMap<DeliveryMethod, DeliveryMethodViewModel>().ReverseMap();
+            CreateMap<Order, OrderToReturnViewModel>().ReverseMap();
+            CreateMap<Order, OrderViewModel>().ReverseMap();
         }
     }
 }

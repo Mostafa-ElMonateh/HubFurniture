@@ -1,0 +1,32 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Edit Order Status";
+}
+
+<h1>Edit @Model.BuyerEmail | Order Id #@Model.Id</h1>
+<div class="container">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
+        <input asp-for="Id" hidden />
+        <input asp-for="BuyerEmail" hidden />
+        <input asp-for="OrderDate" hidden />
+        <input asp-for="ShippingAddress" hidden />
+        <input asp-for="DeliveryMethod" hidden />
+        <input asp-for="OrderItems" hidden />
+        <input asp-for="SubTotal" hidden />
+        <input asp-for="PaymentIntentId" hidden />
+        
+        <div class="form-group">
+            <label asp-for="Status" class="col-form-label"></label>
+            <select class="form-control" asp-for="Status" asp-items="ViewBag.OrderStatuses">
+                <option value="@null">-- Select Suitability --</option>
+            </select>
+        </div>
+
+        <input type="submit" value="Save" class="btn btn-primary mt-3" />
+        <a asp-action="Index" class="btn btn-light mt-3">Back To List</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
