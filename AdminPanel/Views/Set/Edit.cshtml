@@ -39,7 +39,7 @@
                 var categoryId = $(this).val();
                 if (categoryId) {
                     $.ajax({
-                        url: '@Url.Action("GetTypesByCategoryId", "Item")',
+                        url: '@Url.Action("GetTypesByCategoryId", "Set")',
                         type: 'GET',
                         data: { categoryId: categoryId },
                         success: function (data) {

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create a New Item</h1>
+<h1>Create a New Set</h1>
 
 <div class="container">
     <form method="post" asp-action="Create" enctype="multipart/form-data">
@@ -30,7 +30,7 @@
                 var categoryId = $(this).val();
                 if (categoryId) {
                     $.ajax({
-                        url: '@Url.Action("GetTypesByCategoryId", "Item")',
+                        url: '@Url.Action("GetTypesByCategoryId", "Set")',
                         type: 'GET',
                         data: { categoryId: categoryId },
                         success: function (data) {

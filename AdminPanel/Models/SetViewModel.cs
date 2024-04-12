@@ -25,6 +25,9 @@ namespace AdminPanel.Models
         [Required(ErrorMessage = "Price is Required")]
         [Range(1, 500000)]
         public decimal Price { get; set; }
+        [Required(ErrorMessage = "Discount is Required")]
+        [Range(0, 100)]
+        public decimal Discount { get; set; }
         [Required(ErrorMessage = "Color is Required")]
         public string Color { get; set; }
         [Required(ErrorMessage = "Style in Arabic is Required")]

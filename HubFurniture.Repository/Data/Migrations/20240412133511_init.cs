@@ -131,8 +131,8 @@ namespace HubFurniture.Repository.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -176,8 +176,8 @@ namespace HubFurniture.Repository.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -236,7 +236,8 @@ namespace HubFurniture.Repository.Data.Migrations
                         name: "FK_CategoryItemsTypes_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -297,6 +298,7 @@ namespace HubFurniture.Repository.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Availability = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StyleArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StyleEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -306,8 +308,8 @@ namespace HubFurniture.Repository.Data.Migrations
                     Height = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Depth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Width = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    CategoryItemTypeId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategoryItemTypeId = table.Column<int>(type: "int", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
                     NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
@@ -319,13 +321,13 @@ namespace HubFurniture.Repository.Data.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_CategoryItems_CategoryItemsTypes_CategoryItemTypeId",
                         column: x => x.CategoryItemTypeId,
                         principalTable: "CategoryItemsTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -336,14 +338,15 @@ namespace HubFurniture.Repository.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Availability = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StyleArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StyleEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Suitability = table.Column<byte>(type: "tinyint", nullable: false),
                     RoomArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoomEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategorySetTypeId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategorySetTypeId = table.Column<int>(type: "int", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
                     NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
@@ -355,7 +358,7 @@ namespace HubFurniture.Repository.Data.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_CategorySets_CategorySetsTypes_CategorySetTypeId",
                         column: x => x.CategorySetTypeId,
@@ -376,6 +379,7 @@ namespace HubFurniture.Repository.Data.Migrations
                     ProductOrdered_PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ProductOrdered_Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -409,12 +413,14 @@ namespace HubFurniture.Repository.Data.Migrations
                         name: "FK_CustomerReviews_CategoryItems_CategoryItemId",
                         column: x => x.CategoryItemId,
                         principalTable: "CategoryItems",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CustomerReviews_CategorySets_CategorySetId",
                         column: x => x.CategorySetId,
                         principalTable: "CategorySets",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
