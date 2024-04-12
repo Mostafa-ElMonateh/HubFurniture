@@ -117,7 +117,7 @@ namespace HubFurniture.APIs.Controllers
                 {
                     foreach (var error in changePasswordResult.Errors)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        ModelState.AddModelError("message", error.Description);
                     }
                     return BadRequest(ModelState);
                 }
@@ -152,7 +152,7 @@ namespace HubFurniture.APIs.Controllers
                 {
                     foreach (var error in changeEmailResult.Errors)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        ModelState.AddModelError("message", error.Description);
                     }
                     return BadRequest(ModelState);
                 }
