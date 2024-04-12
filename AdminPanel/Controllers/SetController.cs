@@ -171,11 +171,6 @@ namespace AdminPanel.Controllers
                     setViewModel.ProductPictures[0].PictureUrl =
                         PictureSettings.UploadFile(setViewModel.Image, "categoryProducts");
                 }
-                else
-                {
-                    setViewModel.ProductPictures[0].PictureUrl =
-                        PictureSettings.UploadFile(setViewModel.Image, "categoryProducts");
-                }
 
                 var mappedSet = _mapper.Map<SetViewModel, CategorySet>(setViewModel);
 

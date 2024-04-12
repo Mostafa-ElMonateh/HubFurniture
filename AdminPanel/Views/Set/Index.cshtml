@@ -47,7 +47,14 @@
                                 <li>@i.NameEnglish</li>
                             }
                             </ul>
-                            <a class="btn mb-2 text-primary p-2" asp-controller="SetItem" asp-action="Index" asp-route-id="@item.Id">Details</a>
+                            @if (item.Items.Count == 0)
+                            {
+                                <p>No Items</p>
+                                <a class="btn mb-2 text-primary p-2" asp-controller="SetItem" asp-action="Index" asp-route-id="@item.Id">Add Items</a>
+                            }else{
+                                <a class="btn mb-2 text-primary p-2" asp-controller="SetItem" asp-action="Index" asp-route-id="@item.Id">Edit</a>
+
+                            }
 
                         </td>
                         <td>@item.CategorySetType.NameEnglish</td>
