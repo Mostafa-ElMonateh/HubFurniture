@@ -21,7 +21,7 @@ namespace HubFurniture.Core.Contracts.Contracts.Entities
         public string RoomArabic { get; set; }
         public string RoomEnglish { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public List<ProductPicture> ProductPictures { get; set; }
         public ICollection<CustomerReview> CustomerReviews { get; set; }
     }

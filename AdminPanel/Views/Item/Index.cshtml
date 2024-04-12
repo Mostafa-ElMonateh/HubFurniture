@@ -19,6 +19,7 @@
                 <th>Name</th>
                 <th>Availability</th>
                 <th>Price</th>
+                <th>Discount</th>
                 <th>Color</th>
                 <th>Height</th>
                 <th>Depth</th>
@@ -39,12 +40,13 @@
                         <td>@item.NameEnglish</td>
                         <td>@item.Availability</td>
                         <td>@item.Price EGP</td>
+                        <td>@item.Discount %</td>
                         <td>@item.Color</td>
                         <td>@item.Height cm</td>
                         <td>@item.Depth cm</td>
                         <td>@item.Width cm</td>
-                        <td>@item.CategoryItemType.NameEnglish</td>
-                        <td>@item.Category.NameEnglish</td>
+                        <td>@item.CategoryItemType?.NameEnglish</td>
+                        <td>@item.Category?.NameEnglish</td>
                         
                         <td>
                             <div class="d-flex gap-0">
@@ -62,7 +64,7 @@
 else
 {
     <div class="mt-3 p-3 alert-warning">
-        <h2>There are no Items!</h2>
+        <h2>There are no Items Types!</h2>
     </div>
 }
 @section Scripts{

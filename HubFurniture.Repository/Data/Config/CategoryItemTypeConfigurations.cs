@@ -13,7 +13,6 @@ namespace HubFurniture.Repository.Data.Config
     {
         public void Configure(EntityTypeBuilder<CategoryItemType> builder)
         {
-           
 
             builder.Property(cit => cit.NameArabic)
                 .IsRequired()
@@ -26,7 +25,7 @@ namespace HubFurniture.Repository.Data.Config
             builder.HasMany(cit => cit.CategoryItems)
                 .WithOne(ci => ci.CategoryItemType)
                 .HasForeignKey(ci => ci.CategoryItemTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

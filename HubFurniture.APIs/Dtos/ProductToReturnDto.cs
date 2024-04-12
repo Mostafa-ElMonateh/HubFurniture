@@ -6,6 +6,7 @@
         public string Name { get; set; }
         public string Availability { get; set; }
         public decimal Price { get; set; }
+        public decimal Discount { get; set; }
         public string Color { get; set; }
         public string Style { get; set; }
         public string Suitability { get; set; }

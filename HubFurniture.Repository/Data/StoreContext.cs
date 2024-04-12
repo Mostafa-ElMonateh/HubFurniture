@@ -3,6 +3,7 @@ using System.Reflection;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Entities.Order_Aggregate;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace HubFurniture.Repository.Data
 {
@@ -12,6 +13,7 @@ namespace HubFurniture.Repository.Data
         {
             
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

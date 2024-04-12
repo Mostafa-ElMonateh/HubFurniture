@@ -19,5 +19,6 @@ namespace HubFurniture.Core.Contracts.Contracts.Repositories
         Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
+        Task<int> SaveChangesAsync();
     }
 }

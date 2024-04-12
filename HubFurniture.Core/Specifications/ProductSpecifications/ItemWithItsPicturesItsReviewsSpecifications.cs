@@ -21,8 +21,8 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
                 (!specParams.ItemTypeId.HasValue || ci.CategoryItemTypeId == specParams.ItemTypeId) &&
                 (!specParams.CategoryId.HasValue || ci.CategoryId == specParams.CategoryId) &&
                 (string.IsNullOrEmpty(specParams.ProductColor) || ci.Color == specParams.ProductColor) &&
-                (!specParams.MinimumPrice.HasValue || ci.Price >= specParams.MinimumPrice) &&
-                (!specParams.MaximumPrice.HasValue || ci.Price <= specParams.MaximumPrice)
+                (!specParams.MinimumPrice.HasValue || (ci.Price * (ci.Discount == 0 ? 1 : (1 - (ci.Discount / 100)))) >= specParams.MinimumPrice) &&
+                (!specParams.MaximumPrice.HasValue || (ci.Price * (ci.Discount == 0 ? 1 : (1 - (ci.Discount / 100)))) <= specParams.MaximumPrice)
             )
         {
             currentCulture = CultureInfo.CurrentCulture.Name;
@@ -33,10 +33,10 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
                 switch (specParams.Sort)
                 { 
                     case "priceAsc":
-                        AddOrderBy(ci => ci.Price);
+                        AddOrderBy(ci => ci.Price * (ci.Discount == 0 ? 1 : (1 - (ci.Discount / 100))));
                         break;
                     case "priceDesc":
-                        AddOrderByDesc(ci => ci.Price);
+                        AddOrderByDesc(ci => ci.Price * (ci.Discount == 0 ? 1 : (1 - (ci.Discount / 100))));
                         break;
                     case "nameAsc":
                         AddOrderBy(ci => currentCulture == "ar" ? ci.NameArabic : ci.NameEnglish);
@@ -69,6 +69,7 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
 
         public ItemWithItsPicturesItsReviewsSpecifications():base()
         {
+            AddOrderByDesc(i => i.Id);
             Includes.Add(ci => ci.ProductPictures);
             Includes.Add(ci => ci.Category);
             Includes.Add(ci => ci.CategoryItemType);

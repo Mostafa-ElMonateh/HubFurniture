@@ -35,6 +35,10 @@ namespace HubFurniture.Repository.Data.Config
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
 
+            builder.Property(pi => pi.Discount)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
+
             builder.Property(pi => pi.Color)
                 .IsRequired();
 
@@ -64,7 +68,8 @@ namespace HubFurniture.Repository.Data.Config
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(pi => pi.CustomerReviews)
-                .WithOne();
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
 
         }

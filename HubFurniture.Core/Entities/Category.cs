@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace HubFurniture.Core.Entities
 {
-    public class Category : BaseEntity
+    public class Category : BaseEntityWithNames
     {
-        public string NameArabic { get; set; }
-        public string NameEnglish { get; set; }
-
-
         // Navigational Property 1-M => [M]
         public ICollection<CategorySetType> CategorySetsTypes { get; set; } = new HashSet<CategorySetType>();
         

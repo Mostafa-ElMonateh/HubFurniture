@@ -10,6 +10,8 @@ namespace HubFurniture.Core.Entities
 {
     public class ApplicationUser : IdentityUser
     {
+        // Navigational Property 1-M => [M]
+        public ICollection<UserAddress> Addresses { get; set; } = new HashSet<UserAddress>();
         public  string? BasketId { get; set; }
     
         public required string FirstName { get; set; }

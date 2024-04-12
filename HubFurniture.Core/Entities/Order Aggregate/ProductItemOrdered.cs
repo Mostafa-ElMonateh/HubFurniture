@@ -8,11 +8,9 @@ namespace HubFurniture.Core.Entities.Order_Aggregate
 {
     public class ProductItemOrdered
     {
-        private readonly int _setTypeId;
         public int ProductId { get; set; }
         public string ProductNameArabic { get; set; }
         public string ProductNameEnglish { get; set; }
-
         public string PictureUrl { get; set; }
         public string Type { get; set; }
 

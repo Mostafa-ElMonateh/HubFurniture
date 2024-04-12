@@ -32,6 +32,10 @@ namespace HubFurniture.Repository.Data.Config
             builder.Property(cs => cs.Price)
                 .IsRequired()
                 .HasColumnType("decimal(18,2)");
+            
+            builder.Property(cs => cs.Discount)
+                .IsRequired()
+                .HasColumnType("decimal(18,2)");
 
             builder.Property(cs => cs.Color)
                 .IsRequired();
@@ -52,12 +56,14 @@ namespace HubFurniture.Repository.Data.Config
                 .WithOne();
 
             builder.HasMany(cs => cs.CustomerReviews)
-                .WithOne();
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(cs => cs.Items)
                 .WithOne()
                 .HasForeignKey(i => i.CategorySetId)
                 .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

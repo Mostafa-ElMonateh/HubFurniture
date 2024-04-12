@@ -1,0 +1,130 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<div class="container">
+
+    <h1 class="mt-3">'@Model.BuyerEmail' order Details</h1>
+
+    <form method="post" asp-action="Edit">
+
+        <input asp-for="Id" hidden />
+
+        <div class="form-group">
+            <label asp-for="BuyerEmail" class="col-form-label"></label>
+            <input asp-for="BuyerEmail" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="OrderDate" class="col-form-label"></label>
+            <input asp-for="OrderDate" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Status" class="col-form-label"></label>
+            <input asp-for="Status" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ShippingAddress.FirstName" class="col-form-label">Customer First Name</label>
+            <input asp-for="ShippingAddress.FirstName" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ShippingAddress.LastName" class="col-form-label">Customer Last Name</label>
+            <input asp-for="ShippingAddress.LastName" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ShippingAddress.Street" class="col-form-label">Customer Street</label>
+            <input asp-for="ShippingAddress.Street" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ShippingAddress.City" class="col-form-label">Customer City</label>
+            <input asp-for="ShippingAddress.City" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ShippingAddress.Country" class="col-form-label">Customer Country</label>
+            <input asp-for="ShippingAddress.Country" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DeliveryMethod.Name" class="col-form-label">Delivery Method</label>
+            <input asp-for="DeliveryMethod.Name" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DeliveryMethod.Cost" class="col-form-label">Delivery Method Cost</label>
+            <input asp-for="DeliveryMethod.Cost" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DeliveryMethod.DeliveryTimeEnglish" class="col-form-label">Delivery Method Time</label>
+            <input asp-for="DeliveryMethod.DeliveryTimeEnglish" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SubTotal" class="col-form-label">SubTotal</label>
+            <input asp-for="SubTotal" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PaymentIntentId" class="col-form-label">Payment Intent Id</label>
+            <input asp-for="PaymentIntentId" class="form-control" disabled />
+        </div>
+
+        @if (Model.OrderItems.Count() > 0)
+        {
+            <div class="container mt-3">
+                <table class="table table-hover table-bordered dt-responsive text-nowrap">
+                    <thead class="bg-dark text-white text-center">
+                        <tr>
+                            <th>Id</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>Quantity</th>
+                            <th>Product</th>
+                            <th>Product Id</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @foreach (var item in Model.OrderItems)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>
+                                    <img style="width: 100px" src="~/@item.ProductOrdered.PictureUrl" />
+                                </td>
+                                <td>EGP @item.Price</td>
+                                <td>% @item.Discount</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.ProductOrdered.ProductNameEnglish</td>
+                                <td>@item.ProductOrdered.ProductId</td>
+                                <td>@item.ProductOrdered.Type</td>
+                                <td>
+                                    @if (@item.ProductOrdered.Type == "set")
+                                    {
+                                        <a class="btn mb-2 text-warning p-2" asp-controller="Set" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                                    }
+                                    else if (@item.ProductOrdered.Type == "item")
+                                    {
+                                        <a class="btn mb-2 text-warning p-2" asp-controller="Item" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <input type="submit" value="Edit" asp-route-id="@Model.Id" asp-route-view="Edit" class="btn btn-primary mt-3" />
+        <a asp-action="Index" class="btn btn-light mt-3">Back To List</a>
+    </form>
+</div>

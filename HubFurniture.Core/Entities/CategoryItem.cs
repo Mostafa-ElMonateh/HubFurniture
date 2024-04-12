@@ -10,12 +10,11 @@ using System.Text.Json.Serialization;
 
 namespace HubFurniture.Core.Entities
 {
-    public class CategoryItem : BaseEntity, IProduct
+    public class CategoryItem : BaseEntityWithNames, IProduct
     {
-        public string NameArabic { get; set; }
-        public string NameEnglish { get; set; }
         public Availability Availability { get; set; }
         public decimal Price { get; set; }
+        public decimal Discount { get; set; }
         public string Color { get; set; }
         public string StyleArabic { get; set; }
         public string StyleEnglish { get; set; }
@@ -25,7 +24,7 @@ namespace HubFurniture.Core.Entities
         public decimal? Height { get; set; }
         public decimal? Depth { get; set; }
         public decimal? Width { get; set; }
-        public int CategoryItemTypeId { get; set; }
+        public int? CategoryItemTypeId { get; set; }
         public CategoryItemType CategoryItemType { get; set; }
 
         // Navigational Property 1-M => [M]
@@ -35,7 +34,7 @@ namespace HubFurniture.Core.Entities
         public ICollection<CustomerReview> CustomerReviews { get; set; } = new HashSet<CustomerReview>();
         
         
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         
         [JsonIgnore] // Avoid Circle Ref
         public Category Category { get; set; }
