@@ -24,9 +24,16 @@ namespace HubFurniture.Repository.Data.Config
                 .HasMaxLength(50);
 
             builder.HasMany(cst => cst.CategorySets)
-                .WithOne()
+                .WithOne(cs => cs.CategorySetType)
                 .HasForeignKey(cs => cs.CategorySetTypeId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(cst => cst.Category)
+                .WithMany(c => c.CategorySetsTypes)
+                .HasForeignKey(cst => cst.CategoryId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

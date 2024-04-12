@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HubFurniture.Repository.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -225,9 +225,9 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
                     NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -236,8 +236,7 @@ namespace HubFurniture.Repository.Data.Migrations
                         name: "FK_CategoryItemsTypes_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -246,9 +245,9 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -258,7 +257,7 @@ namespace HubFurniture.Repository.Data.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -296,8 +295,6 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Availability = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -310,7 +307,9 @@ namespace HubFurniture.Repository.Data.Migrations
                     Depth = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Width = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CategoryItemTypeId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -335,8 +334,6 @@ namespace HubFurniture.Repository.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Availability = table.Column<byte>(type: "tinyint", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -346,7 +343,9 @@ namespace HubFurniture.Repository.Data.Migrations
                     RoomArabic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoomEnglish = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategorySetTypeId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    NameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    NameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -435,7 +434,8 @@ namespace HubFurniture.Repository.Data.Migrations
                         name: "FK_ProductPictures_CategoryItems_CategoryItemId",
                         column: x => x.CategoryItemId,
                         principalTable: "CategoryItems",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductPictures_CategorySets_CategorySetId",
                         column: x => x.CategorySetId,
@@ -515,6 +515,18 @@ namespace HubFurniture.Repository.Data.Migrations
                 name: "IX_CategoryItems_CategoryItemTypeId",
                 table: "CategoryItems",
                 column: "CategoryItemTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryItems_NameArabic",
+                table: "CategoryItems",
+                column: "NameArabic",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryItems_NameEnglish",
+                table: "CategoryItems",
+                column: "NameEnglish",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryItemsTypes_CategoryId",

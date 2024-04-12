@@ -6,6 +6,7 @@ using HubFurniture.Repository;
 using HubFurniture.Repository.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 using Stripe;
 
 namespace AdminPanel
@@ -22,6 +23,7 @@ namespace AdminPanel
             builder.Services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
             });
 
             builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)

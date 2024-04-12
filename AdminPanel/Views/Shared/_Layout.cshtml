@@ -8,7 +8,7 @@
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<header>
+    <header>
         <nav class=" navbar sb-topnav navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" asp-controller="Home" asp-action="Index">Hub Furniture Panel</a>
@@ -35,34 +35,34 @@
     </nav>
 </header>
 
-@*Side NavBar*@
+    @*Side NavBar*@
 
     <div id="layoutSidenav">
-    <div id="layoutSidenav_nav">
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
-                <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Security</div>
-                            
-                    @*Icon For Roles*@
-                    <a class="nav-link" asp-controller="Role" asp-action="Index">
-                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                        Roles
-                    </a>
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Security</div>
 
-                    @*Icon For Users*@
-                    <a class="nav-link" asp-controller="User" asp-action="Index">
-                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                        Users
-                    </a>
-                    
-                    <div class="sb-sidenav-menu-heading">Website</div>
+                        @*Icon For Roles*@
+                        <a class="nav-link" asp-controller="Role" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            Roles
+                        </a>
 
-                    @*Categories*@
-                    <a class="nav-link" asp-controller="Category" asp-action="Index">
-                        <div class="sb-nav-link-icon"></div>
-                        Categories
-                    </a>
+                        @*Icon For Users*@
+                        <a class="nav-link" asp-controller="User" asp-action="Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            Users
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Website</div>
+
+                        @*Categories*@
+                        <a class="nav-link" asp-controller="Category" asp-action="Index">
+                            <div class="sb-nav-link-icon"></div>
+                            Categories
+                        </a>
 
                     @*Items Types*@
                     <a class="nav-link" asp-controller="ItemType" asp-action="Index">
@@ -94,18 +94,18 @@
     <div id="layoutSidenav_content">
             <div class="container">
                 <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
+                    @RenderBody()
+                </main>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="~/js/scripts.js"></script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
 
     <script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
