@@ -1,0 +1,23 @@
+﻿@model SetItemViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Add a New Item </h1>
+
+<div class="container">
+    <form method="post" asp-action="Create" enctype="multipart/form-data">
+        @* <input hidden asp-for="ProductPictures[0].PictureUrl" /> *@
+        
+        <partial name="CreateOrEditPartialView" model="Model"/>
+
+
+        <input type="submit" value="Add" class="btn btn-primary mt-3"/>
+        <a asp-action="Index" class="btn btn-light mt-3">Back To List</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

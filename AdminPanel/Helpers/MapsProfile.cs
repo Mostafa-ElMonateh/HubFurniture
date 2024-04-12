@@ -23,6 +23,7 @@ namespace AdminPanel.Helpers
             CreateMap<CategorySetType, SetsTypesInCategoryViewModel>();
             CreateMap<CategorySetType, SetTypeViewModel>().ReverseMap();
             CreateMap<Category, SetCategoryViewModel>().ReverseMap();
+            CreateMap<SetItem, SetItemViewModel>().ReverseMap();
 
 
         }

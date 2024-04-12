@@ -10,7 +10,7 @@ namespace AdminPanel.Models
     public class SetViewModel
     {
         public int Id { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
 
         [CheckExistingName<CategorySet>(typeof(StoreContext), "NameArabic")]
         [Required(ErrorMessage = "Arabic Name is Required")]
@@ -57,5 +57,8 @@ namespace AdminPanel.Models
 
         [JsonIgnore] // Avoid Circle Ref
         public SetCategoryViewModel? Category { get; set; }
+
+        public IReadOnlyList<SetItem> Items { get; set; } = new List<SetItem>();
+
     }
 }

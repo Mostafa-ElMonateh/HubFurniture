@@ -65,6 +65,7 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
             Includes.Add(ci => ci.ProductPictures);
             Includes.Add(ci => ci.Category);
             Includes.Add(ci => ci.CategorySetType);
+            Includes.Add(ci => ci.Items);
         }
 
         private void AddIncludes()
