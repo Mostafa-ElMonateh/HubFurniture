@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HubFurniture.APIs\HubFurniture.APIs.csproj" />
+    <ProjectReference Include="..\HubFurniture.Repository\HubFurniture.Repository.csproj" />
+    <ProjectReference Include="..\HubFurniture.Service\HubFurniture.Service.csproj" />
   </ItemGroup>
 
 </Project>

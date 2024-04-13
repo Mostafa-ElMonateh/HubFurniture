@@ -83,7 +83,7 @@ namespace HubFurniture.APIs
             try
             {
                 await dbContext.Database.MigrateAsync();
-                await StoreContextSeed.SeedAsync(dbContext);
+                // await StoreContextSeed.SeedAsync(dbContext);
             }
             catch (Exception ex)
             {
