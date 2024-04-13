@@ -64,7 +64,9 @@ namespace HubFurniture.APIs
             builder.Services.AddSingleton<IConnectionMultiplexer>((serviceProvider) =>
             {
                 var connection = builder.Configuration.GetConnectionString("Redis");
-                return ConnectionMultiplexer.Connect(connection);
+                var options = ConfigurationOptions.Parse(connection);
+                options.Password = "mHyG8XgmcW2HpPhAvZJwKflLiyuVDbl2";
+                return ConnectionMultiplexer.Connect(options);
             });
 
             builder.Services.AddApplicationServices(builder.Configuration);
