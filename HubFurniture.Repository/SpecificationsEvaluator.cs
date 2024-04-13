@@ -2,6 +2,7 @@
 using HubFurniture.Core.Specifications;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace HubFurniture.Repository
 {
     internal static class SpecificationsEvaluator<TEntity> where TEntity : BaseEntity

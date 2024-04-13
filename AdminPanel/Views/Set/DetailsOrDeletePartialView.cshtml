@@ -1,0 +1,86 @@
+﻿@model SetViewModel
+
+<input asp-for="Id" hidden />
+
+<div class="form-group flex flex-column">
+
+    @foreach (var item in Model.ProductPictures)
+    {
+        <img class="me-2 mb-2" src="~/@item.PictureUrl"
+             style="width: 300px; box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.4)" />
+    }
+</div>
+
+
+<div class="row">
+    <div class="col-6">
+        <div class="form-group">
+            <label asp-for="NameEnglish" class="col-form-label">Name (English)</label>
+            <input asp-for="NameEnglish" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NameArabic" class="col-form-label">Name (Arabic)</label>
+            <input asp-for="NameArabic" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Availability" class="col-form-label"></label>
+            <input asp-for="Availability" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Price" class="col-form-label"></label>
+            <input asp-for="Price" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Discount" class="col-form-label"></label>
+            <input asp-for="Discount" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Color" class="col-form-label"></label>
+            <input asp-for="Color" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StyleEnglish" class="col-form-label">Style (English)</label>
+            <input asp-for="StyleEnglish" class="form-control" disabled />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StyleArabic" class="col-form-label">Style (Arabic)</label>
+            <input asp-for="StyleArabic" class="form-control" disabled />
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Suitability" class="col-form-label"></label>
+            <input asp-for="Suitability" class="form-control" disabled />
+        </div>
+
+    </div>
+
+    <div class="col-6">
+        <div class="form-group">
+            <label asp-for="RoomEnglish" class="col-form-label">Room (English)</label>
+            <input asp-for="RoomEnglish" class="form-control" disabled/>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="RoomArabic" class="col-form-label">Room (Arabic)</label>
+            <input asp-for="RoomArabic" class="form-control" disabled/>
+        </div>
+=
+
+        <div class="form-group">
+            <label asp-for="Category.NameEnglish" class="col-form-label">Category</label>
+            <input asp-for="Category.NameEnglish" class="form-control" disabled/>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategorySetType.NameEnglish" class="col-form-label">Type</label>
+            <input asp-for="CategorySetType.NameEnglish" class="form-control" disabled/>
+        </div>
+    </div>
+</div>

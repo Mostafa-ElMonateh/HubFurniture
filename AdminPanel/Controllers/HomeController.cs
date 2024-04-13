@@ -1,4 +1,5 @@
 using AdminPanel.Models;
+using Microsoft.AspNetCore.Authorization;
 using HubFurniture.Core.Contracts;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Enums;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 
 namespace AdminPanel.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class HomeController : Controller
     {
 

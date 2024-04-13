@@ -5,6 +5,7 @@ using HubFurniture.Repository;
 using HubFurniture.Repository.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 using Stripe;
 
 namespace AdminPanel
@@ -21,16 +22,15 @@ namespace AdminPanel
             builder.Services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
             });
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole> (options => 
-            {
-                // Configure user validation rules
-                options.User.RequireUniqueEmail = true;
-                options.User.AllowedUserNameCharacters = ""; 
-            })
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<StoreContext>();
+
+
+
 
             builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
@@ -52,6 +52,7 @@ namespace AdminPanel
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
 
             app.Run();
         }

@@ -1,0 +1,53 @@
+﻿@model SetViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create a New Set</h1>
+
+<div class="container">
+    <form method="post" asp-action="Create" enctype="multipart/form-data">
+        @* <input hidden asp-for="ProductPictures[0].PictureUrl" /> *@
+        
+        <partial name="CreateOrEditPartialView" model="Model"/>
+
+
+        <input type="submit" value="Add" class="btn btn-primary mt-3"/>
+        <a asp-action="Index" class="btn btn-light mt-3">Back To List</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function () {
+            $('#typeSelect').hide();
+            $('#labelTypeSelect').hide();
+
+            $('#categorySelect').change(function () {
+                var categoryId = $(this).val();
+                if (categoryId) {
+                    $.ajax({
+                        url: '@Url.Action("GetTypesByCategoryId", "Set")',
+                        type: 'GET',
+                        data: { categoryId: categoryId },
+                        success: function (data) {
+                            $('#typeSelect').empty();
+                            $('#typeSelect').append($('<option>').val(null).text('-- Select Type --'));
+                            $.each(data, function (index, item) {
+                                $('#typeSelect').append($('<option>').val(item.id).text(item.nameEnglish));
+                            });
+                            $('#typeSelect').show();
+                            $('#labelTypeSelect').show();
+                        }
+                    });
+                } else {
+                    $('#typeSelect').empty().hide();
+                    $('#labelTypeSelect').hide();
+                }
+            });
+        });
+    </script>
+}
