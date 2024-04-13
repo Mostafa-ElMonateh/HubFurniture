@@ -3,6 +3,7 @@ using AutoMapper;
 using HubFurniture.Core.Contracts;
 using HubFurniture.Core.Entities;
 using HubFurniture.Core.Specifications.ItemTypeSpecifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminPanel.Controllers
