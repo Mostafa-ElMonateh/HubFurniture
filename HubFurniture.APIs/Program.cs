@@ -107,9 +107,12 @@ namespace HubFurniture.APIs
 
             app.UseStaticFiles();
 
+            app.UseHttpsRedirection();
+
+            app.UseHttpsRedirection();
+
             app.UseCors("Default");
 
-            //app.UseHttpsRedirection();
             app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
             app.UseAuthentication();
