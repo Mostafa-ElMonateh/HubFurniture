@@ -19,7 +19,7 @@
 
         <div class="form-group">
             <label asp-for="OrderDate" class="col-form-label"></label>
-            <input asp-for="@TimeZoneInfo.ConvertTime(@Model.OrderDate, egyptTimeZone).ToString()" class="form-control" disabled />
+            <input asp-for="OrderDate" value="@TimeZoneInfo.ConvertTime(Model.OrderDate, egyptTimeZone).ToString()" class="form-control" disabled />
         </div>
 
         <div class="form-group">
