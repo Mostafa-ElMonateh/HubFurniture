@@ -29,9 +29,6 @@ namespace AdminPanel
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<StoreContext>();
 
-
-
-
             builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             builder.Services.AddAutoMapper(typeof(MapsProfile));

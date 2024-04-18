@@ -105,11 +105,9 @@ namespace HubFurniture.APIs
                 app.UseSwaggerMiddlewares();
             }
 
+            app.UseHttpsRedirection();
+            
             app.UseStaticFiles();
-
-            app.UseHttpsRedirection();
-
-            app.UseHttpsRedirection();
 
             app.UseCors("Default");
 
