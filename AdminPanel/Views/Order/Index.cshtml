@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Orders";
+    TimeZoneInfo egyptTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Egypt Standard Time");
 }
 
 <h1>Orders</h1>
@@ -27,7 +28,7 @@
                     <tr>
                         <td>@item.Id</td>
                         <td>@item.BuyerEmail</td>
-                        <td>@item.OrderDate</td>
+                        <td>@TimeZoneInfo.ConvertTime(item.OrderDate, egyptTimeZone).ToString()</td>
                         <td>@item.Status</td>
                         <td>EGP @item.DeliveryMethod?.Cost</td>
                         <td>EGP @item.SubTotal</td>
