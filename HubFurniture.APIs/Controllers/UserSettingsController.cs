@@ -44,7 +44,7 @@ namespace HubFurniture.APIs.Controllers
 
                 await _addressService.CreateAddressAsync(userAddress);
 
-                return Ok("Address added successfully.");
+                return Ok(new { message = "Address added successfully." });
             }
 
             return BadRequest(ModelState);
@@ -82,7 +82,7 @@ namespace HubFurniture.APIs.Controllers
 
                 await _addressService.UpdateAddressAsync(updatedAddress);
 
-                return Ok("Address updated successfully.");
+                return Ok(new { message = "Address updated successfully." });
             }
 
             return BadRequest(ModelState);
@@ -130,7 +130,7 @@ namespace HubFurniture.APIs.Controllers
 
             await _addressService.DeleteAdressByIdForUserAsync(addressId);
 
-            return Ok("Address deleted successfully.");
+            return Ok(new { message = "Address deleted successfully." });
         }
 
 
