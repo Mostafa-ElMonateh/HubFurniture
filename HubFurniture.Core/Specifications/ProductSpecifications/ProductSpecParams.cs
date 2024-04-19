@@ -30,11 +30,11 @@ namespace HubFurniture.Core.Specifications.ProductSpecifications
 
         public int PageIndex { get; set; } = 1;
 
-        private int pageSize = 5;
+        private int pageSize = 10;
         public int PageSize
         {
             get => pageSize;
-            set => pageSize = value > 10 ? 10 : value;
+            set => pageSize = value > MaxPageSize ? 10 : value;
         }
 
     }

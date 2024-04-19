@@ -8,6 +8,6 @@ namespace HubFurniture.Core.Enums
 {
     public enum Suitability:byte
     {
-        IndoorUse
+        IndoorUse, OutdoorUse
     }
 }

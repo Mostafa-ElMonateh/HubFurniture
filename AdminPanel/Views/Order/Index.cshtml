@@ -1,7 +1,8 @@
 ﻿@model IReadOnlyList<OrderToReturnViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Orders";
+    TimeZoneInfo egyptTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Egypt Standard Time");
 }
 
 <h1>Orders</h1>
@@ -27,7 +28,7 @@
                     <tr>
                         <td>@item.Id</td>
                         <td>@item.BuyerEmail</td>
-                        <td>@item.OrderDate</td>
+                        <td>@TimeZoneInfo.ConvertTime(item.OrderDate, egyptTimeZone).ToString()</td>
                         <td>@item.Status</td>
                         <td>EGP @item.DeliveryMethod?.Cost</td>
                         <td>EGP @item.SubTotal</td>
@@ -46,7 +47,7 @@
 else
 {
     <div class="mt-3 p-3 alert-warning">
-        <h2>There are no Categories!</h2>
+        <h2>There are no Orders!</h2>
     </div>
 }
 @section Scripts {

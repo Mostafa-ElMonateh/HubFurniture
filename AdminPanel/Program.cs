@@ -29,9 +29,6 @@ namespace AdminPanel
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<StoreContext>();
 
-
-
-
             builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 
             builder.Services.AddAutoMapper(typeof(MapsProfile));
@@ -43,6 +40,9 @@ namespace AdminPanel
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
